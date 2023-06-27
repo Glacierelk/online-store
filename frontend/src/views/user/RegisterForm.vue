@@ -1,6 +1,6 @@
 <script setup>
 import axios from "axios";
-import Header from "@/components/HeaderComponents.vue";
+// import Header from "@/components/HeaderComponents.vue";
 import Footer from "@/components/FooterComponents.vue";
 import {ref} from "vue";
 
@@ -51,9 +51,9 @@ function submitForm() {
 </script>
 
 <template>
-  <div id="header">
-    <Header></Header>
-  </div>
+<!--  <div id="header">-->
+<!--    <Header></Header>-->
+<!--  </div>-->
 
   <div id="register">
     <h2>用户注册</h2>
