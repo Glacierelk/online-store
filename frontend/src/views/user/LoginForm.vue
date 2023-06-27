@@ -1,7 +1,7 @@
 <template>
-  <div id="header">
-    <Header></Header>
-  </div>
+<!--  <div id="header">-->
+<!--    <Header></Header>-->
+<!--  </div>-->
   <div id="login">
     <div class="container">
       <el-form class="form-wrap" label-width="60px" v-bind="submitForm">
@@ -28,7 +28,7 @@
 
 <script setup>
 import axios from "axios";
-import Header from "@/components/HeaderComponents.vue";
+// import Header from "@/components/HeaderComponents.vue";
 import Footer from "@/components/FooterComponents.vue";
 import {ref} from "vue";
 import {ElForm, ElFormItem, ElInput, ElButton} from "element-plus";

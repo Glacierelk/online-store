@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
     <router-link to="/user/login">Login</router-link>
+    &nbsp; | &nbsp;
+    <router-link to="/user/register">Register</router-link>
     <br/>
     <img alt="Vue logo" src="../assets/logo.png">
     <h1>Welcome to Your Vue.js App</h1>

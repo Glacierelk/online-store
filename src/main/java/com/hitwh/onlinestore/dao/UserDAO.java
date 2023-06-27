@@ -1,6 +1,6 @@
 package com.hitwh.onlinestore.dao;
 
-import com.hitwh.onlinestore.pojo.User;
+import com.hitwh.onlinestore.bean.User;
 
 import java.util.List;
 
