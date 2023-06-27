@@ -1,18 +1,16 @@
 package com.hitwh.onlinestore.dao.impl;
 
+import com.hitwh.onlinestore.bean.User;
 import com.hitwh.onlinestore.dao.UserDAO;
-import com.hitwh.onlinestore.pojo.User;
 import com.hitwh.onlinestore.utils.JDBCUtils;
-import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
-    private JdbcTemplate template = new JdbcTemplate(JDBCUtils.getDataSource());
+    private final JdbcTemplate template = new JdbcTemplate(JDBCUtils.getDataSource());
 
     @Override
     public void addUser(User user) {
@@ -64,19 +62,18 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public int getTotal() {
-        String sql = "select count(id) from user";
-        return template.queryForObject(sql, Integer.class);
+        try {
+            String sql = "select count(id) from user";
+            return template.queryForObject(sql, Integer.class);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     @Override
     public List<User> getUserList(int start, int count) {
         String sql = "select * from user limit ?, ?";
         return template.query(sql, new BeanPropertyRowMapper<User>(User.class), start, count);
-    }
-
-    @Test
-    public void test1() {
-        deleteUserByName("test");
     }
 }
 

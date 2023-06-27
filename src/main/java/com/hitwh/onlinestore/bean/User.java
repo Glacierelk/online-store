@@ -1,4 +1,4 @@
-package com.hitwh.onlinestore.pojo;
+package com.hitwh.onlinestore.bean;
 
 public class User {
     private int id;
