@@ -27,6 +27,7 @@
 </template>
 
 <script setup>
+// import Header from "@/components/SearchComponents.vue";
 import axios from "axios";
 // import Header from "@/components/HeaderComponents.vue";
 import Footer from "@/components/FooterComponents.vue";
