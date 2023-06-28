@@ -53,6 +53,7 @@ function submitForm() {
         console.log(res);
         if (res.data.flag) {
           alert("登录成功,即将跳转！");
+          //TODO check user or admin
           router.push('/user/register');
         } else {
           alert("登录失败，请重试！");
