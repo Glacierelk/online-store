@@ -1,5 +1,6 @@
 package com.hitwh.onlinestore.web.servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hitwh.onlinestore.bean.ResultInfo;
 import com.hitwh.onlinestore.bean.User;
 import com.hitwh.onlinestore.service.UserService;
@@ -11,9 +12,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @WebServlet("/user/*")
 public class UserServlet extends BaseServlet {
@@ -73,4 +76,10 @@ public class UserServlet extends BaseServlet {
     }
 
 
+    private User getUser(HttpServletRequest request) throws IOException {
+        BufferedReader reader = request.getReader();
+        String requestBody = reader.lines().collect(Collectors.joining(System.lineSeparator()));
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(requestBody, User.class);
+    }
 }
