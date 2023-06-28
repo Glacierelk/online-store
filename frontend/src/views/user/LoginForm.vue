@@ -1,10 +1,11 @@
 <template>
-<!--  <div id="header">-->
-<!--    <Header></Header>-->
-<!--  </div>-->
+  <div id="header">
+    <Header></Header>
+  </div>
+
   <div id="login">
     <div class="container">
-      <el-form class="form-wrap" label-width="60px" v-bind="submitForm">
+      <el-form class="form-wrap" label-width="60px" @submit.passive.prevent="submitForm">
         <h2>登录</h2>
         <el-form-item class="label" label="用户名" prop="username">
           <el-input v-model.trim="username" clearable required></el-input>
@@ -21,59 +22,76 @@
       </el-form>
     </div>
   </div>
+
   <div id="footer">
     <Footer></Footer>
   </div>
 </template>
 
 <script setup>
-// import Header from "@/components/SearchComponents.vue";
 import axios from "axios";
-// import Header from "@/components/HeaderComponents.vue";
+import Header from "@/components/LoginAndRegisterHeader.vue";
 import Footer from "@/components/FooterComponents.vue";
 import {ref} from "vue";
 import {ElForm, ElFormItem, ElInput, ElButton} from "element-plus";
+import {useRouter} from "vue-router";
 
-const username = ref("");
-const password = ref("");
+let router = useRouter();
+let username = ref("");
+let password = ref("");
 
 function submitForm() {
-  if (!this.username || !this.password) {
-    this.$message.error('请输入用户名或密码');
-    return;
-  }
-
-  axios.post('user/login', {
-    u_name: this.username,
-    u_password: this.password,
+  alert(username.value)
+  alert(password.value)
+  //TODO 修改地址
+  axios.post('http://localhost:8080/store/user/login', {
+    name: username.value,
+    password: password.value,
   })
       .then((res) => {
-        console.log(res)
+        console.log(res);
         if (res.data.flag) {
-          alert("登录成功,即将跳转！")
-          window.location.href = "person.html";
+          alert("登录成功,即将跳转！");
+          router.push('/user/register');
         } else {
-          alert("登录失败，请重试！")
-          this.username = ""
-          this.password = ""
+          alert("登录失败，请重试！");
+          username.value = "";
+          password.value = "";
         }
       })
       .catch(() => {
-        alert("登录失败，请重试！")
-        this.username = ""
-        this.password = ""
+        alert("登录失败，请重试！");
+        username.value = "";
+        password.value = "";
       });
-  return false
 }
 
 </script>
 
 <style scoped>
+#header {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 15px;
+  overflow: hidden;
+}
+
+#login {
+  height: 100vh;
+  width: 90%;
+  background-image: url("@/assets/login/6702.png");
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 95%;
+  float: right;
+  width: 35%;
+  margin-right: 2%;
 }
 
 .form-wrap {
