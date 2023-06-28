@@ -3,41 +3,46 @@ import axios from "axios";
 import Header from "@/components/LoginAndRegisterHeader.vue";
 import Footer from "@/components/FooterComponents.vue";
 import {ref} from "vue";
+import qs from "qs";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-let username = ref("");
-let email = ref("");
+const username = ref("");
+const email = ref("");
 const address = ref("");
-let password = ref("");
-let message = ref("");
+const password = ref("");
+const message = ref("");
 
 function submitForm() {
-
+  // alert(username.value)
+  // alert(email.value)
+  // alert(address.value)
+  // alert(password.value)
   //TODO 修改地址
-  axios.post('#', {
-    name: username,
-    email: email,
-    address: address,
-    password: password
-  })
+  axios.post('http://localhost:8080/store/user/register', qs.stringify({
+    "name": username.value,
+    "email": email.value,
+    "address": address.value,
+    "password": password.value
+  }))
       .then(response => {
         console.log(response)
         if (response.data.flag) {
-          message = '注册成功,将自动跳转...';
+          message.value = '注册成功,将自动跳转...';
           router.push('/user/login');
         }
         else {
-          message = '注册失败,用户名已存在,请重试!';
-          username = "";
-          password = "";
-          email = "";
+          message.value = '注册失败,用户名已存在,请重试!';
+          username.value = "";
+          password.value = "";
+          email.value = "";
         }
       })
       .catch(error => {
         console.error(error);
-        message = '注册失败,请重试!';
+        message.value = '注册失败,请重试!';
       });
+  return false;
 }
 
 </script>
