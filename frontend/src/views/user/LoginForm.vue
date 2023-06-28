@@ -17,7 +17,7 @@
           <el-button native-type="submit" type="danger">登录</el-button>
         </el-form-item>
         <el-form-item>
-          <a class="register" href="#">没有账号？注册新账号</a>
+          <router-link to="/user/register" class="register">没有账号？注册新账号</router-link>
         </el-form-item>
       </el-form>
     </div>
@@ -35,19 +35,20 @@ import Footer from "@/components/FooterComponents.vue";
 import {ref} from "vue";
 import {ElForm, ElFormItem, ElInput, ElButton} from "element-plus";
 import {useRouter} from "vue-router";
+import qs from "qs";
 
-let router = useRouter();
-let username = ref("");
-let password = ref("");
+const router = useRouter();
+const username = ref("");
+const password = ref("");
 
 function submitForm() {
-  alert(username.value)
-  alert(password.value)
+  // alert(username.value)
+  // alert(password.value)
   //TODO 修改地址
-  axios.post('http://localhost:8080/store/user/login', {
-    name: username.value,
-    password: password.value,
-  })
+  axios.post('http://localhost:8080/store/user/login', qs.stringify({
+        "name": username.value,
+        "password": password.value,
+      }))
       .then((res) => {
         console.log(res);
         if (res.data.flag) {
@@ -64,6 +65,7 @@ function submitForm() {
         username.value = "";
         password.value = "";
       });
+  return false;
 }
 
 </script>
@@ -80,6 +82,8 @@ function submitForm() {
   height: 100vh;
   width: 90%;
   background-image: url("@/assets/login/6702.png");
+  background-size: cover;
+  background-repeat: no-repeat;
   margin-left: auto;
   margin-right: auto;
 }

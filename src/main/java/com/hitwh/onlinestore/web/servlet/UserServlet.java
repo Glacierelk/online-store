@@ -26,6 +26,10 @@ public class UserServlet extends BaseServlet {
         ResultInfo info = new ResultInfo();
         String name = request.getParameter("name");
         String password = request.getParameter("password");
+//        User user = getUser(request);
+//        User exist_user = userService.login(user.getName(), user.getPassword());
+        System.out.println(name);
+        System.out.println(password);
         User exist_user = userService.login(name, password);
         if(exist_user!=null) {
             HttpSession session = request.getSession();
@@ -35,10 +39,11 @@ public class UserServlet extends BaseServlet {
             info.setFlag(false);//登陆失败
             info.setErrorMsg("用户名或密码错误");
         }
+        System.out.println(info);
         writeJsonValue(response, info);
     }
     public void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
+//        request.setCharacterEncoding("utf-8");
         ResultInfo info = new ResultInfo();
         Map<String,String[]> parameterMap = request.getParameterMap();
         User user = new User();
@@ -47,6 +52,8 @@ public class UserServlet extends BaseServlet {
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
+        System.out.println(user);
+//        User user = getUser(request);
         boolean flag = userService.register(user);
         if(flag) {
             info.setFlag(true);
