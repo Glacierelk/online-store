@@ -60,6 +60,10 @@ public class UserDAOImpl implements UserDAO {
         return count != 0;
     }
 
+    /**
+     * 获取总记录数
+     * @return
+     */
     @Override
     public int getTotal() {
         try {
@@ -70,7 +74,10 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    //不考虑分页
+    /**
+     * 获取用户列表，不考虑分页
+     * @return
+     */
     @Override
     public List<User> getUserList() {
         String sql = "select id,name,password,email,address from user";
