@@ -1,26 +1,18 @@
 <script setup>
 import axios from "axios";
-// import Header from "@/components/HeaderComponents.vue";
+import Header from "@/components/LoginAndRegisterHeader.vue";
 import Footer from "@/components/FooterComponents.vue";
 import {ref} from "vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 let username = ref("");
 let email = ref("");
 const address = ref("");
 let password = ref("");
 let message = ref("");
 
-function validateForm() {
-  return (username || email || password || address);
-}
-
 function submitForm() {
-  if (!validateForm()) {
-    return;
-  }
-
-  //TODO test code need to delete
-  this.$router.push('/user/login');
 
   //TODO 修改地址
   axios.post('#', {
@@ -33,7 +25,7 @@ function submitForm() {
         console.log(response)
         if (response.data.flag) {
           message = '注册成功,将自动跳转...';
-          this.$router.push('/user/login');
+          router.push('/user/login');
         }
         else {
           message = '注册失败,用户名已存在,请重试!';
@@ -51,9 +43,9 @@ function submitForm() {
 </script>
 
 <template>
-<!--  <div id="header">-->
-<!--    <Header></Header>-->
-<!--  </div>-->
+  <div id="header">
+    <Header></Header>
+  </div>
 
   <div id="register">
     <h2>用户注册</h2>
@@ -82,6 +74,13 @@ function submitForm() {
 </template>
 
 <style scoped>
+#header {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 15px;
+  overflow: hidden;
+}
+
 #register {
   max-width: 50%;
   margin: 50px auto;

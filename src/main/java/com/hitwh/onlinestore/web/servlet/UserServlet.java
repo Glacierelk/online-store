@@ -1,15 +1,16 @@
-package com.hitwh.onlinestore.web;
+package com.hitwh.onlinestore.web.servlet;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.hitwh.onlinestore.bean.ResultInfo;
 import com.hitwh.onlinestore.bean.User;
 import com.hitwh.onlinestore.service.UserService;
 import com.hitwh.onlinestore.service.impl.UserServiceImpl;
 import org.apache.commons.beanutils.BeanUtils;
 
-import javax.servlet.*;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
