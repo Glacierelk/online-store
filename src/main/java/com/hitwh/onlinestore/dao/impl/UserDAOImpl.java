@@ -70,10 +70,11 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    //不考虑分页
     @Override
-    public List<User> getUserList(int start, int count) {
-        String sql = "select id,name,password,email,address from user limit ?, ?";
-        return template.query(sql, new BeanPropertyRowMapper<User>(User.class), start, count);
+    public List<User> getUserList() {
+        String sql = "select id,name,password,email,address from user";
+        return template.query(sql, new BeanPropertyRowMapper<User>(User.class));
     }
 }
 

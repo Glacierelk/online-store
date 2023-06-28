@@ -57,9 +57,19 @@ public class UserServlet extends BaseServlet {
         //重定向到登陆页面
         response.sendRedirect(request.getContextPath()+"/#");
     }
+
+    /**
+     * 获取当前登陆的用户
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     public void getUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         User user = (User) request.getSession().getAttribute("user");
         writeJsonValue(response, user);
     }
+
+
 }

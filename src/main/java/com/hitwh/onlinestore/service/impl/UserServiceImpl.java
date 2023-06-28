@@ -4,6 +4,9 @@ import com.hitwh.onlinestore.bean.User;
 import com.hitwh.onlinestore.dao.UserDAO;
 import com.hitwh.onlinestore.dao.impl.UserDAOImpl;
 import com.hitwh.onlinestore.service.UserService;
+import org.junit.Test;
+
+import java.util.List;
 
 public class UserServiceImpl implements UserService{
     private final UserDAO userDAO = new UserDAOImpl();
@@ -23,4 +26,21 @@ public class UserServiceImpl implements UserService{
             return true;
         }
     }
+
+    @Override
+    public List<User> getUserList() {
+        return userDAO.getUserList();
+    }
+
+//    @Test
+//    public void test1(){
+//        String name = "zhouhao";
+//        String password = "zhouhao";
+//        User user = new User();
+//        user.setName(name);
+//        user.setPassword(password);
+//        System.out.println(register(user));
+//    }
+
+
 }
