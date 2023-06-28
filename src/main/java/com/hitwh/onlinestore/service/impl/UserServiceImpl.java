@@ -32,15 +32,16 @@ public class UserServiceImpl implements UserService{
         return userDAO.getUserList();
     }
 
-//    @Test
-//    public void test1(){
-//        String name = "zhouhao";
-//        String password = "zhouhao";
-//        User user = new User();
-//        user.setName(name);
-//        user.setPassword(password);
-//        System.out.println(register(user));
-//    }
+    @Override
+    public boolean deleteUser(String name) {
+        return userDAO.deleteUserByName(name);
+    }
+
+    @Test
+    public void test1(){
+        String name = "test001";
+        this.deleteUser(name);
+    }
 
 
 }

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,15 +22,19 @@ import java.util.stream.Collectors;
 @WebServlet("/user/*")
 public class UserServlet extends BaseServlet {
     private static final UserService userService = new UserServiceImpl();
+
+    /**
+     * 登陆
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         ResultInfo info = new ResultInfo();
         String name = request.getParameter("name");
         String password = request.getParameter("password");
-//        User user = getUser(request);
-//        User exist_user = userService.login(user.getName(), user.getPassword());
-        System.out.println(name);
-        System.out.println(password);
         User exist_user = userService.login(name, password);
         if(exist_user!=null) {
             HttpSession session = request.getSession();
@@ -41,9 +46,18 @@ public class UserServlet extends BaseServlet {
         }
         System.out.println(info);
         writeJsonValue(response, info);
+        System.out.println(info);
     }
+
+    /**
+     * 注册用户，用户名唯一
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     public void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        request.setCharacterEncoding("utf-8");
+
         ResultInfo info = new ResultInfo();
         Map<String,String[]> parameterMap = request.getParameterMap();
         User user = new User();
@@ -53,7 +67,6 @@ public class UserServlet extends BaseServlet {
             e.printStackTrace();
         }
         System.out.println(user);
-//        User user = getUser(request);
         boolean flag = userService.register(user);
         if(flag) {
             info.setFlag(true);
@@ -63,6 +76,14 @@ public class UserServlet extends BaseServlet {
         }
         writeJsonValue(response, info);
     }
+
+    /**
+     * 退出登陆
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().invalidate();
         //重定向到登陆页面
@@ -82,11 +103,24 @@ public class UserServlet extends BaseServlet {
         writeJsonValue(response, user);
     }
 
-
-    private User getUser(HttpServletRequest request) throws IOException {
-        BufferedReader reader = request.getReader();
-        String requestBody = reader.lines().collect(Collectors.joining(System.lineSeparator()));
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(requestBody, User.class);
+    /**
+     * 根据用户名删除用户
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("name");
+        ResultInfo info = new ResultInfo();
+        if(userService.deleteUser(name)) {
+            info.setFlag(true);
+        }else {
+            info.setFlag(false);
+            info.setErrorMsg("删除失败");
+        }
+        writeJsonValue(response, info);
     }
+
+
 }
