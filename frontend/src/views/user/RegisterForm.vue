@@ -14,10 +14,24 @@ const password = ref("");
 const message = ref("");
 
 function submitForm() {
-  // alert(username.value)
-  // alert(email.value)
-  // alert(address.value)
-  // alert(password.value)
+  if (username.value.length < 4 || username.value.length > 16) {
+    message.value = '用户名长度应在4-16位之间!';
+    return false;
+  }
+
+  if (password.value.length < 6 || password.value.length > 16) {
+    message.value = '密码长度应在6-16位之间!';
+    return false;
+  }
+
+  //TODO delete?
+  let reg
+  reg = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{6,16}$/);
+  if (!reg.test(password.value)) {
+    message.value = '密码要包含大写字母、数字小写字母、特殊字符中的至少三种!';
+    return false;
+  }
+
   //TODO 修改地址
   axios.post('http://localhost:8080/store/user/register', qs.stringify({
     "name": username.value,
