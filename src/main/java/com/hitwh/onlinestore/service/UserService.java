@@ -8,5 +8,5 @@ public interface UserService {
     User login(String username, String password);
     boolean register(User user);
     List<User> getUserList();
-    boolean deleteUser(String username);
+    boolean deleteUser(int id);
 }

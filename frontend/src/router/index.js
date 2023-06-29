@@ -31,9 +31,9 @@ const router = createRouter({
             component: () => import('../App.vue'),
             children: [
                 {
-                    path: 'home',
-                    name: 'HomePage',
-                    component: () => import('../views/manage/HomePage.vue')
+                    path: 'user',
+                    name: 'UserManage',
+                    component: () => import('../views/manage/ManageUser.vue')
                 },
             ]
 

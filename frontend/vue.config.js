@@ -6,3 +6,12 @@ module.exports = defineConfig({
     port: 8081,
   },
 })
+module.exports = {
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `@import "~bootstrap/scss/bootstrap.scss";`
+      }
+    }
+  }
+};
