@@ -1,5 +1,6 @@
 package com.hitwh.onlinestore.bean;
 
+//TODO delete ?
 public class PropertyValue {
     private int id;
     private int pid;
