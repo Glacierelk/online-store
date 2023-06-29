@@ -1,12 +1,10 @@
 package com.hitwh.onlinestore.bean;
 
-import java.util.Date;
-
 public class Product {
     private int id;
     private String name;
     private String subTitle;
-    private float orignalPrice;
+    private float originalPrice;
     private float promotePrice;
     private int stock;
     private int cid;
@@ -19,7 +17,7 @@ public class Product {
         this.id = id;
         this.name = name;
         this.subTitle = subTitle;
-        this.orignalPrice = orignalPrice;
+        this.originalPrice = orignalPrice;
         this.promotePrice = promotePrice;
         this.stock = stock;
         this.cid = cid;
@@ -50,12 +48,12 @@ public class Product {
         this.subTitle = subTitle;
     }
 
-    public float getOrignalPrice() {
-        return orignalPrice;
+    public float getOriginalPrice() {
+        return originalPrice;
     }
 
-    public void setOrignalPrice(float orignalPrice) {
-        this.orignalPrice = orignalPrice;
+    public void setOriginalPrice(float originalPrice) {
+        this.originalPrice = originalPrice;
     }
 
     public float getPromotePrice() {
@@ -96,7 +94,7 @@ public class Product {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", subTitle='" + subTitle + '\'' +
-                ", orignalPrice=" + orignalPrice +
+                ", orignalPrice=" + originalPrice +
                 ", promotePrice=" + promotePrice +
                 ", stock=" + stock +
                 ", cid=" + cid +

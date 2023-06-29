@@ -46,7 +46,7 @@ function submitForm() {
   // alert(password.value)
   //TODO 修改地址
   axios.post('http://localhost:8080/store/user/login', qs.stringify({
-        "name": username.value,
+        "username": username.value,
         "password": password.value,
       }))
       .then((res) => {
