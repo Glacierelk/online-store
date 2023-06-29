@@ -8,21 +8,20 @@
           <span style="margin-left:10px">商品分类</span>
         </div>
         <div class="rightMenu" >
-    <span @mouseenter="showImage" @mouseleave="hideImage">
-       <a href=""><img align="center" src="../assets/HomePage/chaoshi.png" alt="chaoshi"/></a>
-    </span >
+          <span @mouseenter="showImage" @mouseleave="hideImage">
+             <a href=""><img align="center" src="../assets/HomePage/chaoshi.png" alt="chaoshi"/></a>
+          </span >
           <span style="padding-left: 40px;" @mouseenter="showImage" @mouseleave="hideImage">
-        <a href=""><img align="center"  src="../assets/HomePage/guoji.png" alt="guoji"/></a>
-    </span>
-          <span @mouseenter="showImage" @mouseleave="hideImage" class="categoryTab" v-for="(category,index) in categories" :key="category.name">
-                <a href="#" v-if="index<5">{{category.name}}</a>
-    </span>
+            <a href=""><img align="center"  src="../assets/HomePage/guoji.png" alt="guoji"/></a>
+          </span>
+          <span  class="categoryTab" v-for="(category,index) in categories" :key="category.name">
+            <a @mouseenter="showImage" @mouseleave="hideImage" href="#" v-if="index<5">{{category.name}}</a>
+          </span>
         </div>
       </div>
     </div>
     <CategoryMenuComponent></CategoryMenuComponent>
   </div>
-
 </template>
 
 <script setup>
@@ -62,12 +61,9 @@
 </script>
 
 <style scoped>
-  div#guidePage {
 
-  }
   div.categoryWithCarousel {
     width: 100%;
-    position: relative;
   }
   div.categoryWithCarousel div.headbar {
     background-color: #DD2727;

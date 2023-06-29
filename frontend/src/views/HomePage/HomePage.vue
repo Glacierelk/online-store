@@ -8,9 +8,9 @@
 </template>
 
 <script setup>
-  import Header from "@/components/HeaderComponents.vue";
-  import Footer from "@/components/FooterComponents.vue";
-  import SearchComponents from "@/components/SearchComponents.vue";
+  import Header from "@/components/user-facing/HeaderComponents.vue";
+  import Footer from "@/components/user-facing/FooterComponents.vue";
+  import SearchComponents from "@/components/user-facing/SearchComponents.vue";
   import CategoryAndCarouselComponent from "@/components/CategoryAndCarouselComponent.vue";
 </script>
 
