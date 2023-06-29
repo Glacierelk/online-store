@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <h3 style="text-align: left;">分类管理</h3>
   <div>
     <el-table :data="tableData" style="width: 100%">
@@ -31,14 +31,55 @@
           layout="sizes, prev, pager, next, jumper"
       ></el-pagination>
       </div>
+
+    <div class="centered-form">
+      <el-form label-width="100px" class="form-container">
+
+        <el-form-item >
+          <h2 class="form-title">新建分类</h2>
+        </el-form-item>
+
+        <div class="divider"></div> <!-- 添加的分割线 -->
+
+        <el-form-item label="分类名称">
+          <el-input v-model="categoryName"></el-input>
+        </el-form-item>
+      </el-form>
+    </div>
+
   </div>
 </template>
+
+<style>
+.centered-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.divider {
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+</style>
 
 <script>
 export default {
   name: "ManageCategory",
   data() {
     return {
+      categoryName: '',
       tableData:  [
         {
         ID: "ID",
