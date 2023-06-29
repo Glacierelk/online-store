@@ -33,14 +33,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean deleteUser(String username) {
-        return userDAO.deleteUserByUsername(username);
+    public boolean deleteUser(int id) {
+        return userDAO.deleteUserById(id);
     }
 
     @Test
     public void test1(){
-        String name = "test001";
-        this.deleteUser(name);
+        int id = 32;
+        this.deleteUser(id);
     }
 
 

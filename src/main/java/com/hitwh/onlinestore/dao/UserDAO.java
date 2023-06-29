@@ -10,7 +10,7 @@ public interface UserDAO {
     User getUserByUsername(String username);
     User getUserById(int id);
     User getUserByUsernameAndPassword(String username, String password);
-    boolean deleteUserByUsername(String username);
+    boolean deleteUserById(int id);
     int getTotal();
     List<User> getUserList();
 }

@@ -111,9 +111,11 @@ public class UserServlet extends BaseServlet {
      * @throws IOException
      */
     public void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
+        int id = Integer.parseInt(request.getParameter("id"));
+        System.out.println(id);
+//        String name = request.getParameter("name");
         ResultInfo info = new ResultInfo();
-        if(userService.deleteUser(name)) {
+        if(userService.deleteUser(id)) {
             info.setFlag(true);
         }else {
             info.setFlag(false);
@@ -121,6 +123,8 @@ public class UserServlet extends BaseServlet {
         }
         writeJsonValue(response, info);
     }
-
+    public void getAllUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        writeJsonValue(response, userService.getUserList());
+    }
 
 }
