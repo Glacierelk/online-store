@@ -1,30 +1,32 @@
 <template>
-  <div id = "header">
-    <div id = "logo">
-      <a href="/manage/user"><img src="@/assets/header/simpleLogo.png"  alt="logo" class="logo" /></a>
+  <div>
+    <div id="logo">
+      <a href="/manage"><img src="@/assets/header/simpleLogo.png" alt="logo" class="logo" /></a>
     </div>
     <el-tabs v-model="activeTab">
       <el-tab-pane label="分类管理" name="tab1">
-        <!-- 这里是分类管理的内容 -->
+        <Category />
       </el-tab-pane>
       <el-tab-pane label="用户管理" name="tab2">
-        <!-- 这里是用户管理的内容 -->
+        <User />
       </el-tab-pane>
       <el-tab-pane label="订单管理" name="tab3">
-        <!-- 这里是订单管理的内容 -->
+<!--        <Order />-->
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      activeTab: 'tab1'
-    };
-  }
-};
+<script setup>
+import {ref} from "vue";
+import Category from "@/components/manage/CategoryComponents.vue";
+import User from "@/components/manage/UserComponents.vue";
+
+//TODO 这个页面有问题, 显示后会崩溃
+// import Order from "@/components/manage/OrderComponents.vue";
+
+
+let activeTab = ref("tab1");
 </script>
 
 <style>
@@ -33,7 +35,7 @@ img {
 }
 #logo {
   margin-top: 25px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   margin-left: 20px;
   overflow: hidden;
 }

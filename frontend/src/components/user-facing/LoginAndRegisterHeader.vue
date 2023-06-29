@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <img src="../assets/header/simpleLogo.png" alt="logo" id="logo">
+  <img src="../../assets/header/simpleLogo.png" alt="logo" id="logo">
 </template>
 
 <style scoped>

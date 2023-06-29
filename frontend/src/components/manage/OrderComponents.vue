@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>订单管理</h2>
     <el-table :data="orderData" style="width: 100%">
       <el-table-column
           :prop="index"
