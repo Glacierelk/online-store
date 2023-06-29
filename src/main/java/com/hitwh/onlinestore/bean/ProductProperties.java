@@ -3,17 +3,17 @@ package com.hitwh.onlinestore.bean;
 public class ProductProperties {
     private int id;
     private int pid;
-    private String propertyName;
-    private String propertyValue;
+    private String name;
+    private String value;
 
     public ProductProperties() {
     }
 
-    public ProductProperties(int id, int pid, String propertyName, String propertyValue) {
+    public ProductProperties(int id, int pid, String name, String value) {
         this.id = id;
         this.pid = pid;
-        this.propertyName = propertyName;
-        this.propertyValue = propertyValue;
+        this.name = name;
+        this.value = value;
     }
 
     public int getId() {
@@ -32,20 +32,20 @@ public class ProductProperties {
         this.pid = pid;
     }
 
-    public String getPropertyName() {
-        return propertyName;
+    public String getName() {
+        return name;
     }
 
-    public void setPropertyName(String propertyName) {
-        this.propertyName = propertyName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPropertyValue() {
-        return propertyValue;
+    public String getValue() {
+        return value;
     }
 
-    public void setPropertyValue(String propertyValue) {
-        this.propertyValue = propertyValue;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @Override
@@ -53,8 +53,8 @@ public class ProductProperties {
         return "ProductProperties{" +
                 "id=" + id +
                 ", pid=" + pid +
-                ", propertyName='" + propertyName + '\'' +
-                ", propertyValue='" + propertyValue + '\'' +
+                ", propertyName='" + name + '\'' +
+                ", propertyValue='" + value + '\'' +
                 '}';
     }
 }

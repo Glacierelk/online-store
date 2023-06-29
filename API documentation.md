@@ -363,6 +363,8 @@ Content-Type: application/json
 }
 ```
 
+## 商品
+
 ### 后台添加商品
 
 #### 基本信息
@@ -474,6 +476,116 @@ DELETE http://localhost:8080/store/product/delete?id=999
 {
 	"flag": true,
 	"data": null,
+	"errorMsg": null
+}
+```
+
+### 获取商品详情
+
+#### 基本信息
+
+> 请求路径：`/product/details` 
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于前台商品详情页面获取当前商品的详情
+
+
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型     | 是否必须 | 备注                   |
+| ------ | -------- | -------- | ---------------------- |
+| `id`   | `number` | 必须     | 要查询详细信息的商品ID |
+
+##### 请求样例
+
+```http
+POST http://localhost:8080/store/product/details HTTP/1.1
+Content-Type: application/json
+
+{
+	"id": 87
+}
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application\json`
+
+##### 参数说明
+
+| 名称                  | 类型        | 是否必须 | 备注                                    |
+| --------------------- | ----------- | -------- | --------------------------------------- |
+| `flag`                | `boolean`   | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
+| `errorMsg`            | `string`    | 非必须   | 如果删除失败，返回一个错误信息          |
+| `data`                | `object`    | 必需     | 包含了商品的详细信息                    |
+| \|- `id`              | `number`    | 必须     | 商品ID                                  |
+| \|- `name`            | `string`    | 必须     | 商品名称                                |
+| \|- `subTitle`        | `string`    | 非必需   | 商品小标题                              |
+| \|- `originalPrice`   | `number`    | 必须     | 商品价格                                |
+| \|- `promotePrice`    | `number`    | 非必需   | 商品折扣价格                            |
+| \|- `stock`           | `number`    | 必须     | 库存                                    |
+| \|- `cid`             | `number`    | 必须     | 商品类型                                |
+| \|- `createDate`      | `number`    | 必须     | 商品创建日期                            |
+| \|- `images`          | `list`      | 必须     | 商品图片列表                            |
+| \|\|- `id`            | `number`    | 必须     | 图片 ID                                 |
+| \|\|- `type`          | `string`    | 必须     | 图片类型                                |
+| \|- `properties`      | `list`      | 必须     | 属性列表                                |
+| \|\|- `id`            | `number`    | 必须     | 属性 ID                                 |
+| \|\|- `pid`           | `number`    | 必须     | 商品 ID                                 |
+| \|\|- `propertyName`  | `string`    | 必须     | 属性名称                                |
+| \|\|- `propertyValue` | `string`    | 必须     | 属性值                                  |
+| \|- `comments`        | `list`      | 必须     | 评价列表                                |
+| \|\|- `id`            | `number`    | 必须     | 评价 ID                                 |
+| \|\|- `content`       | `string`    | 必须     | 评价内容                                |
+| \|\|- `uid`           | `number`    | 必须     | 做评价用户 ID                           |
+| \|\|- `pid`           | `number`    | 必须     | 被评价商品 ID·                          |
+| \|\|- `create_date`   | `timestamp` | 必须     | 评价日期                                |
+
+##### 响应数据样例
+
+```json
+{
+	"flag": true,
+	"data": {
+		"id": 87,
+		"name": "Konka/康佳 LED32S1卧室32吋安卓智能无线WIFI网络液晶平板电视机",
+		"subTitle": "32吋电视机 8核智能 网络 全国联保 送货上门",
+		"originalPrice": 1699,
+		"promotePrice": 1104.35,
+		"stock": 98,
+		"cid": 83,
+		"createDate": 1471077812000,
+		"images": [
+			{
+				"id": 629,
+				"pid": 0,
+				"type": "type_single"
+			}
+		],
+		"properties": [
+			{
+				"id": 716,
+				"pid": 87,
+				"name": "操作系统",
+				"value": "VIDAA"
+			}
+		],
+		"comments": [
+			{
+				"id": 1,
+				"content": "哈哈哈",
+				"uid": 30,
+				"pid": 87,
+				"create_date": "2023-06-29 22:15:46.0"
+			}
+		]
+	},
 	"errorMsg": null
 }
 ```
