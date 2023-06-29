@@ -33,7 +33,7 @@ public class UserServlet extends BaseServlet {
     public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         ResultInfo info = new ResultInfo();
-        String name = request.getParameter("name");
+        String name = request.getParameter("username");
         String password = request.getParameter("password");
         User exist_user = userService.login(name, password);
         if(exist_user!=null) {

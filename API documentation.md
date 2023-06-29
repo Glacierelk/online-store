@@ -62,3 +62,59 @@ Content-Type: application/json
 	"errorMsg": null
 }
 ```
+
+## 用户登录
+
+### 基本信息
+
+> 请求路径： `/user/login`
+>
+> 请求方式：POST
+>
+> 接口描述：利用前端用户输入的账号和密码进行
+
+### 请求参数
+
+#### 参数说明
+
+| 参数名     | 类型     | 是否必须 | 备注     |
+| ---------- | -------- | -------- | -------- |
+| `username` | `string` | 必须     | 用户名   |
+| `password` | `string` | 必须     | 用户密码 |
+
+#### 请求样例
+
+~~~http
+POST http://localhost:8080/store/user/login HTTP/1.1
+Content-Type: application/json
+
+{
+	"username":"Zincc",
+	"password":"123456",
+}
+~~~
+
+### 响应数据
+
+#### 参数格式
+
+`application\json`
+
+#### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                                    |
+| ---------- | --------- |------| --------------------------------------- |
+| `flag`     | `boolean` | 必须   | 登录是否成功，`true` 成功，`false` 失败 |
+| `data`     | `object`  | 非必须  | 在登录阶段这个字段无用                  |
+| `errorMsg` | `string`  | 非必须  | 如果登录失败，返回一个错误信息          |
+
+#### 响应数据样例
+
+```json
+{
+	"flag": true,
+	"data": null,
+	"errorMsg": null
+}
+```
+

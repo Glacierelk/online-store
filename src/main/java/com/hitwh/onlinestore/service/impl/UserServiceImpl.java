@@ -12,14 +12,14 @@ public class UserServiceImpl implements UserService{
     private final UserDAO userDAO = new UserDAOImpl();
     @Override
     public User login(String username, String password) {
-        return userDAO.getUserByNameAndPassword(username, password);
+        return userDAO.getUserByUsernameAndPassword(username, password);
     }
 
 
 
     @Override
     public boolean register(User user) {
-        if(userDAO.getUserByName(user.getName())!=null){
+        if(userDAO.getUserByUsername(user.getUsername())!=null){
             return false;
         }else {
             userDAO.addUser(user);
@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean deleteUser(String name) {
-        return userDAO.deleteUserByName(name);
+    public boolean deleteUser(String username) {
+        return userDAO.deleteUserByUsername(username);
     }
 
     @Test
