@@ -36,10 +36,16 @@ const router = createRouter({
                     component: () => import('../views/manage/ManageUser.vue')
                 },
                 {
-                    path: 'ManageCategory',
-                    name: 'ManageCategory',
+                    path: 'category',
+                    name: 'CategoryManage',
                     component: () => import('../views/manage/ManageCategory.vue')
                 },
+                {
+                    path: 'order',
+                    name: 'OrderManage',
+                    component: () => import('../views/manage/ManageOrder.vue')
+                },
+
             ]
 
         }

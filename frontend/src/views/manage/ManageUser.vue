@@ -31,7 +31,7 @@ export default {
   setup() {
     const tableHeader = ref({
       id: "用户ID",
-      name: "用户名称",
+      username: "用户名称",
       email: "用户邮箱",
       address: "用户地址",
     });
