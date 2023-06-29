@@ -1,18 +1,36 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+  <h3 style="text-align: left;">分类管理</h3>
+
+  <el-button
+      type="primary"
+      @click="addCategory"
+      style="position: absolute; top: 20px; right: 20px;width: 8%"
+  >添加
+  </el-button>
+
+  <el-dialog title="添加" v-model="secondDialogVisible">
+    <el-form :model="form" label-width="150px" @submit="submitForm">
+      <el-form-item v-for="index in rowCount" :label="`文本框 ${index}`" :key="index">
+        <el-input v-model="form[`input${index}`]"></el-input>
+      </el-form-item>
+      <el-button type="primary" native-type="submit">提交</el-button>
+    </el-form>
+  </el-dialog>
+
   <div>
     <el-table :data="tableData" style="width: 100%">
       <el-table-column prop="ID" label="ID"></el-table-column>
       <el-table-column prop="className" label="分类名称"></el-table-column>
       <el-table-column label="产品管理">
         <template v-slot="scope">
-          <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleButtonClick(scope.row)">
+          <el-button type="primary" size="mini" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleButtonClick(scope.row)">
             <i class="fa fa-edit" style="color: blue;"></i>
           </el-button>
         </template>
       </el-table-column>
       <el-table-column label="删除">
         <template v-slot="scope">
-          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleButtonClick(scope.row)">
+          <el-button type="danger" size="mini" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleButtonClick(scope.row)">
             <i class="fa fa-trash" style="color: red;"></i>
           </el-button>
         </template>
@@ -29,65 +47,34 @@
           :total="total"
           layout="sizes, prev, pager, next, jumper"
       ></el-pagination>
-      </div>
-
-    <div class="centered-form">
-      <el-form label-width="100px" class="form-container">
-
-        <el-form-item >
-          <h2 class="form-title">新建分类</h2>
-        </el-form-item>
-
-        <div class="divider"></div> <!-- 添加的分割线 -->
-
-        <el-form-item label="分类名称">
-          <el-input v-model="categoryName"></el-input>
-        </el-form-item>
-      </el-form>
     </div>
+
 
   </div>
 </template>
 
-<style>
-.centered-form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.form-container {
-  border: 1px solid #ccc;
-  padding: 20px;
-}
-
-.divider {
-  border-top: 1px solid #ccc;
-  margin: 20px 0;
-}
-
-.form-title {
-  text-align: center;
-  margin-bottom: 20px;
-}
-</style>
-
 <script>
+function range(start, end, step = 1) {
+  return Array.from({ length: Math.ceil((end - start) / step) + 1 }, (_, index) => start + (index * step));
+}
 
 export default {
   name: "ManageCategory",
   data() {
     return {
+      form: {},
+      rowCount:1,
+      secondDialogVisible: false,
       categoryName: '',
+      inputValue: '',
       tableData:  [
         {
-        ID: "ID",
-        className: "分类名称",
+          ID: "ID",
+          className: "分类名称",
         },
         {
-        ID: "ID",
-        className: "分类名称",
+          ID: "ID",
+          className: "分类名称",
         }
       ],
       currentPage: 1, // 当前页码
@@ -118,10 +105,39 @@ export default {
     handleDelete(row) {
       // 处理删除按钮点击事件
       console.log("删除", row);
+    },
+    addCategory() {
+      this.$prompt('请输入属性个数', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern:  /\d/,
+        inputErrorMessage: '属性个数不正确'
+      }).then(({ value }) => {
+        this.$message({
+          type: 'success',
+          message: '你的属性个数是: ' + value,
+        });
+        this.rowCount=range(1,value,1);
+        //this.rowCount=Array.from({ length: this.rowCount }, (v, i) => i + 1);
+        console.log(this.rowCount);
+        this.secondDialogVisible = true; // 打开第二个对话框);
+        console.log(this.secondDialogVisible);
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        });
+      });
+    },
+    mounted() {
+      this.getData(); // 页面加载时初始化数据
+    },
+
+    submitForm(event) {
+      event.preventDefault(); // 阻止表单默认提交行为
+      // 在这里执行表单提交逻辑
+      console.log(this.form); // 或者将表单数据发送至后端
     }
-  },
-  mounted() {
-    this.getData(); // 页面加载时初始化数据
   },
 }
 </script>
