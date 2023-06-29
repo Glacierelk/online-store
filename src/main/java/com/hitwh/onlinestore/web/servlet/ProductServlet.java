@@ -46,4 +46,50 @@ public class ProductServlet extends BaseServlet {
         }
         writeJsonValue(response, info);
     }
+
+    /*
+     * @Description: 删除商品
+     * @Param request:产品id
+     */
+    public void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("ProductServlet--delete");
+        ResultInfo info = new ResultInfo();
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            if (productService.delete(id)) {
+                info.setFlag(true);
+            } else {
+                info.setFlag(false);
+                info.setErrorMsg("删除失败");
+            }
+        } catch (NumberFormatException e) {
+            info.setFlag(false);
+            info.setErrorMsg("删除失败, 请检查输入的数据类型");
+        } catch (Exception e) {
+            info.setFlag(false);
+            info.setErrorMsg("删除失败");
+        }
+        writeJsonValue(response, info);
+    }
+
+    /*
+     * @Description: 商品详情
+     * @Param request:产品id
+     */
+    public void details(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("ProductServlet--details");
+        ResultInfo info = new ResultInfo();
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            info.setData(productService.details(id));
+            info.setFlag(true);
+        } catch (NumberFormatException e) {
+            info.setFlag(false);
+            info.setErrorMsg("查询失败, 请检查输入的数据类型");
+        } catch (Exception e) {
+            info.setFlag(false);
+            info.setErrorMsg("查询失败");
+        }
+        writeJsonValue(response, info);
+    }
 }

@@ -3,14 +3,14 @@ package com.hitwh.onlinestore.bean;
 import java.sql.Timestamp;
 
 public class Product {
-    private int id;
-    private String name;
-    private String subTitle;
-    private Double originalPrice;
-    private Double promotePrice;
-    private int stock;
-    private int cid;
-    private Timestamp createDate;
+    protected int id;
+    protected String name;
+    protected String subTitle;
+    protected Double originalPrice;
+    protected Double promotePrice;
+    protected int stock;
+    protected int cid;
+    protected Timestamp createDate;
 
     public Product() {
     }

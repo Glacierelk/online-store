@@ -165,6 +165,9 @@ GET http://localhost:8080/store/category/homePageCategory HTTP/1.1
 | \|- \|- `id`        | `number`  | 必须     | 商品ID                                  |
 | \|- \|- `name`      | `string`  | 必须     | 商品名称                                |
 | \|- \|- `subTitle`  | `string`  | 非必需   | 商品小标题                              |
+| \|- \|- `images`    | `list`    | 必须     | 商品图片                                |
+| \|- \|- \|- `id`    | `number`  | 必须     | 图片 ID                                 |
+| \|- \|- \|- `type`  | `string`  | 必须     | 图片分类                                |
 
 ##### 响应数据样例
 
@@ -180,13 +183,20 @@ GET http://localhost:8080/store/category/homePageCategory HTTP/1.1
 					"id": 449,
 					"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜",
 					"subTitle": "家用冰箱 WIFI智能 风冷无霜",
-					"originalPrice": 0,
-					"promotePrice": 0,
+					"originalPrice": null,
+					"promotePrice": null,
 					"stock": 0,
 					"cid": 0,
-					"createDate": null
+					"createDate": null,
+					"images": [
+						{
+							"id": 4573,
+							"pid": 0,
+							"type": "type_single"
+						}
+					]
 				}
-			]
+            ]
 		}
 	],
 	"errorMsg": null
@@ -406,6 +416,56 @@ Content-Type: application/json
 | ---------- | --------- | -------- | --------------------------------------- |
 | `flag`     | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
 | `errorMsg` | `string`  | 非必须   | 如果添加失败，返回一个错误信息          |
+| `data`     | `object`  | 非必需   | 该参数在此请求中无效                    |
+
+##### 响应数据样例
+
+```json
+{
+	"flag": true,
+	"data": null,
+	"errorMsg": null
+}
+```
+
+### 后台删除商品
+
+#### 基本信息
+
+> 请求路径：`/product/delete` 
+>
+> 请求方式：DELETE
+>
+> 接口描述：该接口用于后台删除某个商品，该删除是级联删除，会把所有相关内容删掉
+
+
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型     | 是否必须 | 备注           |
+| ------ | -------- | -------- | -------------- |
+| `id`   | `number` | 必须     | 要删除的商品ID |
+
+##### 请求样例
+
+```http
+DELETE http://localhost:8080/store/product/delete?id=999
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application\json`
+
+##### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                                    |
+| ---------- | --------- | -------- | --------------------------------------- |
+| `flag`     | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
+| `errorMsg` | `string`  | 非必须   | 如果删除失败，返回一个错误信息          |
 | `data`     | `object`  | 非必需   | 该参数在此请求中无效                    |
 
 ##### 响应数据样例
