@@ -11,4 +11,9 @@ public interface ProductDAO {
      * @return 商品列表
      */
     List<Product> homePageGetProductsByCategoryId(int categoryId);
+
+    /*
+     * 新增商品
+     */
+    boolean addProduct(Product product);
 }

@@ -29,4 +29,11 @@ public interface CategoryDAO {
      * @return List<Category>
      */
     List<Category> listAllCategories();
+
+    /*
+     * 删除商品分类
+     * @param id
+     * @return boolean
+     */
+    boolean deleteCategory(int id);
 }

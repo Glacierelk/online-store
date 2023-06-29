@@ -54,9 +54,9 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean deleteUserByUsername(String username) {
-        String sql = "delete from user where username = ?";
-        int count = template.update(sql, username);
+    public boolean deleteUserById(int id) {
+        String sql = "delete from user where id = ?";
+        int count = template.update(sql, id);
         return count != 0;
     }
 

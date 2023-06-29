@@ -1,23 +1,25 @@
 package com.hitwh.onlinestore.bean;
 
+import java.sql.Timestamp;
+
 public class Product {
     private int id;
     private String name;
     private String subTitle;
-    private float originalPrice;
-    private float promotePrice;
+    private Double originalPrice;
+    private Double promotePrice;
     private int stock;
     private int cid;
-    private String createDate;
+    private Timestamp createDate;
 
     public Product() {
     }
 
-    public Product(int id, String name, String subTitle, float orignalPrice, float promotePrice, int stock, int cid, String createDate) {
+    public Product(int id, String name, String subTitle, Double originalPrice, Double promotePrice, int stock, int cid, Timestamp createDate) {
         this.id = id;
         this.name = name;
         this.subTitle = subTitle;
-        this.originalPrice = orignalPrice;
+        this.originalPrice = originalPrice;
         this.promotePrice = promotePrice;
         this.stock = stock;
         this.cid = cid;
@@ -48,19 +50,19 @@ public class Product {
         this.subTitle = subTitle;
     }
 
-    public float getOriginalPrice() {
+    public Double getOriginalPrice() {
         return originalPrice;
     }
 
-    public void setOriginalPrice(float originalPrice) {
+    public void setOriginalPrice(Double originalPrice) {
         this.originalPrice = originalPrice;
     }
 
-    public float getPromotePrice() {
+    public Double getPromotePrice() {
         return promotePrice;
     }
 
-    public void setPromotePrice(float promotePrice) {
+    public void setPromotePrice(Double promotePrice) {
         this.promotePrice = promotePrice;
     }
 
@@ -80,11 +82,11 @@ public class Product {
         this.cid = cid;
     }
 
-    public String getCreateDate() {
+    public Timestamp getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
 
@@ -94,7 +96,7 @@ public class Product {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", subTitle='" + subTitle + '\'' +
-                ", orignalPrice=" + originalPrice +
+                ", originalPrice=" + originalPrice +
                 ", promotePrice=" + promotePrice +
                 ", stock=" + stock +
                 ", cid=" + cid +

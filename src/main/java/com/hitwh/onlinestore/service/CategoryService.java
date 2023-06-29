@@ -11,4 +11,14 @@ public interface CategoryService {
      * @return 所有分类, 包括id, name
      */
     Object listAllCategories();
+
+    /*
+     * 删除商品分类
+     */
+    boolean deleteCategory(int i);
+
+    /*
+     * 添加商品分类
+     */
+    boolean addCategory(String categoryName);
 }
