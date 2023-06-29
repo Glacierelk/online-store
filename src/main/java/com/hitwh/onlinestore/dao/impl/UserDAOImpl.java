@@ -14,19 +14,19 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void addUser(User user) {
-        String sql = "insert into user(name, password, email, address) values(?, ?, ?, ?)";
-        String name = user.getName();
+        String sql = "insert into user(username, password, email, address) values(?, ?, ?, ?)";
+        String username = user.getUsername();
         String password = user.getPassword();
         String email = user.getEmail();
         String address = user.getAddress();
-        template.update(sql, name, password, email, address);
+        template.update(sql, username, password, email, address);
     }
 
     @Override
-    public User getUserByName(String name) {
-        String sql = "select id,name,password,email,address from user where name = ?";
+    public User getUserByUsername(String username) {
+        String sql = "select id,username,password,email,address from user where username = ?";
         try {
-            return template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class), name);
+            return template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class), username);
         } catch (DataAccessException e) {
             return null;
         }
@@ -34,7 +34,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUserById(int id) {
-        String sql = "select id,name,password,email,address from user where id = ?";
+        String sql = "select id,username,password,email,address from user where id = ?";
         try {
             return template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class), id);
         } catch (DataAccessException e) {
@@ -43,10 +43,10 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserByNameAndPassword(String name, String password) {
-        String sql = "select * from user where name = ? and password = ?";
+    public User getUserByUsernameAndPassword(String username, String password) {
+        String sql = "select id,username,password,email,address from user where username = ? and password = ?";
         try {
-            return template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class), name, password);
+            return template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class), username, password);
         } catch (DataAccessException e) {
             return null;
         }
@@ -54,12 +54,16 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean deleteUserByName(String name) {
-        String sql = "delete from user where name = ?";
-        int count = template.update(sql, name);
+    public boolean deleteUserByUsername(String username) {
+        String sql = "delete from user where username = ?";
+        int count = template.update(sql, username);
         return count != 0;
     }
 
+    /**
+     * 获取总记录数
+     * @return
+     */
     @Override
     public int getTotal() {
         try {
@@ -70,10 +74,14 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * 获取用户列表，不考虑分页
+     * @return
+     */
     @Override
-    public List<User> getUserList(int start, int count) {
-        String sql = "select * from user limit ?, ?";
-        return template.query(sql, new BeanPropertyRowMapper<User>(User.class), start, count);
+    public List<User> getUserList() {
+        String sql = "select id,username,password,email,address from user";
+        return template.query(sql, new BeanPropertyRowMapper<User>(User.class));
     }
 }
 

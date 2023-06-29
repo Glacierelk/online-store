@@ -5,14 +5,12 @@ import com.hitwh.onlinestore.bean.User;
 import java.util.List;
 
 public interface UserDAO {
-    /*
-    * 添加用户
-     */
+
     void addUser(User user);
-    User getUserByName(String name);
+    User getUserByUsername(String username);
     User getUserById(int id);
-    User getUserByNameAndPassword(String name, String password);
-    boolean deleteUserByName(String name);
+    User getUserByUsernameAndPassword(String username, String password);
+    boolean deleteUserByUsername(String username);
     int getTotal();
-    List<User> getUserList(int start,int count);
+    List<User> getUserList();
 }

@@ -1,59 +1,70 @@
 <script setup>
 import axios from "axios";
-// import Header from "@/components/HeaderComponents.vue";
+import Header from "@/components/LoginAndRegisterHeader.vue";
 import Footer from "@/components/FooterComponents.vue";
 import {ref} from "vue";
+import qs from "qs";
+import { useRouter } from "vue-router";
 
-let username = ref("");
-let email = ref("");
+const router = useRouter();
+const username = ref("");
+const email = ref("");
 const address = ref("");
-let password = ref("");
-let message = ref("");
-
-function validateForm() {
-  return (username || email || password || address);
-}
+const password = ref("");
+const message = ref("");
 
 function submitForm() {
-  if (!validateForm()) {
-    return;
+  if (username.value.length < 4 || username.value.length > 16) {
+    message.value = '用户名长度应在4-16位之间!';
+    return false;
   }
 
-  //TODO test code need to delete
-  this.$router.push('/user/login');
+  if (password.value.length < 6 || password.value.length > 16) {
+    message.value = '密码长度应在6-16位之间!';
+    return false;
+  }
+
+  //TODO delete?
+  let reg
+  reg = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{6,16}$/);
+  if (!reg.test(password.value)) {
+    message.value = '密码要包含大写字母、数字小写字母、特殊字符中的至少三种!';
+    return false;
+  }
 
   //TODO 修改地址
-  axios.post('#', {
-    name: username,
-    email: email,
-    address: address,
-    password: password
-  })
+  axios.post('http://localhost:8080/store/user/register', qs.stringify({
+    "username": username.value,
+    "email": email.value,
+    "address": address.value,
+    "password": password.value
+  }))
       .then(response => {
         console.log(response)
         if (response.data.flag) {
-          message = '注册成功,将自动跳转...';
-          this.$router.push('/user/login');
+          message.value = '注册成功,将自动跳转...';
+          router.push('/user/login');
         }
         else {
-          message = '注册失败,用户名已存在,请重试!';
-          username = "";
-          password = "";
-          email = "";
+          message.value = '注册失败,用户名已存在,请重试!';
+          username.value = "";
+          password.value = "";
+          email.value = "";
         }
       })
       .catch(error => {
         console.error(error);
-        message = '注册失败,请重试!';
+        message.value = '注册失败,请重试!';
       });
+  return false;
 }
 
 </script>
 
 <template>
-<!--  <div id="header">-->
-<!--    <Header></Header>-->
-<!--  </div>-->
+  <div id="header">
+    <Header></Header>
+  </div>
 
   <div id="register">
     <h2>用户注册</h2>
@@ -82,6 +93,13 @@ function submitForm() {
 </template>
 
 <style scoped>
+#header {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 15px;
+  overflow: hidden;
+}
+
 #register {
   max-width: 50%;
   margin: 50px auto;
