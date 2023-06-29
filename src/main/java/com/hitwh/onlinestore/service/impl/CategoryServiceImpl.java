@@ -1,6 +1,8 @@
 package com.hitwh.onlinestore.service.impl;
 
 import com.hitwh.onlinestore.bean.Category;
+import com.hitwh.onlinestore.bean.Product;
+import com.hitwh.onlinestore.bean.ProductDetails;
 import com.hitwh.onlinestore.dao.CategoryDAO;
 import com.hitwh.onlinestore.dao.ProductDAO;
 import com.hitwh.onlinestore.dao.impl.CategoryDAOImpl;
@@ -24,7 +26,9 @@ public class CategoryServiceImpl implements CategoryService {
             Map<String, Object> categoryMap = new HashMap<>();
             categoryMap.put("cid", category.getId());
             categoryMap.put("category_name", category.getName());
-            categoryMap.put("products", productDAO.homePageGetProductsByCategoryId(category.getId()));
+            List<ProductDetails> products = productDAO.homePageGetProductsByCategoryId(category.getId());
+            products.forEach(product -> product.setImages(productDAO.getImagesByProductId(product.getId())));
+            categoryMap.put("products", products);
             categoryAndProduct.add(categoryMap);
         }
         return categoryAndProduct;
@@ -33,5 +37,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Object listAllCategories() {
         return categoryDAO.listAllCategories();
+    }
+
+    @Override
+    public boolean deleteCategory(int i) {
+        return categoryDAO.deleteCategory(i);
+    }
+
+    @Override
+    public boolean addCategory(String categoryName) {
+        return categoryDAO.addCategory(categoryName);
     }
 }
