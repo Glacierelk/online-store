@@ -29,4 +29,18 @@ class CategoryServiceImplTest {
         }
         System.out.println(categoryAndProduct);
     }
+
+    @Test
+    void listAllCategories() {
+    }
+
+    @Test
+    void deleteCategory() {
+        System.out.println(categoryDAO.deleteCategory(84));
+    }
+
+    @Test
+    void addCategory() {
+        System.out.println(categoryDAO.addCategory("test"));
+    }
 }
