@@ -1,4 +1,6 @@
 package com.hitwh.onlinestore.service.impl;
 
-public class PropertyServiceImpl {
+import com.hitwh.onlinestore.service.PropertyService;
+
+public class PropertyServiceImpl implements PropertyService {
 }

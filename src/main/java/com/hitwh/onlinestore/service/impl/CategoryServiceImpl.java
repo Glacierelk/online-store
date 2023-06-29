@@ -34,4 +34,14 @@ public class CategoryServiceImpl implements CategoryService {
     public Object listAllCategories() {
         return categoryDAO.listAllCategories();
     }
+
+    @Override
+    public boolean deleteCategory(int i) {
+        return categoryDAO.deleteCategory(i);
+    }
+
+    @Override
+    public boolean addCategory(String categoryName) {
+        return categoryDAO.addCategory(categoryName);
+    }
 }

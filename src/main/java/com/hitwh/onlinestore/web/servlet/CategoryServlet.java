@@ -15,6 +15,28 @@ public class CategoryServlet extends BaseServlet{
     public final CategoryService categoryService = new CategoryServiceImpl();
 
     /*
+     * 删除商品分类
+     */
+    public void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("delete");
+        ResultInfo info = new ResultInfo();
+        String categoryId = request.getParameter("categoryId");
+        System.out.println(categoryId);
+        if (categoryId == null || categoryId.length() == 0) {
+            info.setFlag(false);
+            info.setErrorMsg("删除商品分类失败");
+        } else {
+            if (categoryService.deleteCategory(Integer.parseInt(categoryId))) {
+                info.setFlag(true);
+            } else {
+                info.setFlag(false);
+                info.setErrorMsg("删除商品分类失败");
+            }
+        }
+        writeJsonValue(response, info);
+    }
+
+    /*
      * 获取首页分类
      */
     public void homePageCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,6 +64,28 @@ public class CategoryServlet extends BaseServlet{
         } else {
             info.setFlag(false);
             info.setErrorMsg("获取所有分类失败");
+        }
+        writeJsonValue(response, info);
+    }
+
+    /*
+     * 后台添加分类
+     * @param 商品种类名称
+     */
+    public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("addCategory");
+        ResultInfo info = new ResultInfo();
+        String categoryName = request.getParameter("categoryName");
+        if (categoryName == null || categoryName.length() == 0) {
+            info.setFlag(false);
+            info.setErrorMsg("添加商品分类失败");
+        } else {
+            if (categoryService.addCategory(categoryName)) {
+                info.setFlag(true);
+            } else {
+                info.setFlag(false);
+                info.setErrorMsg("添加商品分类失败");
+            }
         }
         writeJsonValue(response, info);
     }

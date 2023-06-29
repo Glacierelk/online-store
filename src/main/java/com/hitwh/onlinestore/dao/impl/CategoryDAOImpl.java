@@ -44,4 +44,11 @@ public class CategoryDAOImpl implements CategoryDAO {
             return null;
         }
     }
+
+    @Override
+    public boolean deleteCategory(int id) {
+        String sql = "delete from category where id = ?";
+        int count = jdbcTemplate.update(sql, id);
+        return count != 0;
+    }
 }
