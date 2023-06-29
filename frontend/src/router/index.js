@@ -28,26 +28,7 @@ const router = createRouter({
         {
             path: '/manage',
             name: 'Manage',
-            component: () => import('../App.vue'),
-            children: [
-                {
-                    path: 'user',
-                    name: 'UserManage',
-                    component: () => import('../views/manage/ManageUser.vue')
-                },
-                {
-                    path: 'category',
-                    name: 'CategoryManage',
-                    component: () => import('../views/manage/ManageCategory.vue')
-                },
-                {
-                    path: 'order',
-                    name: 'OrderManage',
-                    component: () => import('../views/manage/ManageOrder.vue')
-                },
-
-            ]
-
+            component: () => import('../views/manage/ManageView.vue'),
         }
     ]
 })

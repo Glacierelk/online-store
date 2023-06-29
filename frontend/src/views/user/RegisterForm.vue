@@ -1,7 +1,7 @@
 <script setup>
 import axios from "axios";
-import Header from "@/components/LoginAndRegisterHeader.vue";
-import Footer from "@/components/FooterComponents.vue";
+import Header from "@/components/user-facing/LoginAndRegisterHeader.vue";
+import Footer from "@/components/user-facing/FooterComponents.vue";
 import {ref} from "vue";
 import qs from "qs";
 import { useRouter } from "vue-router";

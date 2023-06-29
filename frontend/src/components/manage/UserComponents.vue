@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h2>用户管理</h2>
-    <el-table :data="userData" style="width: 100%">
+  <div id = "body">
+    <el-table :data="userData" style="width: 100%; text-align: center">
       <el-table-column
           :prop="index"
           :label="item"
@@ -83,3 +82,15 @@ export default {
   }
 }
 </script>
+
+<style>
+#body {
+  margin-top: 20px;
+  width: 95%;
+  text-align: center;
+}
+
+.el-table {
+  text-align: center;
+}
+</style>
