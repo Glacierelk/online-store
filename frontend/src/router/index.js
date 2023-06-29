@@ -35,6 +35,11 @@ const router = createRouter({
                     name: 'HomePage',
                     component: () => import('../views/manage/HomePage.vue')
                 },
+                {
+                    path: 'ManageCategory',
+                    name: 'ManageCategory',
+                    component: () => import('../views/manage/ManageCategory.vue')
+                },
             ]
 
         }

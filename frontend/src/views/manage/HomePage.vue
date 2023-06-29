@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div class="app">
     <div class="navbar">
       <div class="buttons">
