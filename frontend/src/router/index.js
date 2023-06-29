@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -22,8 +22,21 @@ const router = createRouter({
                     path: 'register',
                     name: 'Register',
                     component: () => import('../views/user/RegisterForm.vue')
-                }
+                },
             ]
+        },
+        {
+            path: '/manage',
+            name: 'Manage',
+            component: () => import('../App.vue'),
+            children: [
+                {
+                    path: 'home',
+                    name: 'HomePage',
+                    component: () => import('../views/manage/HomePage.vue')
+                },
+            ]
+
         }
     ]
 })
