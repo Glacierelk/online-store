@@ -34,7 +34,7 @@ function submitForm() {
 
   //TODO 修改地址
   axios.post('http://localhost:8080/store/user/register', qs.stringify({
-    "name": username.value,
+    "username": username.value,
     "email": email.value,
     "address": address.value,
     "password": password.value
