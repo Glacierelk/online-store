@@ -1,0 +1,71 @@
+<template>
+  <div class="guideMenu" id="guideMenu">
+    <div class="categoryMenu" id="categoryMenu">
+      <div @mouseenter="showMenu(index,$event)" @mouseleave="hideMenu(index,$event)" v-for="(category,index) in categories" :key="category.category_name" class="eachCategory" >
+        <span><img height="25px" align="center" class="eachCategoryImg" src="../assets/HomePage/Clip.png" alt="clip"></span>
+        <a href="#">{{category.category_name}} </a>
+        <span></span>
+      </div>
+    </div>
+
+    <ProductsAsideCategoriesComponent></ProductsAsideCategoriesComponent>
+  </div>
+</template>
+
+<script setup>
+  import ProductsAsideCategoriesComponent from "@/components/ProductsAsideCategoriesComponent.vue";
+  var categories=ProductsAsideCategoriesComponent.data().categories
+  function showMenu(index,e){
+    //alert(index);
+    e.target.style.backgroundColor="white"
+    ProductsAsideCategoriesComponent.methods.showMenu(index);
+  }
+  function hideMenu(index,e) {
+    e.target.style.backgroundColor="#e2e2e3"
+    ProductsAsideCategoriesComponent.methods.hideMenu(index);
+  }
+
+</script>
+
+<style scoped>
+  ProductsAsideCategoriesComponent{
+    float: left;
+  }
+
+  div.categoryMenu {
+    float: left;
+    width: 198px;
+    background-color: #e2e2e3;
+    /* 	padding-bottom:10px; */
+    left: 0;
+    top: 0;
+    z-index: 1;
+    text-align: left;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e2e2e3;
+    position: relative;
+  }
+
+  div.categoryMenu a {
+    color: #000;
+    text-decoration: none;
+    margin-left: 10px;
+
+  }
+
+  div.categoryMenu a:hover {
+    color: lightskyblue;
+    text-decoration: none;
+  }
+
+  div.eachCategory {
+    padding: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(219, 217, 217);
+  }
+  img.eachCategoryImg {
+    margin-left: 10px;
+  }
+</style>

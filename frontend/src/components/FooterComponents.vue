@@ -97,6 +97,8 @@
 
 <style scoped>
   div.footer {
+    position: relative;
+    text-align: left;
     margin: 0 0;
     border-top-style: solid;
     border-top-width: 1px;
@@ -168,9 +170,5 @@
 
   img.cateye {
     margin-left: 100px;
-  }
-
-  div.footer{
-    text-align: left;
   }
 </style>

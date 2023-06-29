@@ -4,7 +4,7 @@
       <td>
         <div class="imgDiv" >
           <a href="#">
-            <img id="logo" src="../assets/header/logo.gif"  class="logo" alt="logo">
+            <img style="margin-right: 50px" id="logo"  src="../assets/header/logo.gif"  class="logo" alt="logo">
           </a>
         </div>
       </td>
