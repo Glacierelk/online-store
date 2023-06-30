@@ -44,4 +44,36 @@ public class OrderDAOImpl implements OrderDAO {
             return null;
         }
     }
+
+    @Override
+    public List<Order> getOrdersByUserId(String userId) {
+        String sql = "SELECT\n" +
+                "    o.id AS id,\n" +
+                "    o.order_code,\n" +
+                "    o.receiver_tel,\n" +
+                "    o.user_message,\n" +
+                "    o.create_date,\n" +
+                "    o.pay_date,\n" +
+                "    o.delivery_date,\n" +
+                "    o.confirm_date,\n" +
+                "    o.uid,\n" +
+                "    o.status,\n" +
+                "    COUNT(oi.id) AS amount,\n" +
+                "    SUM(p.promote_price * oi.number) AS totalPrice\n" +
+                "FROM\n" +
+                "    online_store.`order` AS o\n" +
+                "        LEFT JOIN\n" +
+                "    online_store.order_item AS oi ON o.id = oi.oid\n" +
+                "        LEFT JOIN\n" +
+                "    online_store.product AS p ON oi.pid = p.id\n" +
+                "where o.uid = ?\n" +
+                "GROUP BY\n" +
+                "    o.id;";
+        try {
+            return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Order.class),userId);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
