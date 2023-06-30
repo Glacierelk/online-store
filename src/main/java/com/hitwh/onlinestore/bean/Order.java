@@ -5,6 +5,8 @@ public class Order {
     private int id;
     private String orderCode;
     private String address;
+    private int amount;
+    private Double totalPrice;
     private String post;
     private String receiver;
     private String receiverTel;
@@ -22,6 +24,8 @@ public class Order {
                 "id=" + id +
                 ", orderCode='" + orderCode + '\'' +
                 ", address='" + address + '\'' +
+                ", amount=" + amount +
+                ", totalPrice=" + totalPrice +
                 ", post='" + post + '\'' +
                 ", receiver='" + receiver + '\'' +
                 ", receiverTel='" + receiverTel + '\'' +
@@ -33,6 +37,22 @@ public class Order {
                 ", uid=" + uid +
                 ", status=" + status +
                 '}';
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public int getId() {
