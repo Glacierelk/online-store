@@ -15,4 +15,8 @@ public interface PropertyDAO {
      * 根据商品id获取商品的所有属性
      */
     List<ProductProperties> getPropertiesByProductId(int id);
+    /*
+        * 添加商品属性
+     */
+    boolean addProperty(int cid,String name);
 }
