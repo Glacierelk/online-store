@@ -13,7 +13,9 @@ const data = ref({});
 const count = ref(0);
 const leftImage = "";
 const showImages = ref([]);
+const detailImages = ref([]);
 const activeTab = "tab1";
+const show = ref(false);
 
 function getDetails(id) {
   axios.post('/product/details', qs.stringify({
@@ -24,12 +26,17 @@ function getDetails(id) {
         if (res.status === 200 && res.data.flag) {
           data.value = res.data.data;
           console.log(data.value);
+          console.log(data.value.name)
 
           data.value.images.forEach(item => {
             if (item.type === "type_single") {
               showImages.value.push(item.id);
+            } else {
+              detailImages.value.push(item.id)
             }
           })
+
+          show.value = true;
         }
         else {
           alert("获取商品详情失败!");
@@ -53,6 +60,10 @@ function getImagePath(id) {
   return require("../../assets/productSingleSmall/" + id + ".jpg");
 }
 
+// function getDetailImagePath(id) {
+//   return require("../../assets/productDetail/" + id + ".jpg");
+// }
+
 function getComment() {
   return "累计评价" + data.value.comments.length;
 }
@@ -60,12 +71,10 @@ function getComment() {
 </script>
 
 <template>
-  <div>
-    <Header />
-    <SimpleSearchComponents />
-  </div>
+  <Header />
+  <SimpleSearchComponents />
 
-  <div>
+  <div v-if="show" class="mainBody">
     <table class="product-show">
       <tr>
         <td>
@@ -174,12 +183,17 @@ function getComment() {
     </el-tabs>
   </div>
 
-  <div>
-    <Footer />
-  </div>
+  <Footer />
 </template>
 
 <style scoped>
+
+.mainBody {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 1000px;
+}
 
 .name {
   font-size: 23px;

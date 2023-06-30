@@ -26,8 +26,8 @@ import SearchComponents from "@/components/search/SearchComponents.vue";
 import Footer from "@/components/user-facing/FooterComponents.vue";
 import axios from "axios";
 import qs from "qs";
-import {ref} from "vue";
-import {useRouter} from "vue-router";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 let data = ref([]);
