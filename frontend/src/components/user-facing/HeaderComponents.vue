@@ -86,10 +86,10 @@ checkLogin();
       <span>喵，欢迎来天猫</span>
 
       <a v-if="isLogin" href="#">{{ userName }}</a>
-      <a v-if="isLogin" href="#" @click="logout">退出</a>
+      <span v-if="isLogin" href="#" @click="logout">退出</span>
 
-      <a v-if="!isLogin" href="#" @click="login">请登录</a>
-      <a v-if="!isLogin" href="#" @click="register">免费注册</a>
+      <span v-if="!isLogin" href="#" @click="login">请登录</span>
+      <span v-if="!isLogin" href="#" @click="register">免费注册</span>
     </div>
 
 
