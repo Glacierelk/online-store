@@ -51,9 +51,9 @@ export default {
 
 
     onMounted(() => {
-      axios.get('http://localhost:8080/store/order/getAllOrders')
+      axios.get('/order/getAllOrder')
           .then(response => {
-            orderData.value = response.data.data;
+            orderData.value = response.data;
           })
           .catch(error => {
             console.error(error);

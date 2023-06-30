@@ -544,7 +544,7 @@ Content-Type: application/json
 | \|\|- `id`            | `number`    | 必须     | 评价 ID                                 |
 | \|\|- `content`       | `string`    | 必须     | 评价内容                                |
 | \|\|- `uid`           | `number`    | 必须     | 做评价用户 ID                           |
-| \|\|- `pid`           | `number`    | 必须     | 被评价商品 ID·                          |
+| \|\|- `pid`           | `number`    | 必须     | 被评价商品 ID                           |
 | \|\|- `create_date`   | `timestamp` | 必须     | 评价日期                                |
 
 ##### 响应数据样例
@@ -586,6 +586,90 @@ Content-Type: application/json
 			}
 		]
 	},
+	"errorMsg": null
+}
+```
+
+### 商品模糊查询
+
+#### 基本信息
+
+> 请求路径：`/product/search` 
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于前台搜索框搜索商品
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型     | 是否必须 | 备注       |
+| ------ | -------- | -------- | ---------- |
+| `name` | `string` | 必须     | 待查询名称 |
+
+##### 请求样例
+
+```http
+POST http://localhost:8080/store/product/search HTTP/1.1
+Content-Type: application/json
+
+{
+	"name": "乐"
+}
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application\json`
+
+##### 参数说明
+
+| 名称                | 类型      | 是否必须 | 备注                                    |
+| ------------------- | --------- | -------- | --------------------------------------- |
+| `flag`              | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
+| `errorMsg`          | `string`  | 非必须   | 如果删除失败，返回一个错误信息          |
+| `data`              | `list`    | 必需     | 搜索得到的商品列表                      |
+| \|- `id`            | `number`  | 必须     | 商品 ID                                 |
+| \|- `name`          | `string`  | 必须     | 商品名称                                |
+| \|- `subTitle`      | `string`  | 非必需   | 商品小标题                              |
+| \|- `originalPrice` | `number`  | 必须     | 商品价格                                |
+| \|- `promotePrice`  | `number`  | 非必需   | 商品折扣价格                            |
+| \|- `stock`         | `number`  | 必须     | 库存                                    |
+| \|- `cid`           | `number`  | 必须     | 商品类型                                |
+| \|- `createDate`    | `number`  | 必须     | 商品创建日期                            |
+| \|- `images`        | `list`    | 必须     | 商品图片列表                            |
+| \|\|- `id`          | `number`  | 必须     | 图片 ID                                 |
+| \|\|- `type`        | `string`  | 必须     | 图片类型                                |
+
+##### 响应数据样例
+
+```json
+{
+	"flag": true,
+	"data": [
+		{
+			"id": 147,
+			"name": "乐洁士智能马桶高品质全自动遥控感应一体式智能坐便器座便器",
+			"subTitle": "全国联保 清洗烘干 气泡按摩 座圈加热 断电冲水",
+			"originalPrice": 8960,
+			"promotePrice": 8512,
+			"stock": 62,
+			"cid": 82,
+			"createDate": 1471192641000,
+			"images": [
+				{
+					"id": 1276,
+					"pid": 0,
+					"type": "type_single"
+				}
+			],
+			"properties": null,
+			"comments": null
+		}
+	],
 	"errorMsg": null
 }
 ```

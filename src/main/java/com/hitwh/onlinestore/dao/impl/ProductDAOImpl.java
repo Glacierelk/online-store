@@ -60,4 +60,14 @@ public class ProductDAOImpl implements ProductDAO {
             return null;
         }
     }
+
+    @Override
+    public List<ProductDetails> queryByName(String name) {
+        String sql = "select * from product where name like ?";
+        try {
+            return template.query(sql, new BeanPropertyRowMapper<>(ProductDetails.class), "%" + name + "%");
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

@@ -33,7 +33,7 @@ function submitForm() {
   }
 
   //TODO 修改地址
-  axios.post('http://localhost:8080/store/user/register', qs.stringify({
+  axios.post('/user/register', qs.stringify({
     "username": username.value,
     "email": email.value,
     "address": address.value,

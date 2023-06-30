@@ -100,6 +100,7 @@
                 <version>2.2</version>
                 <configuration>
                     <path>/store</path>
+                    <port>8729</port>
                 </configuration>
             </plugin>
         </plugins>

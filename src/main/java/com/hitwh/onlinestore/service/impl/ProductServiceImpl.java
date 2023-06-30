@@ -11,7 +11,7 @@ import com.hitwh.onlinestore.dao.impl.PropertyDAOImpl;
 import com.hitwh.onlinestore.service.ProductService;
 
 import java.sql.Timestamp;
-import java.time.Instant;
+import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
     private final ProductDAO productDAO = new ProductDAOImpl();
@@ -41,5 +41,15 @@ public class ProductServiceImpl implements ProductService {
         product.setProperties(propertyDAO.getPropertiesByProductId(id));
         product.setComments(commentDAO.getCommentsByProductId(id));
         return product;
+    }
+
+    @Override
+    public Object search(String name) {
+        List<ProductDetails> products = productDAO.queryByName(name);
+        if (products == null) {
+            return null;
+        }
+        products.forEach(product -> product.setImages(productDAO.getImagesByProductId(product.getId())));
+        return products;
     }
 }

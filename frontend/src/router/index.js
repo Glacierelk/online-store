@@ -16,12 +16,12 @@ const router = createRouter({
                 {
                     path: 'login',
                     name: 'Login',
-                    component: () => import('../views/user/LoginForm.vue')
+                    component: () => import('@/views/user-facing/account/LoginForm.vue')
                 },
                 {
                     path: 'register',
                     name: 'Register',
-                    component: () => import('../views/user/RegisterForm.vue')
+                    component: () => import('@/views/user-facing/account/RegisterForm.vue')
                 },
             ]
         },
@@ -29,6 +29,11 @@ const router = createRouter({
             path: '/manage',
             name: 'Manage',
             component: () => import('../views/manage/ManageView.vue'),
+        },
+        {
+            path: '/search',
+            name: 'Search',
+            component: () => import('../views/user-facing/SearchResultView.vue'),
         }
     ]
 })

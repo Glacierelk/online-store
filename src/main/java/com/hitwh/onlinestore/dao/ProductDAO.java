@@ -37,4 +37,9 @@ public interface ProductDAO {
      * 根据商品id获取商品信息
      */
     ProductDetails queryById(int id);
+
+    /*
+     * 根据商品名称获取商品信息，模糊查询
+     */
+    List<ProductDetails> queryByName(String name);
 }
