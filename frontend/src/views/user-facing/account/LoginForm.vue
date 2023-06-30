@@ -6,7 +6,7 @@
   <div id="login">
     <div class="container">
       <el-form class="form-wrap" label-width="60px" @submit.passive.prevent="submitForm">
-        <h2>登录</h2>
+        <h2 align="center">登录</h2>
         <el-form-item class="label" label="用户名" prop="username">
           <el-input v-model.trim="username" clearable required></el-input>
         </el-form-item>
@@ -54,7 +54,7 @@ function submitForm() {
         if (res.data.flag) {
           alert("登录成功,即将跳转！");
           //TODO check user or admin
-          router.push('/user/register');
+          router.push('/');
         } else {
           alert("登录失败，请重试！");
           username.value = "";
