@@ -9,26 +9,32 @@
         </div>
       </td>
       <td>
-        <form action="#" method="post" >
-          <div class="searchDiv">
-            <input class="searchEnter" name="keyword" type="text" placeholder="时尚男鞋  太阳镜 ">
-            <button  type="submit" class="searchButton">搜索</button>
-            <div class="searchBelow" >
+        <div class="searchDiv">
+          <input class="searchEnter" name="keyword" type="text" placeholder="时尚男鞋  太阳镜" v-model="keyword">
+          <button @click="search" class="searchButton">搜索</button>
+          <div class="searchBelow" >
               <span v-for="(item,index) in recomment" :key="item">
                 <a  class="item" href="#">{{item}}</a>
                 <a></a>
                 <span v-if="index<2">|</span>
               </span>
-            </div>
           </div>
-        </form>
+        </div>
       </td>
     </tr>
   </table>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 let recomment= ["平衡车","超大棒棒糖","芜湖冲浪板"];
+let keyword = ref("");
+
+function search(emit) {
+  console.log(keyword.value);
+  emit("search", keyword.value);
+}
 
 </script>
 
