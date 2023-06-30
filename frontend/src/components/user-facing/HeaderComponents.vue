@@ -48,10 +48,10 @@ function checkLogin() {
 <template>
   <nav id="top" class="top">
     <div class="pull-left">
-      <a href="#">
+      <router-link to="/">
         <span class="glyphicon glyphicon-home redColor" style="color:#C40000;margin:0"></span>
         天猫首页
-      </a>
+      </router-link>
       <span>喵，欢迎来天猫</span>
       <span>在线人数:{{ userNum }}</span>
 

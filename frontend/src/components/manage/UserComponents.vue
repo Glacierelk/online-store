@@ -65,7 +65,7 @@ export default {
     }
 
     onMounted(() => {
-      axios.get('http://localhost:8080/store/user/getAllUser')
+      axios.get('/user/getAllUser')
           .then(response => {
             userData.value = response.data;
           })
