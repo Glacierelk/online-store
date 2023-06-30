@@ -96,68 +96,79 @@
 </template>
 
 <style scoped>
-div.footer {
-  margin: 0 0;
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #e7e7e7;
-}
+  div.footer {
+    position: relative;
+    text-align: left;
+    margin: 0 0;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #e7e7e7;
+  }
 
-div.footer_ensure {
-  margin-top: 24px;
-  margin-bottom: 24px;
-  text-align: center;
-}
+  div.footer_ensure {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
 
-div.footer_desc {
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-top-color: #e7e7e7;
-  padding-top: 30px;
-  margin: 0 20px;
-  text-align: left;
-}
+  div.footer_desc {
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #e7e7e7;
+    padding-top: 30px;
+    margin-left: 10%;
+  }
 
-div.copyright {
-  background-color: black;
-}
+  div.copyright {
+    background-color: black;
+  }
 
-#copyright a,span.slash{
-  color: #e7e7e7;
+  #copyright a,span.slash{
+    color: #e7e7e7;
 
-}
+  }
 
-div.license,div.footer_desc a{
-  color: gray;
-}
+  div.license,div.footer_desc a{
+    color: gray;
+  }
 
-a {
-  text-decoration: none;
-}
+  div.license{
+    margin-left: 3%;
 
-div.footer div.copyright div.white_link {
-  padding: 10px 0;
-  margin-left: 10px;
-}
+  }
 
-div.footer_desc div.descColumn {
-  width: 19%;
-  float: left;
-  margin-left: 12px;
-}
+  a {
+    text-decoration: none;
+  }
 
-div.footer_desc a {
-  font-size: 13px;
-}
+  div.footer div.copyright div.white_link {
+    padding: 10px 0;
+    margin-left: 3%;
+  }
 
-div.footer_desc div.descColumn  {
-  color: #646464;
-  font-weight: bold;
-  font-size: 16px;
-}
 
-div.footer_desc a {
-  display: block;
-  padding-top: 3px;
-}
+  div.footer_desc a {
+    font-size: 13px;
+  }
+
+  div.footer_desc div.descColumn  {
+    color: #646464;
+    font-weight: bold;
+    font-size: 16px;
+    width: 19%;
+    float: left;
+  }
+
+  div.footer_desc a {
+    display: block;
+    padding-top: 3px;
+  }
+
+  div.footer_desc a:hover{
+    color: red;
+  }
+
+  img.cateye {
+    margin-left: 100px;
+  }
 </style>
