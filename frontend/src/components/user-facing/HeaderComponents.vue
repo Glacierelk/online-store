@@ -71,8 +71,8 @@ checkLogin();
       <a v-if="isLogin" href="#">{{ userName }}</a>
       <a v-if="isLogin" href="#">退出</a>
 
-      <a v-if="!isLogin" href="#" @click="login">请登录</a>
-      <a v-if="!isLogin" href="#" @click="register">免费注册</a>
+      <span v-if="!isLogin" @click="login">请登录</span>
+      <span v-if="!isLogin" @click="register">免费注册</span>
     </div>
 
 

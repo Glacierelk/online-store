@@ -7,7 +7,7 @@
   <div class="list">
     <div v-for="item in data" class="list-item" :key="item.id">
       <!--  TODO 添加链接  -->
-      <div class="product">
+      <div class="product" @click="showDetails(item)">
         <img :src="getPath(item)" alt="图片" style="width: 100%; height: 85%">
         <div class="price">￥{{ item.originalPrice }}</div>
         <div class="name">{{ item.name.substring(0, 30) }}</div>
@@ -55,7 +55,16 @@ function search(params) {
 search(router.currentRoute.value.query.keyword);
 
 function getPath(item) {
-  return require("../../assets/productSingle/" + item.images[0].id + ".jpg");
+  return require("../../assets/productSingleMiddle/" + item.images[0].id + ".jpg");
+}
+
+function showDetails(item) {
+  router.push({
+    path: '/details',
+    query: {
+      id: item.id
+    }
+  })
 }
 
 </script>

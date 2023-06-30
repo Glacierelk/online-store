@@ -77,7 +77,7 @@ for (let i=0;i<categories.length;i++)
   {
     //require中文件的路径必须使用拼接的方式，不要写死，require中文件的路径必须要使用拼接的方式，不要写死
     //require中文件的路径必须使用拼接的方式，不要写死
-    let src=require('../assets/productSingle_middle/'+categories[i].products[j].images[0].id+'.jpg');
+    let src=require('../assets/productSingleMiddle/'+categories[i].products[j].images[0].id+'.jpg');
     images[i].push(src);//直接取第一张图片
     if(categories[i].products[j].promotePrice==null) //如果没有打折价那么就获取原价
     {
