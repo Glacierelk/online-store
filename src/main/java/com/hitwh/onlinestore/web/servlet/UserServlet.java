@@ -124,7 +124,16 @@ public class UserServlet extends BaseServlet {
         writeJsonValue(response, info);
     }
     public void getAllUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        writeJsonValue(response, userService.getUserList());
+        ResultInfo info = new ResultInfo();
+        try {
+            info.setData(userService.getUserList());
+            info.setFlag(true);
+        }
+        catch (Exception e){
+            info.setFlag(false);
+            info.setErrorMsg("获取失败");
+        }
+        writeJsonValue(response, info);
     }
 
 }
