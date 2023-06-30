@@ -37,4 +37,25 @@ public class OrderServlet extends BaseServlet {
         }
         writeJsonValue(response, info);
     }
+    public void getOrdersByUserId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ResultInfo info = new ResultInfo();
+        String userId = request.getParameter("uid");
+        if(userId == null){
+            info.setFlag(false);
+            info.setErrorMsg("获取订单失败");
+            writeJsonValue(response, info);
+            return;
+        }
+        List<Order> orders = orderService.getOrdersByUserId(userId);
+        //检查返回的订单是否为空
+        if(orders == null){
+            info.setFlag(false);
+            info.setErrorMsg("获取订单失败");
+        }else{
+            info.setFlag(true);
+            info.setData(orders);
+        }
+        System.out.println(info);
+        writeJsonValue(response, info);
+    }
 }

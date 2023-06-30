@@ -9,6 +9,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @WebServlet("/user/*")
@@ -39,14 +41,13 @@ public class UserServlet extends BaseServlet {
         if(exist_user!=null) {
             HttpSession session = request.getSession();
             session.setAttribute("user", exist_user);
+//            System.out.println("写入"+exist_user);
             info.setFlag(true);//登陆成功
         }else {
             info.setFlag(false);//登陆失败
             info.setErrorMsg("用户名或密码错误");
         }
-        System.out.println(info);
         writeJsonValue(response, info);
-        System.out.println(info);
     }
 
     /**
@@ -85,9 +86,15 @@ public class UserServlet extends BaseServlet {
      * @throws IOException
      */
     public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getSession().invalidate();
-        //重定向到登陆页面
-        response.sendRedirect(request.getContextPath()+"/#");
+        ResultInfo info = new ResultInfo();
+        try {
+            request.getSession().invalidate();
+            info.setFlag(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+            info.setFlag(false);
+        }
+        writeJsonValue(response, info);
     }
 
 
@@ -100,7 +107,9 @@ public class UserServlet extends BaseServlet {
      */
     public void getUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        User user = (User) request.getSession().getAttribute("user");
+        HttpSession userSession = request.getSession();
+        Object user = userSession.getAttribute("user");
+//        System.out.println("读取"+user);
         ResultInfo info = new ResultInfo();
         if(user!=null) {
             info.setFlag(true);

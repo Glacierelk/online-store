@@ -30,6 +30,7 @@
 
 <script setup>
 import axios from "axios";
+axios.defaults.withCredentials = true;
 import Header from "@/components/user-facing/LoginAndRegisterHeader.vue";
 import Footer from "@/components/user-facing/FooterComponents.vue";
 import {ref} from "vue";
@@ -55,11 +56,12 @@ function submitForm() {
         "password": password.value,
       }))
       .then((res) => {
-        console.log(res);
-        if (res.status === 204) {
-          return;
-        }
-        if (res.data.flag && res.status === 200) {
+        // console.log(res);
+        // if (res.status === 204) {
+        //   return;
+        // }
+        //
+        if (res.data.flag) {
           alert("登录成功,即将跳转！");
           router.push('/');
         } else {
