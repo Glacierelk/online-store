@@ -1,9 +1,9 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<template >
   <div id = "categoryC">
   <el-button
       type="primary"
       @click="addCategory"
-      style="position: absolute; top: 5px; right: 5px;width: 8%;ont-size: 15px; margin-bottom: 0"
+      style="position: absolute; top: 5px; right: 5px;width: 8%;font-size: 15px; margin-bottom: 0"
   >添加
   </el-button>
 
@@ -165,6 +165,6 @@ export default {
     margin-top: 100px;
   }
   .table-container {
-    margin-top: 0px; /* 设置距离顶部的距离为20像素 */
+    margin-top: 1px; /* 设置距离顶部的距离为20像素 */
   }
 </style>
