@@ -22,7 +22,7 @@
 
 <script setup>
 import Header from '@/components/user-facing/HeaderComponents.vue'
-import SearchComponents from "@/components/user-facing/SearchComponents.vue";
+import SearchComponents from "@/components/search/SearchComponents.vue";
 import Footer from "@/components/user-facing/FooterComponents.vue";
 import axios from "axios";
 import qs from "qs";
