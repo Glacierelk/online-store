@@ -10,5 +10,9 @@ public interface OrderDAO {
      * @return
      */
     List<Order> getAllOrders();
+    /**
+     * 获取某个用户的所有订单
+     */
+    List<Order> getOrdersByUserId(String userId);
 }
 
