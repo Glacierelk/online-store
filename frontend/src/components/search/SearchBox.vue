@@ -1,33 +1,3 @@
-<template>
-  <table style="margin-left: auto; margin-right: auto">
-    <tr>
-      <td>
-        <div class="imgDiv">
-          <a href="#">
-            <img id="logo" alt="logo" class="logo" src="../../assets/header/logo.gif">
-          </a>
-        </div>
-      </td>
-      <td>
-        <div class="searchDiv">
-          <div style="overflow: hidden;">
-            <input v-model="keyword" class="searchEnter" name="keyword" placeholder="电视机" type="text">
-            <button class="searchButton" @click="search">搜索</button>
-          </div>
-          <div class="searchBelow">
-              <span v-for="(item,index) in recomment" :key="item">
-                <a class="item" href="#" @click="fastSearch(item)">{{ item }}</a>
-                &nbsp; &nbsp;
-                <span v-if="index<2">|</span>
-                &nbsp; &nbsp;
-              </span>
-          </div>
-        </div>
-      </td>
-    </tr>
-  </table>
-</template>
-
 <script setup>
 import {ref, defineEmits} from 'vue';
 import {useRouter} from "vue-router";
@@ -41,7 +11,7 @@ const emit = defineEmits(["search"]);
 const search = () => {
   // alert(keyword.value)
   emit('search', keyword.value);
-  if (window.location.href.split('/').pop() !== "search") {
+  if (!window.location.href.includes("search")) {
     router.push({path: "/search", query: {keyword: keyword.value}});
   }
 }
@@ -51,8 +21,24 @@ function fastSearch(item) {
   // alert(keyword.value)
   search();
 }
-
 </script>
+
+<template>
+  <div class="searchDiv">
+    <div style="overflow: hidden;">
+      <input v-model="keyword" class="searchEnter" name="keyword" placeholder="电视机" type="text">
+      <button class="searchButton" @click="search">搜索</button>
+    </div>
+    <div class="searchBelow">
+      <span v-for="(item,index) in recomment" :key="item">
+        <a class="item" href="#" @click="fastSearch(item)">{{ item }}</a>
+        &nbsp; &nbsp;
+        <span v-if="index<2">|</span>
+        &nbsp; &nbsp;
+      </span>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 div.searchBelow {
@@ -61,17 +47,11 @@ div.searchBelow {
   text-align: center;
 }
 
-div.searchBelow a {
-//padding: 0 20px 0 20px; font-size: 14px;
-}
-
-
 div.searchDiv {
   width: 400px;
   margin: 50px auto;
-//padding: 1px; height: 40px;
-  display: block;
   align-items: center;
+  overflow: hidden;
 }
 
 div.searchDiv input {

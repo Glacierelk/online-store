@@ -90,8 +90,9 @@ public class UserServlet extends BaseServlet {
         response.sendRedirect(request.getContextPath()+"/#");
     }
 
+
     /**
-     * 获取当前登陆的用户
+     * 获取在线用户信息
      * @param request
      * @param response
      * @throws ServletException
@@ -100,7 +101,15 @@ public class UserServlet extends BaseServlet {
     public void getUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         User user = (User) request.getSession().getAttribute("user");
-        writeJsonValue(response, user);
+        ResultInfo info = new ResultInfo();
+        if(user!=null) {
+            info.setFlag(true);
+            info.setData(user);
+        }else {
+            info.setFlag(false);
+            info.setErrorMsg("获取在线用户信息失败");
+        }
+        writeJsonValue(response, info);
     }
 
     /**

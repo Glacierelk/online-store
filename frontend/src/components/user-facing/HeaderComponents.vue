@@ -1,11 +1,21 @@
 <script setup>
-// import axios from "axios";
+import axios from "axios";
 import {ref} from "vue";
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 let userNum = ref("");
 let userGoods = 0;
 let userName = ref("undefined");
 let isLogin = false;
+
+function login() {
+  router.push("/user/login");
+}
+
+function register() {
+  router.push("/user/register")
+}
 
 /*
 function getUserNum() {
@@ -26,14 +36,15 @@ function getUserGoods() {
       .catch(() => {
         console.log("获取购物车商品数量失败");
       });
-}
+}*/
 
 function checkLogin() {
-  axios.get("user/checkLogin")
+  axios.get("user/getUser")
       .then((res) => {
-        if (res.data.isLogin) {
+        console.log(res.data);
+        if (res.data.flag) {
           isLogin = true;
-          userName.value = res.data.userName;
+          userName.value = res.data.data.userName;
         } else {
           isLogin = false;
         }
@@ -41,7 +52,9 @@ function checkLogin() {
       .catch(() => {
         console.log("检查登录状态失败");
       });
-}*/
+}
+
+checkLogin();
 
 </script>
 
@@ -58,8 +71,8 @@ function checkLogin() {
       <a v-if="isLogin" href="#">{{ userName }}</a>
       <a v-if="isLogin" href="#">退出</a>
 
-      <a v-if="!isLogin" href="#">请登录</a>
-      <a v-if="!isLogin" href="#">免费注册</a>
+      <a v-if="!isLogin" href="#" @click="login">请登录</a>
+      <a v-if="!isLogin" href="#" @click="register">免费注册</a>
     </div>
 
 

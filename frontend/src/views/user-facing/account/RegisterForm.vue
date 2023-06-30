@@ -77,7 +77,7 @@ function submitForm() {
       <input required type="email" v-model="email"><br>
 
       <label>邮寄地址<span class="required">&nbsp;*</span></label>
-      <textarea v-model="address"></textarea><br>
+      <input required type="text" v-model="address">
 
       <label>用户密码<span class="required">&nbsp;*</span></label>
       <input required type="password" v-model="password"><br>
