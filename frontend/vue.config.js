@@ -4,8 +4,11 @@ module.exports = defineConfig({
   devServer: {
     open: false,
     port: 8081,
+
   },
+
 })
+
 module.exports = {
   css: {
     loaderOptions: {

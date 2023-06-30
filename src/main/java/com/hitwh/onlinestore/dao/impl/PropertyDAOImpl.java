@@ -4,6 +4,8 @@ import com.hitwh.onlinestore.bean.ProductProperties;
 import com.hitwh.onlinestore.bean.Property;
 import com.hitwh.onlinestore.dao.PropertyDAO;
 import com.hitwh.onlinestore.utils.JDBCUtils;
+import org.junit.Test;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -31,4 +33,21 @@ public class PropertyDAOImpl implements PropertyDAO {
             return null;
         }
     }
+
+    @Override
+    public boolean addProperty(int cid, String name) {
+        String sql = "insert into property(cid,name) values(?,?)";
+
+        try {
+            template.update(sql, cid, name);
+            return true;
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
+    }
+
+
 }

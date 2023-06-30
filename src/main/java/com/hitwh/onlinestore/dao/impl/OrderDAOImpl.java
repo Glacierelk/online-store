@@ -14,7 +14,7 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<Order> getAllOrders() {
         String sql = "SELECT\n" +
-                "    o.id AS order_id,\n" +
+                "    o.id,\n" +
                 "    o.order_code,\n" +
                 "    o.address,\n" +
                 "    o.post,\n" +
@@ -27,8 +27,8 @@ public class OrderDAOImpl implements OrderDAO {
                 "    o.confirm_date,\n" +
                 "    o.uid,\n" +
                 "    o.status,\n" +
-                "    COUNT(oi.id) AS total_items,\n" +
-                "    SUM(p.promote_price * oi.number) AS total_price\n" +
+                "    COUNT(oi.id) AS amount,\n" +
+                "    SUM(p.promote_price * oi.number) AS totalPrice\n" +
                 "FROM\n" +
                 "    online_store.`order` AS o\n" +
                 "        LEFT JOIN\n" +
