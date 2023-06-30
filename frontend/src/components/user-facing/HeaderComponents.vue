@@ -46,7 +46,7 @@ function checkLogin() {
 </script>
 
 <template>
-  <nav id="top" class="top ">
+  <nav id="top" class="top">
     <div class="pull-left">
       <a href="#">
         <span class="glyphicon glyphicon-home redColor" style="color:#C40000;margin:0"></span>
@@ -73,6 +73,18 @@ function checkLogin() {
 </template>
 
 <style scoped>
+#top {
+  height: 40px;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.pull-left {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 nav.top {
   padding-top: 5px;
   padding-bottom: 5px;

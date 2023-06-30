@@ -1,21 +1,21 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <el-button
-      type="primary"
-      @click="addCategory"
-      style="position: absolute; top: 20px; right: 20px;width: 8%"
-  >添加
-  </el-button>
+  <div id = "categoryC">
+    <el-button
+        type="primary"
+        @click="addCategory"
+        style="position: absolute; top: 10px; right: 20px; width: 8%; font-size: 15px; margin-bottom: 0"
+    >添加
+    </el-button>
 
-  <el-dialog title="添加" v-model="secondDialogVisible">
-    <el-form :model="form" label-width="150px" @submit="submitForm">
-      <el-form-item v-for="index in rowCount" :label="`文本框 ${index}`" :key="index">
-        <el-input v-model="form[`input${index}`]"></el-input>
-      </el-form-item>
-      <el-button type="primary" native-type="submit">提交</el-button>
-    </el-form>
-  </el-dialog>
+    <el-dialog title="添加" v-model="secondDialogVisible">
+      <el-form :model="form" label-width="150px" @submit="submitForm">
+        <el-form-item v-for="index in rowCount" :label="`文本框 ${index}`" :key="index">
+          <el-input v-model="form[`input${index}`]"></el-input>
+        </el-form-item>
+        <el-button type="primary" native-type="submit">提交</el-button>
+      </el-form>
+    </el-dialog>
 
-  <div>
     <el-table :data="tableData" style="width: 100%">
       <el-table-column prop="ID" label="ID"></el-table-column>
       <el-table-column prop="className" label="分类名称"></el-table-column>
@@ -46,8 +46,6 @@
           layout="sizes, prev, pager, next, jumper"
       ></el-pagination>
     </div>
-
-
   </div>
 </template>
 
@@ -141,5 +139,9 @@ export default {
 </script>
 
 <style>
+
+#categoryC {
+  margin-top: 100px;
+}
 
 </style>
