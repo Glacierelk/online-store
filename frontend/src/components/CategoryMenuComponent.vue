@@ -1,19 +1,24 @@
 <template>
   <div class="guideMenu" id="guideMenu">
     <div class="categoryMenu" id="categoryMenu">
-      <div @mouseenter="showMenu(index,$event)" @mouseleave="hideMenu(index,$event)" v-for="(category,index) in categories" :key="category.category_name" class="eachCategory" >
-        <span><img height="25px" align="center" class="eachCategoryImg" src="../assets/HomePage/Clip.png" alt="clip"></span>
-        <a href="#">{{category.category_name}} </a>
-        <span></span>
+      <div v-for="(category,index) in categories" :key="category.category_name">
+        <div @mouseenter="showMenu(index,$event)" @mouseleave="hideMenu(index,$event)" v-if="index<18"  class="eachCategory" >
+          <span><img height="18" align="center" class="eachCategoryImg" src="../assets/HomePage/Clip.png" alt="clip"></span>
+          <a href="#" >{{category.category_name}} </a>
+          <span></span>
+        </div>
       </div>
+
     </div>
 
     <ProductsAsideCategoriesComponent></ProductsAsideCategoriesComponent>
+    <SwiperComponent></SwiperComponent>
   </div>
 </template>
 
 <script setup>
   import ProductsAsideCategoriesComponent from "@/components/ProductsAsideCategoriesComponent.vue";
+  import SwiperComponent from "@/components/SwiperComponent.vue";
   var categories=ProductsAsideCategoriesComponent.data().categories
   function showMenu(index,e){
     //alert(index);
@@ -23,6 +28,7 @@
   function hideMenu(index,e) {
     e.target.style.backgroundColor="#e2e2e3"
     ProductsAsideCategoriesComponent.methods.hideMenu(index);
+
   }
 
 </script>
@@ -34,7 +40,7 @@
 
   div.categoryMenu {
     float: left;
-    width: 198px;
+    width: 200px;
     background-color: #e2e2e3;
     /* 	padding-bottom:10px; */
     left: 0;
