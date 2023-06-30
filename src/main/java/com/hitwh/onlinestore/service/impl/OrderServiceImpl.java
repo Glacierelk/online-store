@@ -15,4 +15,9 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getAllOrders() {
         return orderDAO.getAllOrders();
     }
+
+    @Override
+    public List<Order> getOrdersByUserId(String userId) {
+        return orderDAO.getOrdersByUserId(userId);
+    }
 }

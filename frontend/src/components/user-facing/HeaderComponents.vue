@@ -1,27 +1,50 @@
 <script setup>
-// import axios from "axios";
+import axios from "axios";
 import {ref} from "vue";
+import {useRouter} from "vue-router";
+import qs from "qs";
 
-let userNum = ref("");
-let userGoods = 0;
-let userName = ref("undefined");
-let isLogin = false;
+const router = useRouter();
+const userGoods = ref(0);
+//TODO 获取用户订单数量API
+const userName = ref("undefined");
+const userId = ref();
+const isLogin = ref(false);
 
-/*
-function getUserNum() {
-  axios.get("user/getUserNum")
+
+function login() {
+  router.push("/user/login");
+}
+
+function register() {
+  router.push("/user/register")
+}
+function logout() {
+  axios.get("/user/logout")
       .then((res) => {
-        userNum.value = res.data.userNum;
+        if (res.data.flag) {
+          isLogin.value = false;
+          userName.value = "undefined";
+          userId.value = "";
+          router.push("/");
+        } else {
+          alert("退出失败");
+        }
       })
       .catch(() => {
-        console.log("获取在线人数失败");
+        alert("退出失败");
       });
 }
 
 function getUserGoods() {
-  axios.get("user/getUserGoods")
+  axios.post("/order/getOrdersByUserId",qs.stringify({
+    "uid": userId.value
+  }))
       .then((res) => {
-        userGoods = res.data.userGoods;
+        console.log(res.data);
+        if (res.data.flag) {
+          userGoods.value = res.data.data.length;
+        }
       })
       .catch(() => {
         console.log("获取购物车商品数量失败");
@@ -29,42 +52,49 @@ function getUserGoods() {
 }
 
 function checkLogin() {
-  axios.get("user/checkLogin")
+  axios.get("user/getUser")
       .then((res) => {
-        if (res.data.isLogin) {
-          isLogin = true;
-          userName.value = res.data.userName;
+        console.log(res.data);
+        if (res.data.flag) {
+          isLogin.value = true;
+          userName.value = res.data.data.username;
+          userId.value = res.data.data.id;
+          getUserGoods();
         } else {
-          isLogin = false;
+          isLogin.value = false;
         }
+        console.log(isLogin.value)
+        console.log(userName.value)
+        console.log(userId.value)
       })
       .catch(() => {
         console.log("检查登录状态失败");
       });
-}*/
+}
+
+checkLogin();
 
 </script>
 
 <template>
   <nav id="top" class="top">
     <div class="pull-left">
-      <a href="#">
+      <router-link to="/">
         <span class="glyphicon glyphicon-home redColor" style="color:#C40000;margin:0"></span>
         天猫首页
-      </a>
+      </router-link>
       <span>喵，欢迎来天猫</span>
-      <span>在线人数:{{ userNum }}</span>
 
       <a v-if="isLogin" href="#">{{ userName }}</a>
-      <a v-if="isLogin" href="#">退出</a>
+      <span v-if="isLogin" href="#" @click="logout">退出</span>
 
-      <a v-if="!isLogin" href="#">请登录</a>
-      <a v-if="!isLogin" href="#">免费注册</a>
+      <span v-if="!isLogin" href="#" @click="login">请登录</span>
+      <span v-if="!isLogin" href="#" @click="register">免费注册</span>
     </div>
 
 
     <div v-if="isLogin" class="pull-right">
-      <a v-if="!isLogin" href="#">我的订单</a>
+      <a href="#">我的订单</a>
       <a href="#">
         <span class=" glyphicon glyphicon-shopping-cart redColor" style="color:#C40000;margin:0"></span>
         购物车&nbsp;<strong>{{ userGoods }}</strong>&nbsp;件</a>

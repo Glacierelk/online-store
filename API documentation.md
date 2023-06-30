@@ -120,6 +120,102 @@ Content-Type: application/json
 }
 ```
 
+### 获取登录用户信息
+
+#### 基本信息
+
+> 请求路径：`/user/getUser`
+>
+> 请求方式：GET
+>
+> 接口描述：该接口用于获取登录用户信息
+
+
+
+#### 请求参数
+
+##### 参数说明
+
+无参数
+
+##### 请求样例
+
+~~~http
+GET http://localhost:8080/store/user/getUser HTTP/1.1
+~~~
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                            |
+| ---------- | --------- | -------- | ------------------------------- |
+| `flag`     | `boolean` | 必须     | 成功获取为`true`，否则为`false` |
+| `data`     | `object`  | 非必须   | 该参数在此API无效               |
+| `errorMsg` | `string`  | 非必须   | 若出错返回一个错误信息          |
+
+##### 响应数据样例
+
+~~~json
+{
+    "flag": false,
+    "data": null,
+    "errorMsg": "获取在线用户信息失败"
+}
+~~~
+
+### 用户退出
+
+#### 基本信息
+
+> 请求路径：`user/logout`
+>
+> 请求方式：GET
+>
+> 接口描述：该接口用于失效服务器端的session，实现用户退出
+
+#### 
+
+#### 请求参数
+
+##### 参数说明
+
+无参数
+
+##### 请求样例
+
+~~~http
+GET http://localhost:8080/store/user/logout HTTP/1.1
+~~~
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                              |
+| ---------- | --------- | -------- | --------------------------------- |
+| `flag`     | `boolean` | 必须     | 成功获退出为`true`，否则为`false` |
+| `data`     | `object`  | 非必须   | 该参数在此API无效                 |
+| `errorMsg` | `string`  | 非必须   | 若出错返回一个错误信息            |
+
+##### 响应数据样例
+
+~~~json
+{
+    "flag": true,
+    "data": null,
+    "errorMsg": null
+}
+~~~
+
 ## 商品分类
 
 ### 首页获取分类信息
@@ -362,6 +458,65 @@ Content-Type: application/json
 	"errorMsg": null
 }
 ```
+
+## 商品分类属性
+
+### 后台添加商品分类属性
+
+#### 基本信息
+
+> 请求路径：`/property/add`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于后台新增某个商品分类的属性
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型     | 是否必须 | 备注                   |
+| ------ | -------- | -------- | ---------------------- |
+| `cid`  | `number` | 必须     | 要新增属性的商品分类id |
+| `name` | `string` | 必须     | 新增的属性名           |
+
+##### 请求样例
+
+~~~HTTP
+POST http://localhost:8080/store/property/add HTTP/1.1
+Content-Type: application/json
+
+{
+	"cid": 60,
+	"name": "颜色"
+}
+~~~
+
+### 响应数据
+
+##### 参数格式
+
+`application\json`
+
+##### 参数说明
+
+| 参数名     | 类型      | 是否必须 | 备注                                |
+| ---------- | --------- | -------- | ----------------------------------- |
+| `flag`     | `boolean` | 必须     | 添加成功返回`true`，否则返回`false` |
+| `data`     | `object`  | 非必须   | 该参数在此请求中无效                |
+| `errorMsg` | `string`  | 非必须   | 若出错返回错误信息                  |
+
+##### 响应数据样例
+
+~~~json
+{
+    "flag": true,
+    "data": null,
+    "errorMsg": null
+}
+~~~
+
+
 
 ## 商品
 
@@ -766,3 +921,80 @@ GET http://localhost:8080/order/getAllOrders HTTP/1.1
     "errorMsg": null
 }
 ~~~
+
+### 获取用户订单
+
+#### 基本信息
+
+> 请求路径：`/order/getOrdersByUserId`
+>
+> 请求方式：GET
+>
+> 接口描述：该接口用于查询某个用户的所有订单
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型     | 是否必须 | 备注         |
+| ------ | -------- | -------- | ------------ |
+| `nid`  | `number` | 必须     | 待查询用户id |
+
+##### 请求样例
+
+~~~HTTP
+GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
+~~~
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| 名称               | 类型        | 是否必须 | 备注                                   |
+| ------------------ | ----------- | -------- | -------------------------------------- |
+| `flag`             | `boolean`   | 必须     | 请求是否成功，`true`成功，`false`失败` |
+| `errorMsg`         | `string`    | 非必须   | 如果请求失败，返回一个错误信息         |
+| `data`             | `object`    | 必须     | 包含了用户订单的详细信息               |
+| \|-`id`            | `number`    | 必须     | 订单ID                                 |
+| \|-`order_code`    | `string`    | 必须     | 订单的唯一编码                         |
+| \|-`receiver_tel`  | `number`    | 必须     | 收货人手机号                           |
+| \|-`user_message`  | `string`    | 非必须   | 用户备注                               |
+| \|-`create_date`   | `timestamp` | 必须     | 创建订单时间                           |
+| \|-`pay_date`      | `timestamp` | 非必须   | 订单支付时间                           |
+| \|-`delivery_date` | `timestamp` | 非必须   | 订单发货时间                           |
+| \|-`confirm_date`  | `timestamp` | 非必须   | 订单确认收货时间                       |
+| \|-`uid`           | `number`    | 必须     | 创建订单的用户ID                       |
+| \|-`status`        | `number`    | 必须     | 订单状态                               |
+
+##### 响应数据样例
+
+~~~json
+{
+    "flag": true,
+    "data": [
+        {
+            "id": 1,
+            "orderCode": "202306281219233704899",
+            "address": null,
+            "amount": 2,
+            "totalPrice": 47277.99987792969,
+            "post": null,
+            "receiver": null,
+            "receiverTel": "13587168037",
+            "userMessage": "好",
+            "createDate": "2023-06-30 09:17:16.0",
+            "payDate": "2023-08-30 09:15:21.0",
+            "deliveryDate": "2023-09-30 09:15:25.0",
+            "confirmDate": "2023-06-24 09:15:10.0",
+            "uid": 1,
+            "status": 1
+        }
+    ],
+    "errorMsg": null
+}
+~~~
+

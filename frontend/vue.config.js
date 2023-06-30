@@ -3,7 +3,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
     open: false,
-    port: 8081,
+    port: 8888,
   },
 })
 module.exports = {

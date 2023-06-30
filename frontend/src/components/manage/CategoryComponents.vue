@@ -19,16 +19,16 @@
 
   <div class = table-container>
     <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="id" label="ID"></el-table-column>
-      <el-table-column prop="name" label="分类名称"></el-table-column>
-      <el-table-column label="产品管理">
+      <el-table-column prop="id" label="ID" width="480" align="center"></el-table-column>
+      <el-table-column prop="name" label="分类名称" width="480" align="center"></el-table-column>
+      <el-table-column label="产品管理" width="480" align="center">
         <template v-slot="scope">
           <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleButtonClick(scope.row)">
             <i class="fa fa-edit" style="color: blue;"></i>
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="删除">
+      <el-table-column label="删除" width="480" align="center">
         <template v-slot="scope">
           <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleButtonClick(scope.row)">
             <i class="fa fa-trash" style="color: red;"></i>
@@ -86,7 +86,7 @@ export default {
     },
     // 获取数据
     getData() {
-      const url = 'http://localhost:8080/store/category/listAllCategories';
+      const url = 'category/listAllCategories';
 
       // 发送网络请求获取后端数据
       axios.get(url)
@@ -162,9 +162,13 @@ export default {
 
 <style>
   #categoryC {
-    margin-top: 100px;
+    margin-top:
+        80px;
   }
   .table-container {
     margin-top: 1px; /* 设置距离顶部的距离为20像素 */
+  }
+  .el-input__inner {
+    font-size: 15px;
   }
 </style>
