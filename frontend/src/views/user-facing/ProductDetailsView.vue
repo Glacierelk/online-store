@@ -12,6 +12,7 @@ import SimpleSearchComponents from "@/components/search/SimpleSearchComponents.v
 
   <div>
 
+
   </div>
 
   <div>
