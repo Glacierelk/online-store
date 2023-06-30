@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style scoped>
-div.SwiperComponent{
+#SwiperComponent{
   display: block;
 }
 img.imgClass{

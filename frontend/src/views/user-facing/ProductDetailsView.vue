@@ -17,7 +17,7 @@ const detailImages = ref([]);
 const activeTab = "tab1";
 const show = ref(false);
 
-function getDetails(id) {
+async function getDetails(id) {
   axios.post('/product/details', qs.stringify({
     id: id
   }))
@@ -49,15 +49,14 @@ function getDetails(id) {
       })
 }
 
-console.log(route.query.id);
-getDetails(route.query.id);
-
 function getCategoryPath() {
-  return "../../assets/category/" + data.value.cid + ".jpg";
+  console.log("-------"+data.value.cid)
+  return require("../../assets/category/" + String(data.value.cid) + ".jpg");
 }
 
 function getImagePath(id) {
-  return require("../../assets/productSingleSmall/" + id + ".jpg");
+  console.log("======="+id)
+  return require("../../assets/productSingleSmall/" + String(id) + ".jpg");
 }
 
 // function getDetailImagePath(id) {
@@ -67,6 +66,11 @@ function getImagePath(id) {
 function getComment() {
   return "累计评价" + data.value.comments.length;
 }
+
+console.log(route.query.id);
+// await getDetails(route.query.id);
+// show.value = true;
+getDetails(route.query.id)
 
 </script>
 
@@ -95,8 +99,8 @@ function getComment() {
               <td>
                 <img
                     v-for="item in showImages"
-                    :key="item.id"
-                    :src="getImagePath(item.id)"
+                    :key="item"
+                    :src="getImagePath(item)"
                     alt="商品缩略图" />
               </td>
             </tr>

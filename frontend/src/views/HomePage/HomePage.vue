@@ -1,7 +1,7 @@
 <template>
   <Header></Header>
   <SearchComponents></SearchComponents>
-  <CategoryAndCarouselComponent></CategoryAndCarouselComponent>
+  <div class="categoryNavBar"><CategoryAndCarouselComponent></CategoryAndCarouselComponent></div>
   <BottomListComponent></BottomListComponent>
   <Footer></Footer>
 
@@ -16,5 +16,9 @@
 </script>
 
 <style scoped>
-
+.categoryNavBar {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>
