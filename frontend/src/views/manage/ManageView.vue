@@ -3,7 +3,7 @@
     <div id="logo">
       <a href="/manage"><img src="@/assets/header/simpleLogo.png" alt="logo" class="logo" /></a>
     </div>
-    <el-tabs type="border-card" v-model="activeTab">
+    <el-tabs v-model="activeTab">
       <el-tab-pane label="分类管理" name="tab1">
         <Category />
       </el-tab-pane>
