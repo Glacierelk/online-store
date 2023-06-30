@@ -11,11 +11,12 @@
     "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "element-plus": "^2.3.7",
-    "jquery": "^3.7.0",
     "qs": "^6.11.2",
     "vue": "^3.2.13",
     "vue-router": "^4.0.13",
-    "ant-design-vue": "^2.0.0-rc.3"
+    "ant-design-vue": "^2.0.0-rc.3",
+    "font-awesome": "^4.7.0"
+
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
