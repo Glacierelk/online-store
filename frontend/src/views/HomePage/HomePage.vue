@@ -15,8 +15,10 @@
 </script>
 
 <style scoped>
+
 div.blank {
   height: 1000px;
   width: 1000px;
 }
+
 </style>
