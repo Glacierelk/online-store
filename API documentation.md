@@ -374,7 +374,7 @@ GET http://localhost:8080/store/category/listAllCategories HTTP/1.1
 | ------------ | -------- | -------- | ------------------ |
 | `categoryId` | `number` | 必须     | 要删除的商品分类ID |
 
-##### 请求样例
+##### 请求样例 
 
 ```http
 DELETE http://localhost:8080/store/category/delete?categoryId=84
