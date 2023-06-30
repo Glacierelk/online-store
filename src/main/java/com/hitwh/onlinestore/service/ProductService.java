@@ -21,4 +21,10 @@ public interface ProductService {
      * @Return: 当前商品的所有信息
      */
     Object details(int id);
+
+    /*
+     * @Description: 查询商品
+     * @Param name: 产品名称
+     */
+    Object search(String name);
 }

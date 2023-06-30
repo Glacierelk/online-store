@@ -43,7 +43,7 @@ export default {
     });
 
     const deleteUser = (userId) => {
-      axios.post('http://localhost:8080/store/user/deleteUser', qs.stringify({
+      axios.post('/user/deleteUser', qs.stringify({
             "id": userId,
           }))
           .then(() => {

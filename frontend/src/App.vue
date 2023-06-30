@@ -2,10 +2,9 @@
   <router-view/>
 </template>
 
-<script>
-export default {
-  name: 'App',
-}
+<script setup>
+import axios from "axios";
+axios.defaults.baseURL = 'http://localhost:8729/store';
 </script>
 
 <style>

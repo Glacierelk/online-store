@@ -92,4 +92,22 @@ public class ProductServlet extends BaseServlet {
         }
         writeJsonValue(response, info);
     }
+
+    /*
+     * @Description: 搜索商品
+     * @Param request: 产品名称
+     */
+    public void search(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("ProductServlet--search");
+        ResultInfo info = new ResultInfo();
+        try {
+            String name = request.getParameter("name");
+            info.setData(productService.search(name));
+            info.setFlag(true);
+        } catch (Exception e) {
+            info.setFlag(false);
+            info.setErrorMsg("查询失败");
+        }
+        writeJsonValue(response, info);
+    }
 }

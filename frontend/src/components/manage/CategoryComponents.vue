@@ -1,6 +1,4 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <h3 style="text-align: left;">分类管理</h3>
-
   <el-button
       type="primary"
       @click="addCategory"
@@ -23,14 +21,14 @@
       <el-table-column prop="className" label="分类名称"></el-table-column>
       <el-table-column label="产品管理">
         <template v-slot="scope">
-          <el-button type="primary" size="mini" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleButtonClick(scope.row)">
+          <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleButtonClick(scope.row)">
             <i class="fa fa-edit" style="color: blue;"></i>
           </el-button>
         </template>
       </el-table-column>
       <el-table-column label="删除">
         <template v-slot="scope">
-          <el-button type="danger" size="mini" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleButtonClick(scope.row)">
+          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleButtonClick(scope.row)">
             <i class="fa fa-trash" style="color: red;"></i>
           </el-button>
         </template>
