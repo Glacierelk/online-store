@@ -3,7 +3,7 @@
   <el-button
       type="primary"
       @click="addCategory"
-      style="position: absolute; top: 5px; right: 5px;width: 8%;ont-size: 15px; margin-bottom: 0"
+      style="position: absolute; top: 5px; right: 5px;width: 8%;font-size: 15px; margin-bottom: 0"
   >添加
   </el-button>
 
