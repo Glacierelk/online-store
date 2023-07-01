@@ -7,7 +7,7 @@
   <div class="list">
     <div v-for="item in data" class="list-item" :key="item.id">
       <!--  TODO 添加链接  -->
-      <div class="product">
+      <div class="product" @click="showDetails(item)">
         <img :src="getPath(item)" alt="图片" style="width: 100%; height: 85%">
         <div class="price">￥{{ item.originalPrice }}</div>
         <div class="name">{{ item.name.substring(0, 30) }}</div>
@@ -21,13 +21,13 @@
 </template>
 
 <script setup>
-import Header from '@/components/user-facing/HeaderComponents.vue'
-import SearchComponents from "@/components/search/SearchComponents.vue";
-import Footer from "@/components/user-facing/FooterComponents.vue";
+import Header from '@/components/user-facing/header-footer/HeaderComponents.vue'
+import SearchComponents from "@/components/user-facing/search/SearchComponents.vue";
+import Footer from "@/components/user-facing/header-footer/FooterComponents.vue";
 import axios from "axios";
 import qs from "qs";
-import {ref} from "vue";
-import {useRouter} from "vue-router";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 let data = ref([]);
@@ -55,7 +55,16 @@ function search(params) {
 search(router.currentRoute.value.query.keyword);
 
 function getPath(item) {
-  return require("../../assets/productSingle/" + item.images[0].id + ".jpg");
+  return require("../../assets/productSingleMiddle/" + item.images[0].id + ".jpg");
+}
+
+function showDetails(item) {
+  router.push({
+    path: '/details',
+    query: {
+      id: item.id
+    }
+  })
 }
 
 </script>

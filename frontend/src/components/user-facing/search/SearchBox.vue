@@ -31,7 +31,7 @@ function fastSearch(item) {
     </div>
     <div class="searchBelow">
       <span v-for="(item,index) in recomment" :key="item">
-        <a class="item" href="#" @click="fastSearch(item)">{{ item }}</a>
+        <span class="item" @click="fastSearch(item)">{{ item }}</span>
         &nbsp; &nbsp;
         <span v-if="index<2">|</span>
         &nbsp; &nbsp;
@@ -76,11 +76,11 @@ div.searchDiv button {
   float: left;
 }
 
-a:hover {
+.item:hover {
   color: #ff6ba4;
 }
 
-a.item {
+.item {
   color: gray;
   text-decoration: none;
 }
