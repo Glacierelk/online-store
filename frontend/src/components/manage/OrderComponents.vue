@@ -22,7 +22,7 @@
         <template v-slot="scope">
           <el-button
               v-if="scope.row.status === 1"
-              @click="deliveryOrder(scope.row.id)" type="primary" size="small">发货
+              @click="deliveryOrder(scope.row.id,scope.row.status)" type="primary" size="small">发货
           </el-button>
         </template>
       </el-table-column>
@@ -74,16 +74,25 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val;
     },
-    deliveryOrder(orderId){
-      axios.post('/order/deliveryOrder', qs.stringify({
+    deliveryOrder(orderId,status){
+      axios.post('/order/updateStatus', qs.stringify({
         "id": orderId,
+        "status": status,
       }))
-          .then(() => {
-            this.$message({
-              message: '发货成功',
-              type: 'success'
-            });
-            this.fetchData();
+          .then(res => {
+            if(res.data.flag){
+              console.log(res.data);
+              this.$message({
+                message: '发货成功',
+                type: 'success'
+              });
+              this.fetchData();
+            }else {
+              this.$message({
+                message: '发货失败',
+                type: 'error'
+              });
+            }
           })
           .catch(error => {
             console.error(error);

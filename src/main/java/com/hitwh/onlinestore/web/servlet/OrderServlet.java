@@ -65,4 +65,30 @@ public class OrderServlet extends BaseServlet {
 //        System.out.println(info);
         writeJsonValue(response, info);
     }
+    public void updateStatus(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ResultInfo info = new ResultInfo();
+        int oid = Integer.parseInt(request.getParameter("id"));
+        int status = Integer.parseInt(request.getParameter("status"));
+
+        boolean flag = orderService.updateStatus(oid, status);
+        if(flag){
+            info.setFlag(true);
+        }else{
+            info.setFlag(false);
+            info.setErrorMsg("更新订单失败");
+        }
+        writeJsonValue(response, info);
+    }
+    public void deleteOrder(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ResultInfo info = new ResultInfo();
+        int oid = Integer.parseInt(request.getParameter("id"));
+        boolean flag = orderService.deleteOrder(oid);
+        if(flag){
+            info.setFlag(true);
+        }else{
+            info.setFlag(false);
+            info.setErrorMsg("删除订单失败");
+        }
+        writeJsonValue(response, info);
+    }
 }

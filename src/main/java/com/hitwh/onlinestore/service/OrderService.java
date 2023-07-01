@@ -18,4 +18,15 @@ public interface OrderService {
      * @return
      */
     List<Order> getOrdersByUserId(String userId);
+    /**
+     * 更新某个订单的状态（待付款、待发货、待收货、待评价）
+     */
+    boolean updateStatus(int oid, int status);
+
+    /**
+     * 删除某个订单
+     * @param oid
+     * @return
+     */
+    boolean deleteOrder(int oid);
 }
