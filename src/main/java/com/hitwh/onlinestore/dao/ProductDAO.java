@@ -34,12 +34,22 @@ public interface ProductDAO {
     boolean delete(int id);
 
     /*
-     * 根据商品id获取商品信息
+     * 根据商品id获取商品详细信息
      */
-    ProductDetails queryById(int id);
+    ProductDetails queryForDetailsById(int id);
 
     /*
      * 根据商品名称获取商品信息，模糊查询
      */
     List<ProductDetails> queryByName(String name);
+
+    /*
+     * 根据商品id获取商品信息
+     */
+    Product queryById(int id);
+
+    /**
+     * 根据商品id获取一个商品图片
+     */
+    ProductImage getImageByProductId(int productId);
 }
