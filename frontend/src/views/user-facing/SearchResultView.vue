@@ -34,7 +34,7 @@ let data = ref([]);
 
 function search(params) {
   if (params === "") {
-    params = "电视机";
+    params = "";
   }
   axios.post('/product/search', qs.stringify({
     "name": params,

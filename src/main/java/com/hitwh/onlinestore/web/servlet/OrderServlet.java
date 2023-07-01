@@ -4,7 +4,9 @@ package com.hitwh.onlinestore.web.servlet;
 
 import com.hitwh.onlinestore.bean.Order;
 import com.hitwh.onlinestore.bean.ResultInfo;
+import com.hitwh.onlinestore.service.OrderItemService;
 import com.hitwh.onlinestore.service.OrderService;
+import com.hitwh.onlinestore.service.impl.OrderItemServiceImpl;
 import com.hitwh.onlinestore.service.impl.OrderServiceImpl;
 
 import javax.servlet.ServletException;
@@ -16,6 +18,7 @@ import java.util.List;
 @WebServlet("/order/*")
 public class OrderServlet extends BaseServlet {
     private final OrderService orderService = new OrderServiceImpl();
+    private final OrderItemService orderItemService = new OrderItemServiceImpl();
 
     /**
      * 获取所有订单数据
@@ -53,9 +56,12 @@ public class OrderServlet extends BaseServlet {
             info.setErrorMsg("获取订单失败");
         }else{
             info.setFlag(true);
+            for(Order order : orders){
+                order.setOrderItems(orderItemService.getOrderItemsByOrderId(order.getId()));
+            }
             info.setData(orders);
         }
-        System.out.println(info);
+//        System.out.println(info);
         writeJsonValue(response, info);
     }
 }

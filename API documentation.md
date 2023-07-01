@@ -961,21 +961,31 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
 
 ##### 参数说明
 
-| 名称               | 类型        | 是否必须 | 备注                                   |
-| ------------------ | ----------- | -------- | -------------------------------------- |
-| `flag`             | `boolean`   | 必须     | 请求是否成功，`true`成功，`false`失败` |
-| `errorMsg`         | `string`    | 非必须   | 如果请求失败，返回一个错误信息         |
-| `data`             | `object`    | 必须     | 包含了用户订单的详细信息               |
-| \|-`id`            | `number`    | 必须     | 订单ID                                 |
-| \|-`order_code`    | `string`    | 必须     | 订单的唯一编码                         |
-| \|-`receiver_tel`  | `number`    | 必须     | 收货人手机号                           |
-| \|-`user_message`  | `string`    | 非必须   | 用户备注                               |
-| \|-`create_date`   | `timestamp` | 必须     | 创建订单时间                           |
-| \|-`pay_date`      | `timestamp` | 非必须   | 订单支付时间                           |
-| \|-`delivery_date` | `timestamp` | 非必须   | 订单发货时间                           |
-| \|-`confirm_date`  | `timestamp` | 非必须   | 订单确认收货时间                       |
-| \|-`uid`           | `number`    | 必须     | 创建订单的用户ID                       |
-| \|-`status`        | `number`    | 必须     | 订单状态                               |
+| 名称                 | 类型        | 是否必须 | 备注                                   |
+| -------------------- | ----------- | -------- | -------------------------------------- |
+| `flag`               | `boolean`   | 必须     | 请求是否成功，`true`成功，`false`失败` |
+| `errorMsg`           | `string`    | 非必须   | 如果请求失败，返回一个错误信息         |
+| `data`               | `object`    | 必须     | 包含了用户订单的详细信息               |
+| \|-`id`              | `number`    | 必须     | 订单ID                                 |
+| \|-`orderCode`       | `string`    | 必须     | 订单的唯一编码                         |
+| \|-`receiverTel`     | `number`    | 必须     | 收货人手机号                           |
+| \|-`userDessage`     | `string`    | 非必须   | 用户备注                               |
+| \|-`createDate`      | `timestamp` | 必须     | 创建订单时间                           |
+| \|-`payDate`         | `timestamp` | 非必须   | 订单支付时间                           |
+| \|-`deliveryDate`    | `timestamp` | 非必须   | 订单发货时间                           |
+| \|-`confirmDate`     | `timestamp` | 非必须   | 订单确认收货时间                       |
+| \|-`uid`             | `number`    | 必须     | 创建订单的用户ID                       |
+| \|-`status`          | `number`    | 必须     | 订单状态                               |
+| \|-`amount`          | `number`    | 必须     | 订单包含的商品数量                     |
+| \|-`totalPrice`      | `number`    | 必须     | 订单的总金额                           |
+| \|-`order_item`      | `object`    | 必须     | 订单中包含的商品信息                   |
+| \|\|-`id`            | `number`    | 必须     | 订单商品条目的id                       |
+| \|\|-`pid`           | `number`    | 必须     | 订单商品的id                           |
+| \|\|-`oid`           | `number`    | 必须     | 订单的id                               |
+| \|\|-`name`          | `string`    | 必须     | 商品的名称                             |
+| \|\|-`originalPrice` | `number`    | 必须     | 商品的原始价格                         |
+| \|\|-`promotePrice`  | `number`    | 非必须   | 商品的促销价格                         |
+| \|\|-`number`        | `number`    | 必须     | 购买商品的数量                         |
 
 ##### 响应数据样例
 
@@ -997,6 +1007,26 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
             "payDate": "2023-08-30 09:15:21.0",
             "deliveryDate": "2023-09-30 09:15:25.0",
             "confirmDate": "2023-06-24 09:15:10.0",
+            "orderItems": [
+                {
+                    "id": 1,
+                    "pid": 87,
+                    "oid": 1,
+                    "name": "Konka/康佳 LED32S1卧室32吋安卓智能无线WIFI网络液晶平板电视机",
+                    "originalPrice": 1699,
+                    "promotePrice": 1104.35,
+                    "number": 20
+                },
+                {
+                    "id": 2,
+                    "pid": 88,
+                    "oid": 1,
+                    "name": "Hisense/海信 LED49EC320A 49吋led液晶电视机智能网络平板电视50",
+                    "originalPrice": 2799,
+                    "promotePrice": 1679.4,
+                    "number": 15
+                }
+            ],
             "uid": 1,
             "status": 1
         }
