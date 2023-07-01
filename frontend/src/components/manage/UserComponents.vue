@@ -14,6 +14,7 @@
           <el-button @click="confirmDelete(scope.row.id)" type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
+    </el-table>
       <div class="pagination-container">
         <el-pagination
             @size-change="handleSizeChange"
@@ -25,7 +26,6 @@
             :total="userData.length">
         </el-pagination>
       </div>
-    </el-table>
   </div>
 </template>
 
@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      pageSize: 5,
+      pageSize: 10,
       userData: [],
     };
   },
