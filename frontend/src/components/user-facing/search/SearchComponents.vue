@@ -4,7 +4,7 @@
       <td>
         <div class="imgDiv">
           <a href="#">
-            <img id="logo" alt="logo" class="logo" src="../../assets/header/logo.gif">
+            <img id="logo" alt="logo" class="logo" src="../../../assets/header/logo.gif">
           </a>
         </div>
       </td>
@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import SearchBox from "@/components/search/SearchBox.vue";
+import SearchBox from "@/components/user-facing/search/SearchBox.vue";
 import {defineEmits} from "vue";
 
 const emit = defineEmits(["search"]);

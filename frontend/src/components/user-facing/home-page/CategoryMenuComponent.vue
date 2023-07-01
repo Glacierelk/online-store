@@ -3,7 +3,7 @@
     <div class="categoryMenu" id="categoryMenu">
       <div v-for="(category,index) in categories" :key="category.category_name">
         <div @mouseenter="showMenu(index,$event)" @mouseleave="hideMenu(index,$event)" v-if="index<18"  class="eachCategory" >
-          <span><img height="18" align="center" class="eachCategoryImg" src="../assets/HomePage/Clip.png" alt="clip"></span>
+          <span><img height="18" align="center" class="eachCategoryImg" src="../../../assets/HomePage/Clip.png" alt="clip"></span>
           <a href="#" >{{category.category_name}} </a>
           <span></span>
         </div>
@@ -17,8 +17,8 @@
 </template>
 
 <script setup>
-  import ProductsAsideCategoriesComponent from "@/components/ProductsAsideCategoriesComponent.vue";
-  import SwiperComponent from "@/components/SwiperComponent.vue";
+  import ProductsAsideCategoriesComponent from "@/components/user-facing/home-page/ProductsAsideCategoriesComponent.vue";
+  import SwiperComponent from "@/components/user-facing/home-page/SwiperComponent.vue";
   var categories=ProductsAsideCategoriesComponent.data().categories
   function showMenu(index,e){
     //alert(index);

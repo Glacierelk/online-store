@@ -14,7 +14,7 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public List<Comment> getCommentsByProductId(int productId) {
         try {
-            String sql = "SELECT * FROM comment WHERE pid = ?";
+            String sql = "SELECT * FROM comment_views WHERE pid = ?";
             return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Comment.class), productId);
         } catch (Exception e) {
             return null;

@@ -6,6 +6,19 @@ public class Comment {
     private int uid;
     private int pid;
     private String create_date;
+    private String username;
+
+    public Comment() {
+    }
+
+    public Comment(int id, String content, int uid, int pid, String create_date, String username) {
+        this.id = id;
+        this.content = content;
+        this.uid = uid;
+        this.pid = pid;
+        this.create_date = create_date;
+        this.username = username;
+    }
 
     @Override
     public String toString() {
@@ -15,6 +28,7 @@ public class Comment {
                 ", uid=" + uid +
                 ", pid=" + pid +
                 ", create_date='" + create_date + '\'' +
+                ", username='" + username + '\'' +
                 '}';
     }
 
@@ -56,5 +70,13 @@ public class Comment {
 
     public void setCreate_date(String create_date) {
         this.create_date = create_date;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

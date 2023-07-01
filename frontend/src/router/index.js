@@ -6,7 +6,7 @@ const router = createRouter({
         {
             path: '/',
             name: 'Index',
-            component: () => import('../views/HomePage/HomePage.vue')
+            component: () => import('@/views/user-facing/HomePage.vue')
         },
         {
             path: '/user',
@@ -36,8 +36,8 @@ const router = createRouter({
             component: () => import('../views/user-facing/SearchResultView.vue'),
         },
         {
-            path: '/test',
-            name: 'Test',
+            path: '/details',
+            name: 'Details',
             component: () => import('../views/user-facing/ProductDetailsView.vue'),
         }
     ]

@@ -701,6 +701,7 @@ Content-Type: application/json
 | \|\|- `uid`           | `number`    | 必须     | 做评价用户 ID                           |
 | \|\|- `pid`           | `number`    | 必须     | 被评价商品 ID                           |
 | \|\|- `create_date`   | `timestamp` | 必须     | 评价日期                                |
+| \|\|- `username`      | `string`    | 必须     | 评价用户名                              |
 
 ##### 响应数据样例
 
@@ -736,6 +737,7 @@ Content-Type: application/json
 				"id": 1,
 				"content": "哈哈哈",
 				"uid": 30,
+				"username": "张三",
 				"pid": 87,
 				"create_date": "2023-06-29 22:15:46.0"
 			}
