@@ -21,9 +21,9 @@
 </template>
 
 <script setup>
-import Header from '@/components/user-facing/HeaderComponents.vue'
-import SearchComponents from "@/components/search/SearchComponents.vue";
-import Footer from "@/components/user-facing/FooterComponents.vue";
+import Header from '@/components/user-facing/header-footer/HeaderComponents.vue'
+import SearchComponents from "@/components/user-facing/search/SearchComponents.vue";
+import Footer from "@/components/user-facing/header-footer/FooterComponents.vue";
 import axios from "axios";
 import qs from "qs";
 import { ref } from "vue";

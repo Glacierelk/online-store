@@ -1,19 +1,19 @@
 <template>
   <div id="guidePage">
-    <img id="catear" :style="{ visibility:'hidden'}" alt="catear" class="catear" src="../assets/HomePage/catear.png"/>
+    <img id="catear" :style="{ visibility:'hidden'}" alt="catear" class="catear" src="../../../assets/HomePage/catear.png"/>
     <div id="categoryWithCarousel" class="categoryWithCarousel">
       <div class="headbar show1">
         <div class="head">
-          <div class="leftMenu"><img align="center" alt="list" src="../assets/HomePage/list.png"
+          <div class="leftMenu"><img align="center" alt="list" src="../../../assets/HomePage/list.png"
                                               style="height: 24px"></div>
           <div class="leftMenu">商品分类</div>
         </div>
         <div class="rightMenu">
           <div @mouseenter="showImage" @mouseleave="hideImage" style="float: left;">
-             <a href=""><img alt="chaoshi" src="../assets/HomePage/chaoshi.png"/></a>
+             <a href=""><img alt="chaoshi" src="../../../assets/HomePage/chaoshi.png"/></a>
           </div>
           <div style="padding-left: 40px; float: left" @mouseenter="showImage" @mouseleave="hideImage">
-            <a href=""><img alt="guoji" src="../assets/HomePage/guoji.png"/></a>
+            <a href=""><img alt="guoji" src="../../../assets/HomePage/guoji.png"/></a>
           </div>
           <div v-for="(category,index) in categories" :key="category.name" class="categoryTab">
             <a v-if="index<5" href="#" @mouseenter="showImage" @mouseleave="hideImage">{{ category.name }}</a>
@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import CategoryMenuComponent from "@/components/CategoryMenuComponent.vue";
+import CategoryMenuComponent from "@/components/user-facing/home-page/CategoryMenuComponent.vue";
 
 let categories = [
   {name: "平板电视", icon: "#", href: ""},

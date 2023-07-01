@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import SwiperComponent from "@/components/SwiperComponent.vue";
+import SwiperComponent from "@/components/user-facing/home-page/SwiperComponent.vue";
   export default {
     data(){
       return{

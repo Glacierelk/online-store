@@ -1,227 +1,23 @@
 <script setup>
-import axios from "axios";
-import Header from '@/components/user-facing/HeaderComponents.vue';
-import Footer from '@/components/user-facing/FooterComponents.vue';
-import SimpleSearchComponents from "@/components/search/SimpleSearchComponents.vue";
-import qs from 'qs';
-import {useRouter, useRoute} from "vue-router";
-import {ref} from "vue";
-
-const router = useRouter();
-const route = useRoute();
-const data = ref({});
-const count = ref(0);
-const leftImage = "";
-const showImages = ref([]);
-const detailImages = ref([]);
-const activeTab = "tab1";
-const show = ref(false);
-
-async function getDetails(id) {
-  axios.post('/product/details', qs.stringify({
-    id: id
-  }))
-      .then(res => {
-        console.log(res.data);
-        if (res.status === 200 && res.data.flag) {
-          data.value = res.data.data;
-          console.log(data.value);
-          console.log(data.value.name)
-
-          data.value.images.forEach(item => {
-            if (item.type === "type_single") {
-              showImages.value.push(item.id);
-            } else {
-              detailImages.value.push(item.id)
-            }
-          })
-
-          show.value = true;
-        }
-        else {
-          alert("获取商品详情失败!");
-          router.back();
-        }
-      })
-      .catch(() => {
-        alert("获取商品详情失败!");
-        router.back();
-      })
-}
-
-function getCategoryPath() {
-  console.log("-------"+data.value.cid)
-  return require("../../assets/category/" + String(data.value.cid) + ".jpg");
-}
-
-function getImagePath(id) {
-  console.log("======="+id)
-  return require("../../assets/productSingleSmall/" + String(id) + ".jpg");
-}
-
-// function getDetailImagePath(id) {
-//   return require("../../assets/productDetail/" + id + ".jpg");
-// }
-
-function getComment() {
-  return "累计评价" + data.value.comments.length;
-}
-
-console.log(route.query.id);
-// await getDetails(route.query.id);
-// show.value = true;
-getDetails(route.query.id)
-
+import Header from '@/components/user-facing/header-footer/HeaderComponents.vue';
+import Footer from '@/components/user-facing/header-footer/FooterComponents.vue';
+import SimpleSearchComponents from "@/components/user-facing/search/SimpleSearchComponents.vue";
+import ProductDetailsComponent from "@/components/user-facing/ProductDetailsComponent.vue";
 </script>
 
 <template>
-  <Header />
-  <SimpleSearchComponents />
-
-  <div v-if="show" class="mainBody">
-    <table class="product-show">
-      <tr>
-        <td>
-          <img :src="getCategoryPath()" alt="商品图片">
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <table class="product-show-left">
-            <tr>
-              <td>
-                <img :src="leftImage" alt="商品图片" />
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <img
-                    v-for="item in showImages"
-                    :key="item"
-                    :src="getImagePath(item)"
-                    alt="商品缩略图" />
-              </td>
-            </tr>
-          </table>
-        </td>
-
-        <td>
-          <table class="product-show-right">
-            <tr>
-              <td class="name">
-                {{ data.value.name }}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                {{ data.value.subTitle }}
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <div class="price-show">
-                  <div class="juhuasuan">
-                    <span class="juhuasuanBig">聚划算</span>
-                    <span>此商品即将参加聚划算，<span class="juhuasuanTime">1天19小时</span>后开始，</span>
-                  </div>
-
-                  <div>
-                    <span class="common-font">价格</span>
-                    <span>￥</span>
-                    <span class="original-price-show">{{data.value.originalPrice}}</span>
-                  </div>
-
-                  <div>
-                    <span class="common-font">促销价</span>
-                    <span class="promote-dollar">￥</span>
-                    <span class="promote-price-show">{{data.value.promotePrice}}</span>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <span class="common-font">数量</span>
-                <el-input-number v-model="count" :min="1" :max="data.value.stock"></el-input-number>
-                <span class="common-font">件&nbsp;库存{{data.value.stock}}件</span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <span class="common-font">
-                  服务承诺&nbsp;极速退款&nbsp;赠运费险&nbsp;七天无理由退换
-                </span>
-              </td>
-            </tr>
-
-            <tr>
-              <td>
-                <el-button type="danger" plain>立即购买</el-button>
-                <el-button type="danger">
-                  <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                  加入购物车
-                </el-button>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-
-    <el-tabs v-model="activeTab" type="card">
-      <el-tab-pane label="商品详情" name="tab1">
-        <div class="common-font">
-
-        </div>
-      </el-tab-pane>
-
-      <el-tab-pane :label="getComment()" name="tab2">
-
-      </el-tab-pane>
-    </el-tabs>
-  </div>
-
-  <Footer />
+  <Header/>
+  <SimpleSearchComponents/>
+  <Suspense>
+    <ProductDetailsComponent/>
+  </Suspense>
+  <Footer/>
 </template>
 
 <style scoped>
-
-.mainBody {
-  width: 80%;
+ProductDetailsComponent {
+  //width: 85%;
   margin-left: auto;
   margin-right: auto;
-  height: 1000px;
 }
-
-.name {
-  font-size: 23px;
-  font-weight: bold;
-}
-
-.juhuasuan {
-  /* height: 40px; */
-  background-color: #2DA77A;
-  color: white;
-  text-align: center;
-  line-height: 40px;
-  margin-top: 10px;
-}
-
-.juhuasuanBig {
-  font-size: 18px;
-  font-weight: bold;
-  font-family: Arial,serif;
-}
-
-.juhuasuanTime {
-  color: #FFC057;
-  font-weight: bold;
-}
-
 </style>

@@ -7,8 +7,8 @@ import qs from "qs";
 const router = useRouter();
 const userGoods = ref(0);
 //TODO 获取用户订单数量API
-const userName = ref("undefined");
-const userId = ref();
+const userName = ref("");
+const userId = ref("");
 const isLogin = ref(false);
 
 
@@ -24,7 +24,7 @@ function logout() {
       .then((res) => {
         if (res.data.flag) {
           isLogin.value = false;
-          userName.value = "undefined";
+          userName.value = "";
           userId.value = "";
           router.push("/");
         } else {
@@ -86,10 +86,10 @@ checkLogin();
       <span>喵，欢迎来天猫</span>
 
       <a v-if="isLogin" href="#">{{ userName }}</a>
-      <span v-if="isLogin" href="#" @click="logout">退出</span>
+      <span v-if="isLogin" @click="logout" class="link">退出</span>
 
-      <span v-if="!isLogin" href="#" @click="login">请登录</span>
-      <span v-if="!isLogin" href="#" @click="register">免费注册</span>
+      <span v-if="!isLogin" @click="login" class="link">请登录</span>
+      <span v-if="!isLogin" @click="register" class="link">免费注册</span>
     </div>
 
 
@@ -162,6 +162,10 @@ div.pull-left{
 }
 div.pull-right{
   margin-right: 10px;
+}
+
+.link:hover {
+  color: #C40000;
 }
 
 </style>
