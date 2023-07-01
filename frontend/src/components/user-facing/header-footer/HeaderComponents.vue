@@ -166,6 +166,7 @@ div.pull-right{
 
 .link:hover {
   color: #C40000;
+  cursor: pointer;
 }
 
 </style>
