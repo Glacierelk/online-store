@@ -20,10 +20,14 @@
           </el-col>
         </el-row>
       </div>
+      <div class="endIconDiv">
+        <img class="endIconImg" src="../../../assets/site/end.png">
+      </div>
     </div>
 </template>
 
 <script>
+import ProductsAsideCategoriesComponent from "@/components/user-facing/home-page/ProductsAsideCategoriesComponent.vue";
 export default {
   name: "BottomListComponent",
   data(){
@@ -46,25 +50,7 @@ export default {
   }
 }
 
-var categories=[{"category_name": "冰箱","cid": 76,"products": [
-    {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 11111, "promotePrice": 2222,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-    {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 1221, "promotePrice": null,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-    {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 111121, "promotePrice": 35,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-    {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 1211, "promotePrice": 272,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-    {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 11111, "promotePrice": 22776,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-    {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 11311, "promotePrice": 242,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-    {"id": 455,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 15141, "promotePrice": 4522,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-  ]},
-  {"category_name": "电视机","cid": 76,"products": [
-      {"id": 456,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 11111, "promotePrice": 2222,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-      {"id": 457,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 1221, "promotePrice": null,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-      {"id": 458,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 111121, "promotePrice": 35,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-      {"id": 459,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 1211, "promotePrice": 272,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-      {"id": 460,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 11111, "promotePrice": 22776,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-      {"id": 461,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 11311, "promotePrice": 242,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-      {"id": 462,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","originalPrice": 15141, "promotePrice": 4522,"images": [{"id": 4573, "pid": 0, "type": "type_single"}]},
-    ]},
-]
+var categories=ProductsAsideCategoriesComponent.data().categories;
 var images=[];
 var prices=[];
 var titles=[];
@@ -141,6 +127,12 @@ div.imgTab{
   height: 65%;
 }
 
+div.endIconDiv{
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
 div.textTab{
   padding: 10px 10px 10px 10px;
   width: 100%;
@@ -154,7 +146,7 @@ div.itemTab{
   border-style: solid;
   border-width: 2px;
   border-color: white;
-  margin-bottom: 15px;
+  margin-bottom: 35px;
   margin-left: 50%;
 }
 

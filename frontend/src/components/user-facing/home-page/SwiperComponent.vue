@@ -66,6 +66,6 @@ export default {
 }
 img.imgClass{
   width: 100%;
-  height: 606px;
+  height: 546px;
 }
 </style>

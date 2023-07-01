@@ -1,10 +1,11 @@
 <template>
-  <Header></Header>
-  <SearchComponents></SearchComponents>
-  <div class="categoryNavBar"><CategoryAndCarouselComponent></CategoryAndCarouselComponent></div>
-  <BottomListComponent></BottomListComponent>
-  <Footer></Footer>
-
+  <div class="homePageDiv">
+    <Header></Header>
+    <SearchComponents></SearchComponents>
+    <div class="categoryNavBar"><CategoryAndCarouselComponent></CategoryAndCarouselComponent></div>
+    <BottomListComponent></BottomListComponent>
+    <Footer></Footer>
+  </div>
 </template>
 
 <script setup>
@@ -17,7 +18,6 @@
 
 <style scoped>
 .categoryNavBar {
-  width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
