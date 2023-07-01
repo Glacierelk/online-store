@@ -1,4 +1,3 @@
-
 <template >
   <div id = "categoryC">
   <el-button
@@ -126,6 +125,7 @@ export default {
     },
     handleManage(row) {
       // 在这里处理按钮点击事件
+      //window.location.href = 'https://localhost:8080/manage/ProductComponents';
       console.log("管理",row);
     },
     handleDelete(row) {
