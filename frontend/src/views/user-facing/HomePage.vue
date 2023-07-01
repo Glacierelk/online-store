@@ -4,7 +4,6 @@
   <div class="categoryNavBar"><CategoryAndCarouselComponent></CategoryAndCarouselComponent></div>
   <BottomListComponent></BottomListComponent>
   <Footer></Footer>
-
 </template>
 
 <script setup>
