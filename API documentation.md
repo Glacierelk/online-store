@@ -943,9 +943,9 @@ GET http://localhost:8080/order/getAllOrders HTTP/1.1
 
 ##### 参数说明
 
-| 参数名 | 类型     | 是否必须 | 备注         |
-| ------ | -------- | -------- | ------------ |
-| `nid`  | `number` | 必须     | 待查询用户id |
+| 参数名 | 类型     | 是否必须 | 备注          |
+| ------ | -------- | -------- | ------------- |
+| `uid`  | `number` | 必须     | 待查询用户 ID |
 
 ##### 请求样例
 
@@ -1035,3 +1035,65 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
 }
 ~~~
 
+## 购物车
+
+### 获取用户购物车
+
+#### 基本信息
+
+> 请求路径：`/shoppingCart/getShoppingCart`
+>
+> 请求方式：GET
+>
+> 接口描述：该接口用于查询某个用户的所有订单
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型     | 是否必须 | 备注          |
+| ------ | -------- | -------- | ------------- |
+| `id`   | `number` | 必须     | 待查询用户 ID |
+
+##### 请求样例
+
+~~~HTTP
+GET http://localhost:8729/store/shoppingCart/getShoppingCart?id=1 HTTP/1.1
+~~~
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| 名称         | 类型      | 是否必须 | 备注                                         |
+| ------------ | --------- | -------- | -------------------------------------------- |
+| `flag`       | `boolean` | 必须     | 请求是否成功，`true`成功，`false`失败`       |
+| `errorMsg`   | `string`  | 非必须   | 如果请求失败，返回一个错误信息               |
+| `data`       | `list`    | 必须     | 包含了用户购物车的信息                       |
+| \|- `id`     | `number`  | 必须     | 购物车条目 ID                                |
+| \|- `pid`    | `number`  | 必须     | 商品 ID                                      |
+| \|- `uid`    | `number`  | 必须     | 当前的用户ID                                 |
+| \|- `status` | `number`  | 必须     | 购物车条目状态，这里返回的都是 1，即未删除的 |
+| \|- `count`  | `number`  | 必须     | 商品数量                                     |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"data": [
+		{
+			"id": 1,
+			"pid": 87,
+			"uid": 1,
+			"count": 10,
+			"status": 1
+		}
+	],
+	"errorMsg": null
+}
+~~~

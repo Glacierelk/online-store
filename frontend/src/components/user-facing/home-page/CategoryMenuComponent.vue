@@ -2,7 +2,7 @@
   <div class="guideMenu" id="guideMenu">
     <div class="categoryMenu" id="categoryMenu">
       <div v-for="(category,index) in categories" :key="category.category_name">
-        <div @mouseenter="showMenu(index,$event)" @mouseleave="hideMenu(index,$event)" v-if="index<18"  class="eachCategory" >
+        <div @mouseenter="showMenu(index,$event)" @mouseleave="hideMenu(index,$event)" v-if="index<16"  class="eachCategory" >
           <span><img height="18" align="center" class="eachCategoryImg" src="../../../assets/HomePage/Clip.png" alt="clip"></span>
           <a href="#" >{{category.category_name}} </a>
           <span></span>
