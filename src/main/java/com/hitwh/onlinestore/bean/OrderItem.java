@@ -7,40 +7,8 @@ public class OrderItem {
     private String name;
     private Double originalPrice;
     private Double promotePrice;
-    private int number;
+    private int count;
 
-    public OrderItem() {
-    }
-
-    public OrderItem(int id, int pid, int oid, int number) {
-        this.id = id;
-        this.pid = pid;
-        this.oid = oid;
-        this.number = number;
-    }
-
-    public OrderItem(int id, int pid, int oid, String name, Double originalPrice, Double promotePrice, int number) {
-        this.id = id;
-        this.pid = pid;
-        this.oid = oid;
-        this.name = name;
-        this.originalPrice = originalPrice;
-        this.promotePrice = promotePrice;
-        this.number = number;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderItem{" +
-                "id=" + id +
-                ", pid=" + pid +
-                ", oid=" + oid +
-                ", name='" + name + '\'' +
-                ", originalPrice=" + originalPrice +
-                ", promotePrice=" + promotePrice +
-                ", number=" + number +
-                '}';
-    }
 
     public int getId() {
         return id;
@@ -90,11 +58,24 @@ public class OrderItem {
         this.promotePrice = promotePrice;
     }
 
-    public int getNumber() {
-        return number;
+    public int getCount() {
+        return count;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", pid=" + pid +
+                ", oid=" + oid +
+                ", name='" + name + '\'' +
+                ", originalPrice=" + originalPrice +
+                ", promotePrice=" + promotePrice +
+                ", count=" + count +
+                '}';
     }
 }

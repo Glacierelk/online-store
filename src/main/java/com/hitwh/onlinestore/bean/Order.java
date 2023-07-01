@@ -7,7 +7,7 @@ public class Order {
     private int id;
     private String orderCode;
     private String address;
-    private int amount;
+    private int productCount;
     private Double totalPrice;
     private String post;
     private String receiver;
@@ -21,13 +21,14 @@ public class Order {
     private int uid;
     private int status;
 
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", orderCode='" + orderCode + '\'' +
                 ", address='" + address + '\'' +
-                ", amount=" + amount +
+                ", productCount=" + productCount +
                 ", totalPrice=" + totalPrice +
                 ", post='" + post + '\'' +
                 ", receiver='" + receiver + '\'' +
@@ -41,30 +42,6 @@ public class Order {
                 ", uid=" + uid +
                 ", status=" + status +
                 '}';
-    }
-
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public int getId() {
@@ -89,6 +66,22 @@ public class Order {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public String getPost() {
@@ -153,6 +146,14 @@ public class Order {
 
     public void setConfirmDate(String confirmDate) {
         this.confirmDate = confirmDate;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public int getUid() {

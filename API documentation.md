@@ -891,10 +891,10 @@ GET http://localhost:8080/order/getAllOrders HTTP/1.1
     "flag": true,
     "data": [
         {
-            "id": 0,
+            "id": 1,
             "orderCode": "202306281219233704899",
             "address": null,
-            "amount": 0,
+            "productCount": 35,
             "totalPrice": 47277.99987792969,
             "post": null,
             "receiver": null,
@@ -904,14 +904,15 @@ GET http://localhost:8080/order/getAllOrders HTTP/1.1
             "payDate": "2023-08-30 09:15:21.0",
             "deliveryDate": "2023-09-30 09:15:25.0",
             "confirmDate": "2023-06-24 09:15:10.0",
+            "orderItems": null,
             "uid": 1,
             "status": 1
         },
         {
-            "id": 0,
+            "id": 2,
             "orderCode": "202306281026465138173",
             "address": null,
-            "amount": 0,
+            "productCount": 1,
             "totalPrice": 1104.3499755859375,
             "post": null,
             "receiver": null,
@@ -921,6 +922,7 @@ GET http://localhost:8080/order/getAllOrders HTTP/1.1
             "payDate": "2023-06-30 09:29:27.0",
             "deliveryDate": "2023-06-30 09:29:30.0",
             "confirmDate": "2023-06-30 09:29:19.0",
+            "orderItems": null,
             "uid": 30,
             "status": 3
         }
@@ -976,7 +978,7 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
 | \|-`confirmDate`     | `timestamp` | 非必须   | 订单确认收货时间                       |
 | \|-`uid`             | `number`    | 必须     | 创建订单的用户ID                       |
 | \|-`status`          | `number`    | 必须     | 订单状态                               |
-| \|-`amount`          | `number`    | 必须     | 订单包含的商品数量                     |
+| \|-`productCount`    | `number`    | 必须     | 订单包含的商品数量                     |
 | \|-`totalPrice`      | `number`    | 必须     | 订单的总金额                           |
 | \|-`order_item`      | `object`    | 必须     | 订单中包含的商品信息                   |
 | \|\|-`id`            | `number`    | 必须     | 订单商品条目的id                       |
@@ -985,7 +987,7 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
 | \|\|-`name`          | `string`    | 必须     | 商品的名称                             |
 | \|\|-`originalPrice` | `number`    | 必须     | 商品的原始价格                         |
 | \|\|-`promotePrice`  | `number`    | 非必须   | 商品的促销价格                         |
-| \|\|-`number`        | `number`    | 必须     | 购买商品的数量                         |
+| \|\|-`count`         | `number`    | 必须     | 购买商品的数量                         |
 
 ##### 响应数据样例
 
@@ -997,7 +999,7 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
             "id": 1,
             "orderCode": "202306281219233704899",
             "address": null,
-            "amount": 2,
+            "productCount": 35,
             "totalPrice": 47277.99987792969,
             "post": null,
             "receiver": null,
@@ -1015,7 +1017,7 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
                     "name": "Konka/康佳 LED32S1卧室32吋安卓智能无线WIFI网络液晶平板电视机",
                     "originalPrice": 1699,
                     "promotePrice": 1104.35,
-                    "number": 20
+                    "count": 20
                 },
                 {
                     "id": 2,
@@ -1024,7 +1026,7 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
                     "name": "Hisense/海信 LED49EC320A 49吋led液晶电视机智能网络平板电视50",
                     "originalPrice": 2799,
                     "promotePrice": 1679.4,
-                    "number": 15
+                    "count": 15
                 }
             ],
             "uid": 1,
@@ -1034,6 +1036,116 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
     "errorMsg": null
 }
 ~~~
+
+### 更新订单信息
+
+#### 基本信息
+
+> 请求路径：`/order/updateStatus`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于更新某个订单的状态
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名   | 类型     | 是否必须 | 备注             |
+| -------- | -------- | -------- | ---------------- |
+| `id`     | `number` | 必须     | 待更新订单 ID    |
+| `status` | `number` | 必须     | 待更新订单的状态 |
+
+##### 请求样例
+
+~~~HTTP
+POST http://localhost:8729/store/order/updateStatus HTTP/1.1
+Content-Type: application/json
+
+{
+	"id": "1",
+	"status":"1"
+}
+~~~
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                                       |
+| ---------- | --------- | -------- | ------------------------------------------ |
+| `flag`     | `boolean` | 必须     | 状态更新是否成功，`true`成功，`false`失败` |
+| `errorMsg` | `string`  | 非必须   | 如果请求失败，返回一个错误信息             |
+| `data`     | `object`  | 非必须   | 该参数在该API中无效                        |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"data": null,
+	"errorMsg": null
+}
+~~~
+
+### 删除订单
+
+#### 基本信息
+
+> 请求路径：`/order/deleteOrder`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于删除某个用户的订单，并删除order_item表中的订单商品
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型     | 是否必须 | 备注          |
+| ------ | -------- | -------- | ------------- |
+| `id`   | `number` | 必须     | 删除的订单 ID |
+
+##### 请求样例
+
+~~~
+POST http://localhost:8729/store/order/deleteOrder HTTP/1.1
+Content-Type: application/json
+
+{
+	"id": "1"
+}
+~~~
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                                   |
+| ---------- | --------- | -------- | -------------------------------------- |
+| `flag`     | `boolean` | 必须     | 删除是否成功，`true`成功，`false`失败` |
+| `errorMsg` | `string`  | 非必须   | 如果请求失败，返回一个错误信息         |
+| `data`     | `object`  | 非必须   | 该参数在该API中无效                    |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"data": null,
+	"errorMsg": null
+}
+~~~
+
+
 
 ## 购物车
 

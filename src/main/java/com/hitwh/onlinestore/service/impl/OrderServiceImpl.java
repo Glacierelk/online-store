@@ -20,4 +20,15 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getOrdersByUserId(String userId) {
         return orderDAO.getOrdersByUserId(userId);
     }
+
+    @Override
+    public boolean updateStatus(int oid, int status) {
+
+        return orderDAO.updateStatus(oid, status);
+    }
+
+    @Override
+    public boolean deleteOrder(int oid) {
+        return orderDAO.deleteOrder(oid);
+    }
 }

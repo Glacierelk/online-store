@@ -12,6 +12,7 @@ import java.util.List;
 
 public class OrderDAOImpl implements OrderDAO {
     private final JdbcTemplate jdbcTemplate = new JdbcTemplate(JDBCUtils.getDataSource());
+
     @Override
     public List<Order> getAllOrders() {
         String sql = "SELECT\n" +
@@ -28,8 +29,8 @@ public class OrderDAOImpl implements OrderDAO {
                 "    o.confirm_date,\n" +
                 "    o.uid,\n" +
                 "    o.status,\n" +
-                "    COUNT(oi.id) AS amount,\n" +
-                "    SUM(p.promote_price * oi.number) AS totalPrice\n" +
+                "    SUM(oi.count) AS productCount,\n" +
+                "    SUM(p.promote_price * oi.count) AS totalPrice\n" +
                 "FROM\n" +
                 "    online_store.`order` AS o\n" +
                 "        LEFT JOIN\n" +
@@ -39,7 +40,7 @@ public class OrderDAOImpl implements OrderDAO {
                 "GROUP BY\n" +
                 "    o.id;";
         try {
-            return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Order.class));
+            return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Order.class));
         } catch (DataAccessException e) {
             e.printStackTrace();
             return null;
@@ -49,7 +50,7 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<Order> getOrdersByUserId(String userId) {
         String sql = "SELECT\n" +
-                "    o.id AS id,\n" +
+                "    o.id,\n" +
                 "    o.order_code,\n" +
                 "    o.receiver_tel,\n" +
                 "    o.user_message,\n" +
@@ -59,8 +60,8 @@ public class OrderDAOImpl implements OrderDAO {
                 "    o.confirm_date,\n" +
                 "    o.uid,\n" +
                 "    o.status,\n" +
-                "    COUNT(oi.id) AS amount,\n" +
-                "    SUM(p.promote_price * oi.number) AS totalPrice\n" +
+                "    SUM(oi.count) AS productCount,\n" +
+                "    SUM(p.promote_price * oi.count) AS total_price\n" +
                 "FROM\n" +
                 "    online_store.`order` AS o\n" +
                 "        LEFT JOIN\n" +
@@ -71,7 +72,7 @@ public class OrderDAOImpl implements OrderDAO {
                 "GROUP BY\n" +
                 "    o.id;";
         try {
-            return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Order.class),userId);
+            return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Order.class), userId);
         } catch (DataAccessException e) {
             e.printStackTrace();
             return null;
@@ -87,7 +88,7 @@ public class OrderDAOImpl implements OrderDAO {
                 "    p.name,\n" +
                 "    p.original_price,\n" +
                 "    p.promote_price,\n" +
-                "    oi.number\n" +
+                "    oi.count\n" +
                 "FROM\n" +
                 "    online_store.order_item AS oi\n" +
                 "        LEFT JOIN\n" +
@@ -95,10 +96,39 @@ public class OrderDAOImpl implements OrderDAO {
                 "WHERE\n" +
                 "    oi.oid = ?;";
         try {
-            return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(OrderItem.class),orderId);
+            return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(OrderItem.class), orderId);
         } catch (DataAccessException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public boolean updateStatus(int oid, int status) {
+        String sql = "UPDATE online_store.`order` SET status = ? WHERE id = ?;";
+        int status1;//（0待付款、1待发货、2待收货、3待评价、4订单完成）
+        if (status == 4) {
+            return false;
+        }else {
+            status1 = status + 1;
+        }
+        try {
+            return jdbcTemplate.update(sql, status1, oid) > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteOrder(int oid) {
+
+        String sql = "DELETE FROM online_store.`order` WHERE id = ?;";
+        try {
+            return jdbcTemplate.update(sql, oid) > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }
