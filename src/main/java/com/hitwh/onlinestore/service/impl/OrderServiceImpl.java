@@ -31,4 +31,9 @@ public class OrderServiceImpl implements OrderService {
     public boolean deleteOrder(int oid) {
         return orderDAO.deleteOrder(oid);
     }
+
+    @Override
+    public boolean createOrder(Order order) {
+        return orderDAO.createOrder(order);
+    }
 }

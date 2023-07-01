@@ -9,6 +9,8 @@ public class OrderItem {
     private Double promotePrice;
     private int count;
 
+    public OrderItem() {
+    }
 
     public int getId() {
         return id;
