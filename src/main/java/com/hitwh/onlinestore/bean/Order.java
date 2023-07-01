@@ -1,5 +1,7 @@
 package com.hitwh.onlinestore.bean;
 
+import java.util.List;
+
 public class Order {
 
     private int id;
@@ -15,6 +17,7 @@ public class Order {
     private String payDate;
     private String deliveryDate;
     private String confirmDate;
+    private List<OrderItem> orderItems;
     private int uid;
     private int status;
 
@@ -34,9 +37,18 @@ public class Order {
                 ", payDate='" + payDate + '\'' +
                 ", deliveryDate='" + deliveryDate + '\'' +
                 ", confirmDate='" + confirmDate + '\'' +
+                ", orderItems=" + orderItems +
                 ", uid=" + uid +
                 ", status=" + status +
                 '}';
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public int getAmount() {

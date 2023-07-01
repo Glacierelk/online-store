@@ -8,6 +8,7 @@ public class Comment {
     private String create_date;
     private String username;
 
+
     public Comment() {
     }
 
