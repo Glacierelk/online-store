@@ -33,7 +33,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Object details(int id) {
-        ProductDetails product = productDAO.queryById(id);
+        ProductDetails product = productDAO.queryForDetailsById(id);
         if (product == null) {
             return null;
         }

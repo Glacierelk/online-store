@@ -2,10 +2,10 @@
 import axios from "axios";
 import {ref} from "vue";
 import {useRouter} from "vue-router";
-import qs from "qs";
+// import qs from "qs";
 
 const router = useRouter();
-const userGoods = ref(0);
+const userCartCount = ref(0);
 //TODO 获取用户订单数量API
 const userName = ref("");
 const userId = ref("");
@@ -36,14 +36,27 @@ function logout() {
       });
 }
 
-function getUserGoods() {
-  axios.post("/order/getOrdersByUserId",qs.stringify({
-    "uid": userId.value
-  }))
+// function getUserGoods() {
+//   axios.post("/order/getOrdersByUserId",qs.stringify({
+//     "uid": userId.value
+//   }))
+//       .then((res) => {
+//         console.log(res.data);
+//         if (res.data.flag) {
+//           userGoods.value = res.data.data.length;
+//         }
+//       })
+//       .catch(() => {
+//         console.log("获取购物车商品数量失败");
+//       });
+// }
+
+function getUserCartCount() {
+  axios.get("/cart/getCount?id=" + userId.value)
       .then((res) => {
         console.log(res.data);
         if (res.data.flag) {
-          userGoods.value = res.data.data.length;
+          userCartCount.value = res.data.data;
         }
       })
       .catch(() => {
@@ -59,7 +72,8 @@ function checkLogin() {
           isLogin.value = true;
           userName.value = res.data.data.username;
           userId.value = res.data.data.id;
-          getUserGoods();
+          // getUserGoods();
+          getUserCartCount();
         } else {
           isLogin.value = false;
         }
@@ -73,6 +87,15 @@ function checkLogin() {
 }
 
 checkLogin();
+
+function toCart() {
+  router.push({
+    path: "/cart",
+    query: {
+      id: userId.value
+    }
+  });
+}
 
 </script>
 
@@ -95,9 +118,10 @@ checkLogin();
 
     <div v-if="isLogin" class="pull-right">
       <a href="#">我的订单</a>
-      <a href="#">
-        <span class=" glyphicon glyphicon-shopping-cart redColor" style="color:#C40000;margin:0"></span>
-        购物车&nbsp;<strong>{{ userGoods }}</strong>&nbsp;件</a>
+      <span style="cursor: pointer" @click="toCart()">
+        <i aria-hidden="true" class="fa fa-shopping-cart"></i>
+        购物车&nbsp;<strong>{{ userCartCount }}</strong>&nbsp;件
+      </span>
     </div>
   </nav>
 </template>

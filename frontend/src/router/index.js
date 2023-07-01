@@ -6,7 +6,7 @@ const router = createRouter({
         {
             path: '/',
             name: 'Index',
-            component: () => import('@/views/user-facing/HomePage.vue')
+            component: () => import('@/views/user-facing/HomePageView.vue')
         },
         {
             path: '/user',
@@ -39,6 +39,11 @@ const router = createRouter({
             path: '/details',
             name: 'Details',
             component: () => import('../views/user-facing/ProductDetailsView.vue'),
+        },
+        {
+            path: '/cart',
+            name: 'Cart',
+            component: () => import('../views/user-facing/ShoppingCartView.vue'),
         }
     ]
 })

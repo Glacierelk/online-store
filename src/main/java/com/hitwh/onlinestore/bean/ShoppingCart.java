@@ -6,16 +6,10 @@ public class ShoppingCart {
     private Integer uid; // 用户id
     private Integer count; // 商品数量
     private Integer status; // 商品状态
+    private Product product; // 商品信息
+    private Integer imageId; // 商品图片ID
 
     public ShoppingCart() {
-    }
-
-    public ShoppingCart(Integer id, Integer pid, Integer uid, Integer count, Integer status) {
-        this.id = id;
-        this.pid = pid;
-        this.uid = uid;
-        this.count = count;
-        this.status = status;
     }
 
     public Integer getId() {
@@ -58,14 +52,42 @@ public class ShoppingCart {
         this.status = status;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Integer getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Integer imageId) {
+        this.imageId = imageId;
+    }
+
+    public ShoppingCart(Integer id, Integer pid, Integer uid, Integer count, Integer status, Product product, Integer imageId) {
+        this.id = id;
+        this.pid = pid;
+        this.uid = uid;
+        this.count = count;
+        this.status = status;
+        this.product = product;
+        this.imageId = imageId;
+    }
+
     @Override
     public String toString() {
-        return "SoppingCart{" +
+        return "ShoppingCart{" +
                 "id=" + id +
                 ", pid=" + pid +
                 ", uid=" + uid +
                 ", count=" + count +
                 ", status=" + status +
+                ", product=" + product +
+                ", imageId=" + imageId +
                 '}';
     }
 }
