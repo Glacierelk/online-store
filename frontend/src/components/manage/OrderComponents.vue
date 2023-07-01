@@ -4,7 +4,6 @@
       <el-table-column sortable prop="id" label="订单ID" align="center" width="150"></el-table-column>
       <el-table-column sortable prop="uid" label="买家ID" align="center" width="150"></el-table-column>
       <el-table-column prop="orderCode" label="订单编号" align="center" width="200"></el-table-column>
-      <el-table-column prop="orderCode" label="订单编号" align="center" width="200"></el-table-column>
       <el-table-column sortable prop="productCount" label="商品总数" align="center" width="120"></el-table-column>
       <el-table-column sortable prop="totalPrice" label="总金额" align="center" width="150">
         <template v-slot="scope">
