@@ -1,53 +1,61 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <div id = "categoryC">
-  <el-button
-      type="primary"
-      @click="addCategory"
-      style="position: absolute; top: 5px; right: 5px;width: 8%;font-size: 15px; margin-bottom: 0"
-  >添加
-  </el-button>
+  <div id="categoryC">
 
-  <el-dialog title="添加" v-model="secondDialogVisible">
-    <el-form :model="form" label-width="150px" @submit="submitForm">
-      <el-form-item v-for="index in rowCount" :label="`属性 ${index}`" :key="index">
-        <el-input v-model="form[`input${index}`]"></el-input>
-      </el-form-item>
-      <el-button type="primary" native-type="submit">提交</el-button>
-    </el-form>
-  </el-dialog>
+
+    <el-dialog title="添加" v-model="secondDialogVisible">
+      <el-form :model="form" label-width="150px" @submit="submitForm">
+        <el-form-item v-for="index in rowCount" :label="`属性 ${index}`" :key="index">
+          <el-input v-model="form[`input${index}`]"></el-input>
+        </el-form-item>
+        <el-button type="primary" native-type="submit">提交</el-button>
+      </el-form>
+    </el-dialog>
   </div>
 
-  <div class = table-container>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="id" label="ID" width="480" align="center"></el-table-column>
+  <div class=table-container>
+    <el-table stripe :data="tableData" style="width: 100%; margin-bottom: 20px">
+      <el-table-column prop="id" label="分类ID" width="480" align="center"></el-table-column>
       <el-table-column prop="name" label="分类名称" width="480" align="center"></el-table-column>
       <el-table-column label="产品管理" width="480" align="center">
         <template v-slot="scope">
-          <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleButtonClick(scope.row)">
+          <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"
+                     @click="handleButtonClick(scope.row)">
             <i class="fa fa-edit" style="color: blue;"></i>
           </el-button>
         </template>
       </el-table-column>
       <el-table-column label="删除" width="480" align="center">
         <template v-slot="scope">
-          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleButtonClick(scope.row)">
+          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"
+                     @click="handleButtonClick(scope.row)">
             <i class="fa fa-trash" style="color: red;"></i>
           </el-button>
         </template>
       </el-table-column>
     </el-table>
-
-    <div style="display: flex; justify-content: center;">
-      <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[5,10,15]"
-          :page-size="pageSize"
-          :total="total"
-          layout="sizes, prev, pager, next, jumper"
-      ></el-pagination>
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div style="flex-grow: 1; display: flex; justify-content: center;">
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-sizes="[5,10,15]"
+            :page-size="pageSize"
+            :total="total"
+            layout="sizes, prev, pager, next, jumper"
+        ></el-pagination>
+      </div>
+      <div>
+        <el-button
+            type="primary"
+            @click="addCategory"
+            style="margin-right: 20px;"
+        >添加
+        </el-button>
+      </div>
     </div>
+
+
   </div>
 </template>
 
@@ -55,7 +63,7 @@
 import axios from "axios";
 
 function range(start, end, step = 1) {
-  return Array.from({ length: Math.ceil((end - start) / step) + 1 }, (_, index) => start + (index * step));
+  return Array.from({length: Math.ceil((end - start) / step) + 1}, (_, index) => start + (index * step));
 }
 
 export default {
@@ -91,14 +99,14 @@ export default {
       // 发送网络请求获取后端数据
       axios.get(url)
           .then(response => {
-            this.tableData=response.data.data;
+            this.tableData = response.data.data;
             this.total = this.tableData.length;
             // console.log(this.total);
-             console.log(this.currentPage,this.pageSize, this.total);
+            console.log(this.currentPage, this.pageSize, this.total);
             // 请求成功，将返回的数据赋值给tableData和total
             this.tableData = [];
-            for(let i = (this.currentPage-1)*this.pageSize, j=0; i < Math.min((this.currentPage-1)*this.pageSize + this.pageSize, this.total); i++) {
-              this.tableData[j]=response.data.data[i];
+            for (let i = (this.currentPage - 1) * this.pageSize, j = 0; i < Math.min((this.currentPage - 1) * this.pageSize + this.pageSize, this.total); i++) {
+              this.tableData[j] = response.data.data[i];
               j++;
               console.log(i);
               console.log(response.data.data[i]);
@@ -161,14 +169,21 @@ export default {
 </script>
 
 <style>
-  #categoryC {
-    margin-top:
-        80px;
-  }
-  .table-container {
-    margin-top: 0px; /* 设置距离顶部的距离为20像素 */
-  }
-  .el-input__inner {
-    font-size: 15px;
-  }
+#categoryC {
+  margin-top: 0px;
+}
+
+.table-container {
+  margin-top: 0px; /* 设置距离顶部的距离为20像素 */
+}
+
+.el-input__inner {
+  font-size: 15px;
+}
+
+.el-button {
+  align-items: center;
+  --el-font-size-base: 15px;
+
+}
 </style>

@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
-    <el-table :data="orderData.slice((currentPage-1)*pageSize, currentPage*pageSize)" style="width: 100%">
+    <el-table stripe :data="orderData.slice((currentPage-1)*pageSize, currentPage*pageSize)" style="width: 100%">
       <el-table-column prop="id" label="订单ID" align="center" width="150"></el-table-column>
       <el-table-column prop="uid" label="买家ID" align="center" width="150"></el-table-column>
       <el-table-column prop="orderCode" label="订单编号" align="center" width="200"></el-table-column>
@@ -143,7 +143,7 @@ export default {
   padding: 20px 0;
 }
 
-.el-input__inner {
-  font-size: 15px;
+.el-button {
+  float: right;
 }
 </style>
