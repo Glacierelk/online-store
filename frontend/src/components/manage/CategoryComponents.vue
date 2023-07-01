@@ -1,3 +1,4 @@
+
 <template >
   <div id = "categoryC">
   <el-button
@@ -61,6 +62,7 @@
 <script>
 import axios from "axios";
 import qs from "qs";
+import { ElMessageBox } from 'element-plus';
 //import {inject} from "vue";
 
 function range(start, end, step = 1) {
@@ -74,7 +76,9 @@ export default {
   data() {
     return {
       form: {},
-      rowCount: 5,
+      rowCount: [],
+      rowCountNum:0,
+      rowId:0,
       secondDialogVisible: false,
       categoryName: '',
       inputValue: '',
@@ -125,28 +129,45 @@ export default {
       console.log("管理",row);
     },
     handleDelete(row) {
-      // 处理删除按钮点击事件
-      const deleteUrl = 'category/delete?categoryId='+row.id;
-      axios.delete(deleteUrl)
-      window.location.reload();
+      ElMessageBox.confirm('确定要删除吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+          .then(() => {
+            // 用户点击了确定按钮
+            const deleteUrl = 'category/delete?categoryId=' + row.id;
+
+            axios.delete(deleteUrl)
+                .then(() => {
+                  // 删除成功，刷新页面
+                  window.location.reload();
+                })
+                .catch(error => {
+                  // 处理删除失败的情况
+                  console.error(error);
+                  alert("删除发生错误，请重试！");
+                });
+          })
+          .catch(() => {
+            // 用户点击了取消按钮或者点击了弹窗外部区域，不执行任何操作
+          });
     },
-    addProperty() {
+    addProperty(row) {
       this.$prompt('请输入对应分类想要添加的属性个数', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /\d/,
         inputErrorMessage: '属性个数不正确'
       }).then(({value}) => {
-        this.$message({
-          type: 'success',
-          message: '你的属性个数是: ' + value,
-        });
+        this.rowCountNum = value;
         this.rowCount = range(1, value, 1);
+        // eslint-disable-next-linerow.id;
+        this.rowId = row.id;
+        console.log(row.id);
         //this.rowCount=Array.from({ length: this.rowCount }, (v, i) => i + 1);
-        console.log(this.rowCount);
+        //console.log(this.rowCount);
         this.secondDialogVisible = true; // 打开第二个对话框);
-        console.log(this.secondDialogVisible);
-        console.log(this.row);
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -184,16 +205,67 @@ export default {
       });
     },
 
-    submitForm(event) {
+    async submitForm(event) {
       event.preventDefault(); // 阻止表单默认提交行为
       // 在这里执行表单提交逻辑
+      console.log("行数是" + this.rowCount);
+      let requests = []; // 存储所有请求
 
-      console.log(this.form); // 或者将表单数据发送至后端
+      for (let i = 1; i <= this.rowCountNum; i++) {
+        const inputValue = this.form[`input${i}`];
+        requests.push(
+            axios.post('property/add', qs.stringify({
+              "cid": this.rowId,
+              "name": inputValue,
+            }))
+        );
+      }
+
+      try {
+        const responses = await Promise.all(requests);
+
+        let successAdded = false;
+        let showAlert = false;
+
+        responses.forEach(res => {
+          if (res.data.flag) {
+            successAdded = true; // 设置成功添加标志为true
+          } else {
+            showAlert = true;
+          }
+        });
+
+        if (successAdded) {
+          this.$message({
+            type: 'success',
+            message: "添加成功"
+          });
+
+          this.clearForm();
+          this.secondDialogVisible = false;
+        } else if (showAlert) {
+          alert("添加失败，请重试！");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("请求发生错误，请重试！");
+      }
+
+      this.clearForm();
+      this.secondDialogVisible = false;
+      // 或者将表单数据发送至后端
+    },
+
+    clearForm() {
+      // 将表单中的各个输入元素重置为空字符串或默认值
+      for (let i = 1; i <= this.rowCountNum; i++) {
+        this.form[`input${i}`] = '';
+      }
     }
   },
   mounted() {
     this.getData(); // 页面加载时初始化数据
-    console.log("111"); // 或者将表单数据发送至后端
+    //console.log("111"); // 或者将表单数据发送至后端
   },
 }
 </script>
