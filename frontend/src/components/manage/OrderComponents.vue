@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
-    <el-table :data="orderData.slice((currentPage-1)*pageSize, currentPage*pageSize)" style="width: 100%">
+    <el-table stripe :data="orderData.slice((currentPage-1)*pageSize, currentPage*pageSize)" style="width: 100%">
       <el-table-column prop="id" label="订单ID" align="center" width="150"></el-table-column>
       <el-table-column prop="uid" label="买家ID" align="center" width="150"></el-table-column>
       <el-table-column prop="orderCode" label="订单编号" align="center" width="200"></el-table-column>
@@ -27,7 +27,7 @@
         <template v-slot="scope">
           <el-button
               v-if="scope.row.status === 1"
-              @click="deliveryOrder(scope.row.id,scope.row.status)" type="primary" size="small">发货
+              @click="confirmDelivery(scope.row.id,scope.row.status)" type="primary" size="small">发货
           </el-button>
         </template>
       </el-table-column>
@@ -49,6 +49,7 @@
 <script>
 import axios from 'axios';
 import qs from "qs";
+import {ElMessageBox} from "element-plus";
 
 export default {
   name: 'OrderComponents',
@@ -56,7 +57,7 @@ export default {
     return {
       orderData: [], // 数据初始化为空
       currentPage: 1,
-      pageSize: 5
+      pageSize: 10
     };
   },
   mounted() {
@@ -95,6 +96,16 @@ export default {
     handleCurrentChange(val) {
       this.currentPage = val;
     },
+    confirmDelivery(oid,status){
+      ElMessageBox.confirm('确认发货?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deliveryOrder(oid,status);
+      }).catch(() => {
+      });
+    },
     deliveryOrder(orderId,status){
       axios.post('/order/updateStatus', qs.stringify({
         "id": orderId,
@@ -119,6 +130,7 @@ export default {
             console.error(error);
           });
     }
+
   }
 };
 </script>
@@ -131,7 +143,7 @@ export default {
   padding: 20px 0;
 }
 
-.el-input__inner {
-  font-size: 15px;
+.el-button {
+  float: right;
 }
 </style>
