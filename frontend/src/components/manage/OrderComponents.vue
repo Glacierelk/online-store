@@ -4,7 +4,7 @@
       <el-table-column prop="id" label="订单ID" align="center" width="150"></el-table-column>
       <el-table-column prop="uid" label="买家ID" align="center" width="150"></el-table-column>
       <el-table-column prop="orderCode" label="订单编号" align="center" width="200"></el-table-column>
-      <el-table-column prop="amount" label="商品总数" align="center" width="80"></el-table-column>
+      <el-table-column prop="productCount" label="商品总数" align="center" width="80"></el-table-column>
       <el-table-column prop="totalPrice" label="总金额" align="center" width="150">
         <template v-slot="scope">
           {{ scope.row.totalPrice.toFixed(2) }}
@@ -14,7 +14,12 @@
       <el-table-column prop="payDate" label="支付时间" align="center" width="200"></el-table-column>
       <el-table-column prop="deliveryDate" label="发货时间" align="center" width="200"></el-table-column>
       <el-table-column prop="confirmDate" label="确认时间" align="center" width="200"></el-table-column>
-      <el-table-column prop="status" label="订单状态" align="center" min-width="100"></el-table-column>
+      <el-table-column prop="status" label="订单状态" align="center" min-width="100"
+      >
+        <template v-slot="scope">
+          {{ getStatusDescription(scope.row.status) }}
+        </template>
+      </el-table-column>
       <el-table-column
           label="操作" width="100px"
           fixed="right"
@@ -58,6 +63,22 @@ export default {
     this.fetchData(); // 页面加载时获取数据
   },
   methods: {
+    getStatusDescription(status) {
+      switch (status) {
+        case 0:
+          return '待付款';
+        case 1:
+          return '待发货';
+        case 2:
+          return '待收货';
+        case 3:
+          return '待评价';
+        case 4:
+          return '订单完成';
+        default:
+          return '未知状态'; // 用于处理可能存在的未知状态
+      }
+    },
     fetchData() {
       axios.get('/order/getAllOrders')
           .then(response => {
