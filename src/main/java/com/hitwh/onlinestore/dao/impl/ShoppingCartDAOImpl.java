@@ -13,7 +13,7 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO {
 
     @Override
     public List<ShoppingCart> queryByUserId(Integer userId) {
-        String sql = "select * from shopping_cart where uid = ?";
+        String sql = "select * from shopping_cart where uid = ? and status = 1";
         try {
             return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ShoppingCart.class), userId);
         } catch (Exception e) {
