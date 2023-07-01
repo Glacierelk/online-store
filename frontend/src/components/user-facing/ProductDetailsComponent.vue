@@ -8,7 +8,7 @@
       </tr>
 
       <tr style="margin-top: 20px">
-        <td>
+        <td style="width: 48%">
           <table class="product-show-left">
             <tr>
               <td>
@@ -19,91 +19,79 @@
             </tr>
 
             <tr>
-              <td>
+              <td align="center">
                 <img
                     v-for="item in showImages"
                     :key="item"
                     :src="getImagePath(item)"
+                    class="small-show-image"
+                    @mouseover="changeImage(item)"
                     alt="商品缩略图"/>
               </td>
             </tr>
           </table>
         </td>
 
-        <td>
-          <table class="product-show-right">
-            <tr>
-              <td class="name">
-                {{ data.name }}
-              </td>
-            </tr>
+        <td class="product-show-right">
+          <div class="product-name">
+            {{ data.name }}
+          </div>
 
-            <tr>
-              <td v-if="data.subTitle">
-                {{ data.subTitle }}
-              </td>
-            </tr>
+          <div class="product-sub-title">
+            {{ data.subTitle }}
+          </div>
 
-            <tr>
-              <td>
-                <div class="price-show">
-                  <div class="juhuasuan">
-                    <span class="juhuasuanBig">聚划算</span>
-                    <span>此商品即将参加聚划算，<span class="juhuasuanTime">1天19小时</span>后开始，</span>
-                  </div>
+          <div class="price-show">
+            <div class="juhuasuan">
+              <span class="juhuasuanBig">聚划算</span>
+              <span>此商品即将参加聚划算，<span class="juhuasuanTime">1天19小时</span>后开始，</span>
+            </div>
 
-                  <div>
-                    <span class="common-font">价格</span>
-                    <span>￥</span>
-                    <span class="original-price-show">{{ data.originalPrice }}</span>
-                  </div>
+            <div id="price-show">
+              <div style="padding-top: 20px;">
+                <span class="common-font">价格</span>
+                <span>￥</span>
+                <span class="original-price-show">{{ data.originalPrice }}</span>
+              </div>
 
-                  <div>
-                    <span class="common-font">促销价</span>
-                    <span class="promote-dollar">￥</span>
-                    <span class="promote-price-show">{{ data.promotePrice }}</span>
-                  </div>
-                </div>
-              </td>
-            </tr>
+              <div>
+                <span class="common-font">促销价</span>
+                <span class="promote-dollar">￥</span>
+                <span class="promote-price-show">{{ data.promotePrice }}</span>
+              </div>
+            </div>
+          </div>
 
-            <tr>
-              <td v-if="data.stock">
-                <span class="common-font">数量</span>
-                <el-input-number v-model="count" :max="data.stock" :min="1"></el-input-number>
-                <span class="common-font">件&nbsp;库存{{ data.stock }}件</span>
-              </td>
-            </tr>
+          <div>
+            <span class="common-font">数量</span>
+            <el-input-number v-model="count" :max="data.stock" :min="1"></el-input-number>
+            <span class="common-font">件&nbsp;库存&nbsp;{{ data.stock }}&nbsp;件</span>
+          </div>
 
-            <tr>
-              <td>
-                <span class="common-font">
-                  服务承诺&nbsp;极速退款&nbsp;赠运费险&nbsp;七天无理由退换
-                </span>
-              </td>
-            </tr>
+          <div class="common-font">
+            服务承诺&nbsp;极速退款&nbsp;赠运费险&nbsp;七天无理由退换
+          </div>
 
-            <tr>
-              <td>
-                <el-button plain type="danger">立即购买</el-button>
-                <el-button type="danger">
-                  <i aria-hidden="true" class="fa fa-shopping-cart"></i>
-                  &nbsp;加入购物车
-                </el-button>
-              </td>
-            </tr>
-          </table>
+          <div align="center">
+            <el-button plain type="danger">立即购买</el-button>
+            <el-button type="danger">
+              <i aria-hidden="true" class="fa fa-shopping-cart"></i>
+              &nbsp;加入购物车
+            </el-button>
+          </div>
+
         </td>
       </tr>
     </table>
 
-    <el-tabs v-model="activeTab" type="card">
+    <el-tabs v-model="activeTab" type="card" class="product-show">
       <el-tab-pane label="商品详情" name="tab1">
         <div class="common-font table-content">
-          产品参数 <br/>
+          产品参数: <br/> <br/>
           <div class="properties">
-            <div v-for="item in data.properties" :key="item.id">
+            <div v-for="item in data.properties" :key="item.id" class="product-property">
               <span>{{ item.name }}</span>
+              :&nbsp;
               <span>{{ item.value }}</span>
             </div>
           </div>
@@ -114,16 +102,17 @@
               v-for="item in detailImages"
               :key="item"
               :src="getDetailImagePath(item)"
+              style="margin-bottom: 5px"
               alt="商品详情图"/>
         </div>
       </el-tab-pane>
 
       <el-tab-pane :label="getComment(data.comments.length)" name="tab2">
-        <div class="comment-show table-content">
-          <div v-for="item in data.comments" :key="item.id">
+        <div class="comment-show table-content" v-if="data.comments">
+          <div v-for="item in data.comments" :key="item.id" class="comments-show">
             <div class="comment-show-header">
-              <span>{{ item.user.name }}</span>
-              <span>{{ item.createDate }}</span>
+              <span>{{ item.username }}</span>
+              <span>{{ item.create_date }}</span>
             </div>
 
             <div class="comment-show-content">
@@ -161,7 +150,7 @@ export default {
         cid: 0,
         images: [],
         properties: [],
-        content: []
+        comments: []
       },
       showImages: [],
       detailImages: [],
@@ -218,7 +207,10 @@ export default {
       return require("../../assets/productDetail/" + id + ".jpg");
     },
     getComment(count) {
-      return "累计评价" + count;
+      return "累计评价 " + count;
+    },
+    changeImage(id) {
+      this.leftImage = require("../../assets/productSingle/" + id + ".jpg");
     }
   },
   async mounted() {
@@ -235,7 +227,7 @@ export default {
   width: 85%;
   margin-left: auto;
   margin-right: auto;
-  //height: 1000px;
+  min-width: 1000px;
 }
 
 .name {
@@ -265,18 +257,17 @@ export default {
 
 .big-show-div {
   border: #cccccc solid 1px;
-  margin: 10px;
+  margin: 2%;
 }
 
 .big-show-image {
-  padding: 5px;
+  vertical-align: middle;
+  padding: 2%;
   width: 100%;
 }
 
 .el-tabs {
-  margin-top: 20px;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 20px auto;
 }
 
 .top-ad-image {
@@ -284,12 +275,128 @@ export default {
 }
 
 .table-content {
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .images {
   margin-left: auto;
   margin-right: auto;
 }
+
+.product-show-right {
+  height: 95%;
+  width: 100%;
+  //border: #cccccc solid 1px;
+  vertical-align: top;
+  margin-top: 20px;
+}
+
+.small-show-image {
+  margin: 1%;
+  border: #ffffff solid 2px;
+}
+
+.small-show-image:hover {
+  border: black solid 2px;
+}
+
+.product-show {
+  max-width: 1000px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.properties {
+  overflow: hidden;
+}
+
+.product-property {
+  width: 32%;
+  margin-right: 1%;
+  float: left;
+  margin-bottom: 10px;
+}
+
+.product-name {
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+.product-sub-title {
+  color: #DD2727;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+.common-font {
+  font-size: 12px;
+  color: #999999;
+  margin: 0 10px;
+}
+
+.original-price-show {
+  font-family: Arial, serif;
+  font-size: 12px;
+  color: #333333;
+  text-decoration: line-through;
+}
+
+.promote-dollar {
+  font-family: Arial, serif;
+  font-size: 18px;
+  color: #C40000;
+}
+
+.promote-price-show {
+  color: #c40000;
+  font-family: Arial, serif;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#price-show {
+  background-image: url("../../assets/site/priceBackground.png");
+  margin-top: 0;
+}
+
+.product-show-right > div {
+  margin-top: 25px;
+}
+
+.el-button {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.comments-show {
+  height: 100px;
+  border-bottom: #cccccc 1px solid;
+}
+
+.comment-show {
+  margin-bottom: 20px;
+}
+
+.comment-show-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment-show-header span:first-child {
+  font-weight: bold;
+}
+
+.comment-show-content {
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 6px;
+}
+
 </style>

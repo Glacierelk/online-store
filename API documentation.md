@@ -250,20 +250,23 @@ GET http://localhost:8080/store/category/homePageCategory HTTP/1.1
 
 ##### 参数说明
 
-| 名称                | 类型      | 是否必须 | 备注                                    |
-| ------------------- | --------- | -------- | --------------------------------------- |
-| `flag`              | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
-| `errorMsg`          | `string`  | 非必须   | 如果获取失败，返回一个错误信息          |
-| `data`              | `list`    | 必须     | 分类数据列表                            |
-| \|- `category_name` | `string`  | 必须     | 分类名称                                |
-| \|- `cid`           | `number`  | 必须     | 分类ID                                  |
-| \|- `products`      | `list`    | 必须     | 当前分类的商品                          |
-| \|- \|- `id`        | `number`  | 必须     | 商品ID                                  |
-| \|- \|- `name`      | `string`  | 必须     | 商品名称                                |
-| \|- \|- `subTitle`  | `string`  | 非必需   | 商品小标题                              |
-| \|- \|- `images`    | `list`    | 必须     | 商品图片                                |
-| \|- \|- \|- `id`    | `number`  | 必须     | 图片 ID                                 |
-| \|- \|- \|- `type`  | `string`  | 必须     | 图片分类                                |
+| 名称                   | 类型      | 是否必须 | 备注                                    |
+| ---------------------- | --------- | -------- | --------------------------------------- |
+| `flag`                 | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
+| `errorMsg`             | `string`  | 非必须   | 如果获取失败，返回一个错误信息          |
+| `data`                 | `list`    | 必须     | 分类数据列表                            |
+| \|- `category_name`    | `string`  | 必须     | 分类名称                                |
+| \|- `cid`              | `number`  | 必须     | 分类ID                                  |
+| \|- `products`         | `list`    | 必须     | 当前分类的商品                          |
+| \|- \|- `id`           | `number`  | 必须     | 商品ID                                  |
+| \|- \|- `name`         | `string`  | 必须     | 商品名称                                |
+| \|- \|- `subTitle`     | `string`  | 非必需   | 商品小标题                              |
+| \|-\|- `originalPrice` | `number`  | 必须     | 原价                                    |
+| \|-\|- `promotePrice`  | `number`  | 非必需   | 促销价                                  |
+| \|-\|- `stock`         | `number`  | 必须     | 库存                                    |
+| \|- \|- `images`       | `list`    | 必须     | 商品图片                                |
+| \|- \|- \|- `id`       | `number`  | 必须     | 图片 ID                                 |
+| \|- \|- \|- `type`     | `string`  | 必须     | 图片分类                                |
 
 ##### 响应数据样例
 
@@ -272,27 +275,29 @@ GET http://localhost:8080/store/category/homePageCategory HTTP/1.1
 	"flag": true,
 	"data": [
 		{
-			"category_name": "冰箱",
-			"cid": 76,
+			"category_name": "安全座椅",
+			"cid": 60,
 			"products": [
 				{
-					"id": 449,
-					"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜",
-					"subTitle": "家用冰箱 WIFI智能 风冷无霜",
-					"originalPrice": null,
-					"promotePrice": null,
-					"stock": 0,
-					"cid": 0,
-					"createDate": null,
+					"id": 958,
+					"name": "惠尔顿儿童安全座椅isofix硬接口汽车用安全坐椅9个月-12岁酷睿宝",
+					"subTitle": "双接口固定 夏克立推荐 好评如潮",
+					"originalPrice": 2848,
+					"promotePrice": 1993.6,
+					"stock": 52,
+					"cid": 60,
+					"createDate": 1469384947000,
 					"images": [
 						{
-							"id": 4573,
+							"id": 10144,
 							"pid": 0,
 							"type": "type_single"
 						}
-					]
+					],
+					"properties": null,
+					"comments": null
 				}
-            ]
+			]
 		}
 	],
 	"errorMsg": null
@@ -492,7 +497,7 @@ Content-Type: application/json
 }
 ~~~
 
-### 响应数据
+#### 响应数据
 
 ##### 参数格式
 

@@ -16,7 +16,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<ProductDetails> homePageGetProductsByCategoryId(int categoryId) {
         try {
-            String sql = "select id, name, sub_title from product where cid = ? limit 30";
+            String sql = "select * from product where cid = ? limit 30";
             return template.query(sql, new BeanPropertyRowMapper<>(ProductDetails.class), categoryId);
         } catch (Exception e) {
             return null;
