@@ -838,6 +838,75 @@ Content-Type: application/json
 
 ## 订单
 
+### 创建订单
+
+#### 基本信息
+
+> 请求路径：`/order/createOrder`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于创建订单
+
+#### 请求参数
+
+##### 参数说明
+
+| 名称           | 类型     | 是否必须 | 备注                                   |
+| -------------- | -------- | -------- | -------------------------------------- |
+| `uid`          | `number` | 必须     | 创建订单的用户ID                       |
+| `address`      | `string` | 非必须   | 订单的收货地址默认为用户注册的地址信息 |
+| `receiverTel`  | `number` | 非必须   | 收货人手机号                           |
+| `user_message` | `string` | 非必须   | 用户对该订单的备注                     |
+| `orderItems`   | `list`   | 必须     | 订单包含的商品ID与件数                 |
+| \|-`pid`       | `number` | 必须     | 购买商品的ID                           |
+| \|-`count`     | `number` | 必须     | 购买商品的件数                         |
+
+##### 请求样例
+
+~~~HTTP
+POST http://localhost:8080/store/product/search HTTP/1.1
+Content-Type: application/json
+
+{
+    "uid": 114,
+    "receiverTel": "13587168037",
+    "userMessage": "好好好",
+    "orderItems": [
+        {"pid": 87, "count": 3},
+        {"pid": 148, "count": 1},
+        {"pid": 204, "count": 2}
+    ]
+}
+
+~~~
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                                        |
+| ---------- | --------- | -------- | ------------------------------------------- |
+| `flag`     | `boolean` | 必须     | 创建订单是否成功，`true` 成功，`false` 失败 |
+| `errorMsg` | `string`  | 非必须   | 如果删除失败，返回一个错误信息              |
+| `data`     | `object`  | 非必须   | 该参数在该API无效                           |
+
+##### 响应数据样例
+
+~~~json
+{
+    "flag": true,
+    "data": null,
+    "errorMsg": null
+}
+~~~
+
+
+
 ### 获取所有订单
 
 #### 基本信息

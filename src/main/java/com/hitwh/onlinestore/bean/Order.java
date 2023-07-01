@@ -22,6 +22,8 @@ public class Order {
     private int status;
 
 
+    public Order() {
+    }
     @Override
     public String toString() {
         return "Order{" +

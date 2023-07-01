@@ -29,4 +29,6 @@ public interface OrderService {
      * @return
      */
     boolean deleteOrder(int oid);
+
+    boolean createOrder(Order order);
 }

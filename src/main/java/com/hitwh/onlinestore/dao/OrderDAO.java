@@ -34,5 +34,12 @@ public interface OrderDAO {
      * @return
      */
     boolean deleteOrder(int oid);
+
+    /**
+     * 创建订单
+     * @param order
+     * @return
+     */
+    boolean createOrder(Order order);
 }
 

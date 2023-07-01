@@ -83,6 +83,7 @@ export default {
     fetchData() {
       axios.get('/order/getAllOrders')
           .then(response => {
+            console.log(response.data);
             this.orderData = response.data.data; // 将获取到的数据赋值给orderData
           })
           .catch(error => {
