@@ -1037,6 +1037,116 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
 }
 ~~~
 
+### 更新订单信息
+
+#### 基本信息
+
+> 请求路径：`/order/updateStatus`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于更新某个订单的状态
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名   | 类型     | 是否必须 | 备注             |
+| -------- | -------- | -------- | ---------------- |
+| `id`     | `number` | 必须     | 待更新订单 ID    |
+| `status` | `number` | 必须     | 待更新订单的状态 |
+
+##### 请求样例
+
+~~~HTTP
+POST http://localhost:8729/store/order/updateStatus HTTP/1.1
+Content-Type: application/json
+
+{
+	"id": "1",
+	"status":"1"
+}
+~~~
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                                       |
+| ---------- | --------- | -------- | ------------------------------------------ |
+| `flag`     | `boolean` | 必须     | 状态更新是否成功，`true`成功，`false`失败` |
+| `errorMsg` | `string`  | 非必须   | 如果请求失败，返回一个错误信息             |
+| `data`     | `object`  | 非必须   | 该参数在该API中无效                        |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"data": null,
+	"errorMsg": null
+}
+~~~
+
+### 删除订单
+
+#### 基本信息
+
+> 请求路径：`/order/deleteOrder`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于删除某个用户的订单，并删除order_item表中的订单商品
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型     | 是否必须 | 备注          |
+| ------ | -------- | -------- | ------------- |
+| `id`   | `number` | 必须     | 删除的订单 ID |
+
+##### 请求样例
+
+~~~
+POST http://localhost:8729/store/order/deleteOrder HTTP/1.1
+Content-Type: application/json
+
+{
+	"id": "1"
+}
+~~~
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                                   |
+| ---------- | --------- | -------- | -------------------------------------- |
+| `flag`     | `boolean` | 必须     | 删除是否成功，`true`成功，`false`失败` |
+| `errorMsg` | `string`  | 非必须   | 如果请求失败，返回一个错误信息         |
+| `data`     | `object`  | 非必须   | 该参数在该API中无效                    |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"data": null,
+	"errorMsg": null
+}
+~~~
+
+
+
 ## 购物车
 
 ### 获取用户购物车

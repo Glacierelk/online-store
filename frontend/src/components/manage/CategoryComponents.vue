@@ -7,30 +7,30 @@
   >添加分类
   </el-button>
 
-  <el-dialog title="添加" v-model="secondDialogVisible">
-    <el-form :model="form" label-width="150px" @submit="submitForm">
-      <el-form-item v-for="index in rowCount" :label="`属性 ${index}`" :key="index">
-        <el-input v-model="form[`input${index}`]"></el-input>
-      </el-form-item>
-      <el-button type="primary" native-type="submit">提交</el-button>
-    </el-form>
-  </el-dialog>
+    <el-dialog title="添加" v-model="secondDialogVisible">
+      <el-form :model="form" label-width="150px" @submit="submitForm">
+        <el-form-item v-for="index in rowCount" :label="`属性 ${index}`" :key="index">
+          <el-input v-model="form[`input${index}`]"></el-input>
+        </el-form-item>
+        <el-button type="primary" native-type="submit">提交</el-button>
+      </el-form>
+    </el-dialog>
   </div>
 
-  <div class = table-container>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column prop="id" label="ID"></el-table-column>
-      <el-table-column prop="name" label="分类名称"></el-table-column>
-      <el-table-column label="产品管理">
+  <div class=table-container>
+    <el-table stripe :data="tableData" style="width: 100%; margin-bottom: 20px">
+      <el-table-column prop="id" label="分类ID" width="480" align="center"></el-table-column>
+      <el-table-column prop="name" label="分类名称" width="480" align="center"></el-table-column>
+      <el-table-column label="产品管理" width="480" align="center">
         <template v-slot="scope">
-          <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleManage(scope.row)">
+          <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleButtonClick(scope.row)">
             <i class="fa fa-edit" style="color: blue;"></i>
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="删除">
+      <el-table-column label="删除" width="480" align="center">
         <template v-slot="scope">
-          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleDelete(scope.row)">
+          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleButtonClick(scope.row)">
             <i class="fa fa-trash" style="color: red;"></i>
           </el-button>
         </template>
@@ -43,18 +43,29 @@
         </template>
       </el-table-column>
     </el-table>
-
-    <div style="display: flex; justify-content: center;">
-      <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[5,10,15]"
-          :page-size="pageSize"
-          :total="total"
-          layout="sizes, prev, pager, next, jumper"
-      ></el-pagination>
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div style="flex-grow: 1; display: flex; justify-content: center;">
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentPage"
+            :page-sizes="[5,10,15]"
+            :page-size="pageSize"
+            :total="total"
+            layout="sizes, prev, pager, next, jumper"
+        ></el-pagination>
+      </div>
+      <div>
+        <el-button
+            type="primary"
+            @click="addCategory"
+            style="margin-right: 20px;"
+        >添加
+        </el-button>
+      </div>
     </div>
+
+
   </div>
 </template>
 
@@ -108,13 +119,20 @@ export default {
             this.tableData=response.data.data;
             this.total = this.tableData.length;
             // console.log(this.total);
-            //  console.log(this.currentPage,this.pageSize, this.total);
+             console.log(this.currentPage,this.pageSize, this.total);
             // 请求成功，将返回的数据赋值给tableData和total
             this.tableData = [];
             for(let i = (this.currentPage-1)*this.pageSize, j=0; i < Math.min((this.currentPage-1)*this.pageSize + this.pageSize, this.total); i++) {
               this.tableData[j]=response.data.data[i];
               j++;
+              console.log(i);
+              console.log(response.data.data[i]);
+              console.log(this.tableData[j]);
             }
+            //this.tableData = response.data.data; // 假设返回的数据是一个数组
+            //console.log(this.tableData)
+            //this.total = this.tableData.length;
+            console.log(this.total);
           })
           .catch(error => {
             // 请求失败，处理错误
@@ -271,10 +289,21 @@ export default {
 </script>
 
 <style>
-  #categoryC {
-    margin-top: 100px;
-  }
-  .table-container {
-    margin-top: 1px; /* 设置距离顶部的距离为20像素 */
-  }
+#categoryC {
+  margin-top: 0px;
+}
+
+.table-container {
+  margin-top: 0px; /* 设置距离顶部的距离为20像素 */
+}
+
+.el-input__inner {
+  font-size: 15px;
+}
+
+.el-button {
+  align-items: center;
+  --el-font-size-base: 15px;
+
+}
 </style>

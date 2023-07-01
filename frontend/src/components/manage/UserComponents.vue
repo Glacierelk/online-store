@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="userData.slice((currentPage-1)*pageSize, currentPage*pageSize)" style="width: 100%">
+    <el-table stripe :data="userData.slice((currentPage-1)*pageSize, currentPage*pageSize)" style="width: 100%">
       <el-table-column prop="id" label="用户ID" align="center" width="450"></el-table-column>
       <el-table-column prop="username" label="用户名称" align="center" width="450"></el-table-column>
       <el-table-column prop="email" label="用户邮箱" align="center" width="450"></el-table-column>
@@ -14,6 +14,7 @@
           <el-button @click="confirmDelete(scope.row.id)" type="danger" size="small">删除</el-button>
         </template>
       </el-table-column>
+    </el-table>
       <div class="pagination-container">
         <el-pagination
             @size-change="handleSizeChange"
@@ -25,7 +26,6 @@
             :total="userData.length">
         </el-pagination>
       </div>
-    </el-table>
   </div>
 </template>
 
@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      pageSize: 5,
+      pageSize: 10,
       userData: [],
     };
   },
