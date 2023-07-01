@@ -4,19 +4,18 @@
     <div id="categoryWithCarousel" class="categoryWithCarousel">
       <div class="headbar show1">
         <div class="head">
-          <div class="leftMenu"><img align="center" alt="list" src="../../../assets/HomePage/list.png"
-                                              style="height: 24px"></div>
+          <div class="leftMenu"><img align="center" alt="list" src="../../../assets/HomePage/list.png" style="height: 24px"></div>
           <div class="leftMenu">商品分类</div>
         </div>
         <div class="rightMenu">
           <div @mouseenter="showImage" @mouseleave="hideImage" style="float: left;">
              <a href=""><img alt="chaoshi" src="../../../assets/HomePage/chaoshi.png"/></a>
           </div>
-          <div style="padding-left: 40px; float: left" @mouseenter="showImage" @mouseleave="hideImage">
+          <div style="margin-left: 20px; float: left" @mouseenter="showImage" @mouseleave="hideImage">
             <a href=""><img alt="guoji" src="../../../assets/HomePage/guoji.png"/></a>
           </div>
-          <div v-for="(category,index) in categories" :key="category.name" class="categoryTab">
-            <a v-if="index<5" href="#" @mouseenter="showImage" @mouseleave="hideImage">{{ category.name }}</a>
+          <div v-for="(category,index) in categories" :key="category.cid" class="categoryTab">
+            <a  v-if="index<5" href="#" @mouseenter="showImage" @mouseleave="hideImage">{{ category.category_name }}</a>
           </div>
         </div>
       </div>
@@ -27,30 +26,17 @@
 
 <script setup>
 import CategoryMenuComponent from "@/components/user-facing/home-page/CategoryMenuComponent.vue";
+import ProductsAsideCategoriesComponent from "@/components/user-facing/home-page/ProductsAsideCategoriesComponent.vue";
 
-let categories = [
-  {name: "平板电视", icon: "#", href: ""},
-  {name: "马桶", icom: "", href: ""},
-  {name: "沙发", icon: "", href: ""},
-  {name: "电热水器", icon: "", href: ""},
-  {name: "冲浪板冲浪板", icon: "", href: ""},
-  {name: "冲浪板", icon: "", href: ""},
-  {name: "冲浪板", icon: "", href: ""},
-  {name: "冲浪板", icon: "", href: ""},
-  {name: "冲浪板", icon: "", href: ""},
-  {name: "冲浪板", icon: "", href: ""},
-  {name: "冲浪板", icon: "", href: ""},
-  {name: "冲浪板", icon: "", href: ""},
-  {name: "冲浪板", icon: "", href: ""},
-  {name: "冲浪板", icon: "", href: ""},
-  {name: "冲浪板", icon: "", href: ""},
-];
+let categories =ProductsAsideCategoriesComponent.data().categories
 
-function showImage() {
+function showImage(event) {
+
   //eslint-disable-next-line no-unused-vars
-  const {left: left, right: right, top, width: width} = event.target.getBoundingClientRect();
+  const {left: left, right: right,top: top, width: width} = event.target.getBoundingClientRect();
   let catear = document.getElementById("catear");
-  let destLeft = left + (width) / 2 - 45 / 2//找到box的中间位置,45是猫图片的长度（加上了padding）
+  //要记得减去margin-left的部分，margin-left是%5,所以用window.innerwidth先得到窗口的宽度，之后再乘以5%来获取需要减去的宽度
+  let destLeft = left-window.innerWidth*0.05+width/2-30/2//找到box的中间位置,45是猫图片的长度（加上了padding）
   let destLeftStr = "" + destLeft + "px"
   catear.style.visibility = "visible";
   catear.style.left = destLeftStr;
@@ -64,10 +50,13 @@ function hideImage() {
 </script>
 
 <style scoped>
+div.tab{
+  width: 1px;
+}
 
 #guidePage {
-  margin-left: 1%;
-  margin-right: 1%;
+  width: 90%;
+  margin-left: 5%;
 }
 
 div.categoryWithCarousel {
@@ -126,6 +115,7 @@ img#catear {
 }
 
 .categoryTab {
+  width: auto;
   float: left;
   margin-top: 2px;
 }
