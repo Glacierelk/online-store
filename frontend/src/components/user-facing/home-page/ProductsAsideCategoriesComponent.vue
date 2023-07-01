@@ -22,6 +22,7 @@
 
 <script>
 import SwiperComponent from "@/components/user-facing/home-page/SwiperComponent.vue";
+import axios from "axios";
   export default {
     data(){
       return{
@@ -44,162 +45,17 @@ import SwiperComponent from "@/components/user-facing/home-page/SwiperComponent.
         },
     }
   }
-      var categories=[
-      {"category_name": "冰箱","cid": 76,"products": [
-          {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-        ]},
-      {"category_name": "马桶","cid": 77,"products": [
-          {"id": 455,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰2 WIFI智能 风冷无霜",},
-          {"id": 456,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰2 WIFI智能 风冷无霜",},
-          {"id": 457,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰2 WIFI智能 风冷无霜",},
-          {"id": 458,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰2 WIFI智能 风冷无霜",},
-          {"id": 459,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰2 WIFI智能 风冷无霜",},
-          {"id": 460,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰2 WIFI智能 风冷无霜",},
-        ]},
-      {"category_name": "平板电视","cid": 78,"products": [
-          {"id": 461,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱3 WIFI智能 风冷无霜",},
-          {"id": 462,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰3箱 WIFI智能 风冷无霜",},
-          {"id": 463,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱3 WIFI智能 风冷无霜",},
-          {"id": 464,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱3 WIFI智能 风冷无霜",},
-          {"id": 465,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱3 WIFI智能 风冷无霜",},
-          {"id": 466,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱3 WIFI智能 风冷无霜",},
-        ]},
-      {"category_name": "空调","cid": 79,"products": [
-          {"id": 467,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱4 WIFI智能 风冷无霜",},
-          {"id": 468,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱4 WIFI智能 风冷无霜",},
-          {"id": 469,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱4 WIFI智能 风冷无霜",},
-          {"id": 470,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱4 WIFI智能 风冷无霜",},
-          {"id": 471,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱4 WIFI智能 风冷无霜",},
-          {"id": 472,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱4 WIFI智能 风冷无霜",},
-        ]},
-      {"category_name": "扫地机器人","cid": 80,"products": [
-          {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱5 WIFI智能 风冷无霜",},
-          {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱5 WIFI智能 风冷无霜",},
-          {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱5 WIFI智能 风冷无霜",},
-          {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱5 WIFI智能 风冷无霜",},
-          {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱5 WIFI智能 风冷无霜",},
-          {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱5 WIFI智能 风冷无霜",},
-        ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-        {"category_name": "冰箱","cid": 76,"products": [
-            {"id": 449,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 450,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 451,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 452,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 453,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-            {"id": 454,"name": "MeiLing/美菱 BCD-560WUCX对开门电冰箱家用冰箱WIFI智能风冷无霜","subTitle": "家用冰箱1 WIFI智能 风冷无霜",},
-          ]},
-    ];
 
-
+  var categories=[];
+  //加上await阻塞请求，直到请求完成后再进行页面的刷新
+  await axios.get("/category/homePageCategory").then(function (response){
+    categories=response.data.data
+    //alert(categories)
+  },function (err){
+    alert(err)
+  }).catch(function (){
+    alert("连接失败！！！")
+  })
 
 
 

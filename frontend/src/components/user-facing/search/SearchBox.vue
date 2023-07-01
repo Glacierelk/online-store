@@ -1,10 +1,11 @@
 <script setup>
 import {ref, defineEmits} from 'vue';
 import {useRouter} from "vue-router";
+import ProductsAsideCategoriesComponent from "@/components/user-facing/home-page/ProductsAsideCategoriesComponent.vue";
 
 const router = useRouter();
 
-let recomment = ["平衡车", "超大棒棒糖", "芜湖冲浪板"];
+var categories = ProductsAsideCategoriesComponent.data().categories;
 let keyword = ref("");
 const emit = defineEmits(["search"]);
 
@@ -30,11 +31,10 @@ function fastSearch(item) {
       <button class="searchButton" @click="search">搜索</button>
     </div>
     <div class="searchBelow">
-      <span v-for="(item,index) in recomment" :key="item">
-        <span class="item" @click="fastSearch(item)">{{ item }}</span>
-        &nbsp; &nbsp;
+      <span class="bottomItem" v-for="(category,index) in categories" :key="category.cid">
+        <span v-if="index<3" class="item" @click="fastSearch(category.category_name)">{{ category.category_name }}</span>
+        &nbsp;&nbsp;
         <span v-if="index<2">|</span>
-        &nbsp; &nbsp;
       </span>
     </div>
   </div>
@@ -85,6 +85,9 @@ div.searchDiv button {
   text-decoration: none;
 }
 
+span.item{
+  margin-left: 10%;
+}
 .searchButton {
   width: 15%;
 }
