@@ -1,6 +1,7 @@
 package com.hitwh.onlinestore.dao.impl;
 
 import com.hitwh.onlinestore.bean.Order;
+import com.hitwh.onlinestore.bean.OrderItem;
 import com.hitwh.onlinestore.dao.OrderDAO;
 import com.hitwh.onlinestore.utils.JDBCUtils;
 import org.springframework.dao.DataAccessException;
@@ -71,6 +72,30 @@ public class OrderDAOImpl implements OrderDAO {
                 "    o.id;";
         try {
             return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Order.class),userId);
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<OrderItem> getOrderItemsByOrderId(int orderId) {
+        String sql = "SELECT\n" +
+                "    oi.id ,\n" +
+                "    oi.pid,\n" +
+                "    oi.oid,\n" +
+                "    p.name,\n" +
+                "    p.original_price,\n" +
+                "    p.promote_price,\n" +
+                "    oi.number\n" +
+                "FROM\n" +
+                "    online_store.order_item AS oi\n" +
+                "        LEFT JOIN\n" +
+                "    online_store.product AS p ON oi.pid = p.id\n" +
+                "WHERE\n" +
+                "    oi.oid = ?;";
+        try {
+            return jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(OrderItem.class),orderId);
         } catch (DataAccessException e) {
             e.printStackTrace();
             return null;
