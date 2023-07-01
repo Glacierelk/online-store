@@ -19,23 +19,23 @@
 
   <div class=table-container>
     <el-table stripe :data="tableData" style="width: 100%; margin-bottom: 20px">
-      <el-table-column prop="id" label="分类ID" width="480" align="center"></el-table-column>
-      <el-table-column prop="name" label="分类名称" width="480" align="center"></el-table-column>
-      <el-table-column label="产品管理" width="480" align="center">
+      <el-table-column prop="id" sortable label="分类ID" width="450" align="center"></el-table-column>
+      <el-table-column prop="name" label="分类名称" width="450" align="center" ></el-table-column>
+      <el-table-column label="产品管理" width="450" align="center">
         <template v-slot="scope">
           <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleButtonClick(scope.row)">
             <i class="fa fa-edit" style="color: blue;"></i>
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="删除" width="480" align="center">
+      <el-table-column label="删除" width="450" align="center">
         <template v-slot="scope">
           <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleButtonClick(scope.row)">
             <i class="fa fa-trash" style="color: red;"></i>
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="添加属性">
+      <el-table-column label="添加属性" align="center" width = "450" fixed="right">
         <template v-slot="scope">
           <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="addProperty(scope.row)">
             <i class="fa fas fa-plus" style="color: green;"></i>
@@ -94,8 +94,7 @@ export default {
       inputValue: '',
       tableData: [],
       currentPage: 1, // 当前页码
-      pageSize: 5, // 每页显示的条数
-      total: 5, // 数据总数
+      pageSize: 10, // 每页显示的条数
     }
   },
   methods: {
@@ -306,4 +305,5 @@ export default {
   --el-font-size-base: 15px;
 
 }
+
 </style>
