@@ -28,8 +28,8 @@ public class OrderDAOImpl implements OrderDAO {
                 "    o.confirm_date,\n" +
                 "    o.uid,\n" +
                 "    o.status,\n" +
-                "    COUNT(oi.id) AS amount,\n" +
-                "    SUM(p.promote_price * oi.number) AS totalPrice\n" +
+                "    SUM(oi.count) AS productCount,\n" +
+                "    SUM(p.promote_price * oi.count) AS totalPrice\n" +
                 "FROM\n" +
                 "    online_store.`order` AS o\n" +
                 "        LEFT JOIN\n" +
@@ -49,7 +49,7 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<Order> getOrdersByUserId(String userId) {
         String sql = "SELECT\n" +
-                "    o.id AS id,\n" +
+                "    o.id,\n" +
                 "    o.order_code,\n" +
                 "    o.receiver_tel,\n" +
                 "    o.user_message,\n" +
@@ -59,8 +59,8 @@ public class OrderDAOImpl implements OrderDAO {
                 "    o.confirm_date,\n" +
                 "    o.uid,\n" +
                 "    o.status,\n" +
-                "    COUNT(oi.id) AS amount,\n" +
-                "    SUM(p.promote_price * oi.number) AS totalPrice\n" +
+                "    SUM(oi.count) AS productCount,\n" +
+                "    SUM(p.promote_price * oi.count) AS total_price\n" +
                 "FROM\n" +
                 "    online_store.`order` AS o\n" +
                 "        LEFT JOIN\n" +
@@ -87,7 +87,7 @@ public class OrderDAOImpl implements OrderDAO {
                 "    p.name,\n" +
                 "    p.original_price,\n" +
                 "    p.promote_price,\n" +
-                "    oi.number\n" +
+                "    oi.count\n" +
                 "FROM\n" +
                 "    online_store.order_item AS oi\n" +
                 "        LEFT JOIN\n" +

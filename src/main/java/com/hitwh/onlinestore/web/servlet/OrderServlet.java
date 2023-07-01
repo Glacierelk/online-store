@@ -58,6 +58,7 @@ public class OrderServlet extends BaseServlet {
             info.setFlag(true);
             for(Order order : orders){
                 order.setOrderItems(orderItemService.getOrderItemsByOrderId(order.getId()));
+//                System.out.println(order);
             }
             info.setData(orders);
         }
