@@ -1106,7 +1106,7 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
 }
 ~~~
 
-### 更新订单信息
+### 更新订单状态
 
 #### 基本信息
 

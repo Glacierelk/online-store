@@ -158,5 +158,7 @@ span.divider {
 div.rowTitle {
   margin-bottom: 10px;
 }
-
+.itemTab{
+  cursor: pointer;
+}
 </style>
