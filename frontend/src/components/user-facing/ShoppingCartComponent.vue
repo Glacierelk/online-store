@@ -1,7 +1,8 @@
 <script>
 import axios from "axios";
 import {useRouter} from "vue-router";
-
+import qs from "qs";
+import {ref} from "vue";
 export default {
   props: {
     userId: {
@@ -15,7 +16,7 @@ export default {
       tableData: [],
       summary: 0,
       total: 0,
-      selection: []
+      ids: ref([])
     }
   },
   methods: {
@@ -39,9 +40,11 @@ export default {
           })
     },
     deleteCart(cartId) {
-      axios.post('/cart/deleteGoods', {
-        id: cartId
-      })
+      axios.post('/cart/deleteGoods', qs.stringify(
+          {
+            "id": cartId
+          }
+      ))
           .then(res => {
             if (res.status === 200 && res.data.flag) {
               console.log("删除成功");
@@ -55,32 +58,38 @@ export default {
           })
     },
     handleSelectionChange(selection){
-      console.log(selection);
-      this.selection = selection;
+      // console.log(selection);
       let sum = 0;
       let cnt = 0;
+      let temp = [];
       selection.forEach(item => {
         sum += item.count * item.product.promotePrice;
         cnt += item.count;
+        // console.log(item);
+        // console.log(item.id);
+        temp.push(item.id);
       })
       this.summary = sum.toFixed(2);
       this.total = cnt;
+      console.log(temp);
+      this.ids.value = temp;
+      console.log(this.ids.value);
     },
     settlement() {
       alert("jiesuan")
     },
     deleteCarts() {
-      if (this.selection.length === 0) {
+      if (this.ids.value.length === 0) {
         alert("请选择要删除的商品!");
         return;
       }
-      axios.post('/cart/deleteGoods', {
-        id: this.selection.map(item => item.id)
+      axios.post('/cart/deleteGoodsByList', {
+        id: this.ids.value
       })
           .then(res => {
             if (res.status === 200 && res.data.flag) {
               alert("删除成功");
-              this.tableData = this.tableData.filter(item => !this.selection.includes(item));
+              this.tableData = this.tableData.filter(item => !this.ids.value.includes(item.id));
             } else {
               alert("删除失败!");
             }

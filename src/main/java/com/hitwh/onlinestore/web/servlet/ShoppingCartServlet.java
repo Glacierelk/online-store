@@ -1,5 +1,6 @@
 package com.hitwh.onlinestore.web.servlet;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hitwh.onlinestore.bean.ResultInfo;
 import com.hitwh.onlinestore.bean.ShoppingCart;
@@ -10,10 +11,12 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/cart/*")
 public class ShoppingCartServlet extends BaseServlet {
@@ -40,69 +43,71 @@ public class ShoppingCartServlet extends BaseServlet {
         writeJsonValue(response, info);
     }
 
-    public void addGoods(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void addGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println("adding goods...");
         ShoppingCart shoppingCart = new ShoppingCart();
         ResultInfo resultInfo = new ResultInfo();
-        try{
+        try {
             shoppingCart.setCount(Integer.parseInt(request.getParameter("count")));
             shoppingCart.setPid(Integer.parseInt(request.getParameter("pid")));
             shoppingCart.setUid(Integer.parseInt(request.getParameter("uid")));
             shoppingCart.setStatus(1);
-            boolean addFlag=shoppingCartService.addGoods(shoppingCart);
-            if(addFlag){
+            boolean addFlag = shoppingCartService.addGoods(shoppingCart);
+            if (addFlag) {
                 resultInfo.setErrorMsg(null);
                 resultInfo.setFlag(true);
-            }
-            else
-            {
+            } else {
                 resultInfo.setErrorMsg("fail to insert!!!(db)");
                 resultInfo.setFlag(false);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
             resultInfo.setFlag(false);
             resultInfo.setErrorMsg("fail to add goods!");
         }
-        writeJsonValue(response,resultInfo);
+        writeJsonValue(response, resultInfo);
     }
 
-    //TODO 接收参数错误
-    public void deleteGoods(HttpServletRequest request,HttpServletResponse response) throws IOException {
+
+    public void deleteGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int id;
         ResultInfo info = new ResultInfo();
-        try{
-            id=Integer.parseInt(request.getParameter("id"));
-            boolean delStatus=shoppingCartService.deleteGoods(id);
-            if(delStatus)
-            {
+        try {
+            id = Integer.parseInt(request.getParameter("id"));
+            boolean delStatus = shoppingCartService.deleteGoods(id);
+            if (delStatus) {
                 info.setFlag(true);
                 info.setErrorMsg(null);
-            }
-            else {
+            } else {
                 info.setErrorMsg("fail to del!!!(db)");
                 info.setFlag(false);
             }
 
 
-        }catch (Exception e){
+        } catch (Exception e) {
             info.setFlag(false);
             info.setErrorMsg("fail to del!!!");
         }
-        writeJsonValue(response,info);
+        writeJsonValue(response, info);
     }
 
-    //TODO 接收参数错误
-    public void deleteGoodsByList(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
+    public void deleteGoodsByList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ResultInfo info = new ResultInfo();
+        // 创建一个 ObjectMapper 实例
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // 使用 ObjectMapper 将字符串解析为 Map 对象
+        Map<String, List<Integer>> dataMap = objectMapper.readValue(request.getReader(), new TypeReference<Map<String, List<Integer>>>() {
+        });
+        System.out.println(dataMap);
+        // 从 Map 中获取你需要的数据
+        List<Integer> ids = dataMap.get("id");
+
+//        System.out.println(ids);
         try {
-            List<Integer> shoppingCarts = objectMapper.readValue(request.getParameter("id"), objectMapper.getTypeFactory().constructParametricType(List.class, Integer.class));
-            System.out.println(shoppingCarts);
-            for(Integer item : shoppingCarts) {
-                boolean delFlag=shoppingCartService.deleteGoods(item);
-                if(!delFlag)
-                {
+            for (Integer id : ids) {
+                boolean delFlag = shoppingCartService.deleteGoods(id);
+                if (!delFlag) {
                     info.setFlag(false);
                     info.setErrorMsg("fail to delete list!!!(db)");
                     break;
@@ -110,15 +115,15 @@ public class ShoppingCartServlet extends BaseServlet {
             }
             info.setFlag(true);
             info.setErrorMsg(null);
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.toString());
             info.setFlag(false);
             info.setErrorMsg("fail to delete list!!!");
         }
-        writeJsonValue(response,info);
+        writeJsonValue(response, info);
     }
 
-    public void alterGoodsNumber(HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void alterGoodsNumber(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ShoppingCart shoppingCart = new ShoppingCart();
         ResultInfo info = new ResultInfo();
         try {
@@ -126,21 +131,19 @@ public class ShoppingCartServlet extends BaseServlet {
             shoppingCart.setUid(Integer.parseInt(request.getParameter("uid")));
             shoppingCart.setCount(Integer.parseInt(request.getParameter("count")));
             boolean alterFlag = shoppingCartService.alterGoodNumber(shoppingCart);
-            if(alterFlag){
+            if (alterFlag) {
                 info.setFlag(true);
                 info.setErrorMsg(null);
-            }
-            else
-            {
+            } else {
                 info.setFlag(false);
                 info.setErrorMsg("fail to alter!!!(db)");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.toString());
             info.setErrorMsg("fail to alter!!!");
             info.setFlag(false);
         }
-        writeJsonValue(response,info);
+        writeJsonValue(response, info);
     }
 
     /**
@@ -165,33 +168,32 @@ public class ShoppingCartServlet extends BaseServlet {
     }
 
     /*
-    * 检查商品是否在购物车中
-    * */
-    public void checkCartStatus(HttpServletRequest request,HttpServletResponse response) throws IOException {
+     * 检查商品是否在购物车中
+     * */
+    public void checkCartStatus(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ResultInfo info = new ResultInfo();
         System.out.println("checking status ......");
 
         try {
-            int uid=Integer.parseInt(request.getParameter("uid"));
-            int pid=Integer.parseInt(request.getParameter("pid"));
-            boolean cartFlag=shoppingCartService.checkCartStatus(pid,uid);
-            if(cartFlag){
+            int uid = Integer.parseInt(request.getParameter("uid"));
+            int pid = Integer.parseInt(request.getParameter("pid"));
+            boolean cartFlag = shoppingCartService.checkCartStatus(pid, uid);
+            if (cartFlag) {
                 info.setFlag(true);//flag表示的是是否查询到
                 info.setErrorMsg(null);
                 info.setData(true); //data表示到的是查询到的状态是什么
-            }
-            else {
+            } else {
                 info.setErrorMsg("fail to check!!!(db)");
                 info.setFlag(true);
                 info.setData(false);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e.toString());
             info.setErrorMsg("fail to check!!!");
             info.setFlag(false);
             info.setData(null);
         }
-        writeJsonValue(response,info);
+        writeJsonValue(response, info);
     }
 
 
