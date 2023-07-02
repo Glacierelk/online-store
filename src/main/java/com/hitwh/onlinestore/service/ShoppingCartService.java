@@ -12,4 +12,11 @@ public interface ShoppingCartService {
     boolean addGoods(ShoppingCart shoppingCart);
     boolean deleteGoods(int uid,int pid);
     boolean alterGoodNumber(ShoppingCart shoppingCart);
+
+    /**
+     * 获取购物车商品数量
+     * @param id 用户 ID
+     * @return integer
+     */
+    Integer getShoppingCartCount(int id);
 }

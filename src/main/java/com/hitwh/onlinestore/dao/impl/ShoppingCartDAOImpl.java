@@ -61,4 +61,14 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO {
             return false;
         }
     }
+
+    @Override
+    public Integer getCount(int id) {
+        String sql = "select count(*) from shopping_cart where uid = ? and status = 1";
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, id);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 }

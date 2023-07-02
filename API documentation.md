@@ -379,7 +379,7 @@ GET http://localhost:8080/store/category/listAllCategories HTTP/1.1
 | ------------ | -------- | -------- | ------------------ |
 | `categoryId` | `number` | 必须     | 要删除的商品分类ID |
 
-##### 请求样例
+##### 请求样例 
 
 ```http
 DELETE http://localhost:8080/store/category/delete?categoryId=84
@@ -838,6 +838,75 @@ Content-Type: application/json
 
 ## 订单
 
+### 创建订单
+
+#### 基本信息
+
+> 请求路径：`/order/createOrder`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于创建订单
+
+#### 请求参数
+
+##### 参数说明
+
+| 名称           | 类型     | 是否必须 | 备注                                   |
+| -------------- | -------- | -------- | -------------------------------------- |
+| `uid`          | `number` | 必须     | 创建订单的用户ID                       |
+| `address`      | `string` | 非必须   | 订单的收货地址默认为用户注册的地址信息 |
+| `receiverTel`  | `number` | 非必须   | 收货人手机号                           |
+| `user_message` | `string` | 非必须   | 用户对该订单的备注                     |
+| `orderItems`   | `list`   | 必须     | 订单包含的商品ID与件数                 |
+| \|-`pid`       | `number` | 必须     | 购买商品的ID                           |
+| \|-`count`     | `number` | 必须     | 购买商品的件数                         |
+
+##### 请求样例
+
+~~~HTTP
+POST http://localhost:8080/store/product/search HTTP/1.1
+Content-Type: application/json
+
+{
+    "uid": 114,
+    "receiverTel": "13587168037",
+    "userMessage": "好好好",
+    "orderItems": [
+        {"pid": 87, "count": 3},
+        {"pid": 148, "count": 1},
+        {"pid": 204, "count": 2}
+    ]
+}
+
+~~~
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                                        |
+| ---------- | --------- | -------- | ------------------------------------------- |
+| `flag`     | `boolean` | 必须     | 创建订单是否成功，`true` 成功，`false` 失败 |
+| `errorMsg` | `string`  | 非必须   | 如果删除失败，返回一个错误信息              |
+| `data`     | `object`  | 非必须   | 该参数在该API无效                           |
+
+##### 响应数据样例
+
+~~~json
+{
+    "flag": true,
+    "data": null,
+    "errorMsg": null
+}
+~~~
+
+
+
 ### 获取所有订单
 
 #### 基本信息
@@ -1145,15 +1214,63 @@ Content-Type: application/json
 }
 ~~~
 
-
-
 ## 购物车
+
+### 获取用户购物车商品数量
+
+#### 基本信息
+
+> 请求路径：`/cart/getCount`
+>
+> 请求方式：GET
+>
+> 接口描述：该接口用于查询某个用户的购物车商品数量
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型     | 是否必须 | 备注          |
+| ------ | -------- | -------- | ------------- |
+| `id`   | `number` | 必须     | 待查询用户 ID |
+
+##### 请求样例
+
+~~~HTTP
+GET http://localhost:8729/store/cart/getCount?id=1 HTTP/1.1
+~~~
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                                   |
+| ---------- | --------- | -------- | -------------------------------------- |
+| `flag`     | `boolean` | 必须     | 请求是否成功，`true`成功，`false`失败` |
+| `errorMsg` | `string`  | 非必须   | 如果请求失败，返回一个错误信息         |
+| `data`     | `number`  | 必须     | 用户购物车商品数量                     |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"data": 2,
+	"errorMsg": null
+}
+~~~
+
+
 
 ### 获取用户购物车
 
 #### 基本信息
 
-> 请求路径：`/shoppingCart/getShoppingCart`
+> 请求路径：`/cart/show`
 >
 > 请求方式：GET
 >
@@ -1170,7 +1287,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ~~~HTTP
-GET http://localhost:8729/store/shoppingCart/getShoppingCart?id=1 HTTP/1.1
+GET http://localhost:8729/store/cart/show?id=1 HTTP/1.1
 ~~~
 
 #### 响应数据
@@ -1181,16 +1298,26 @@ GET http://localhost:8729/store/shoppingCart/getShoppingCart?id=1 HTTP/1.1
 
 ##### 参数说明
 
-| 名称         | 类型      | 是否必须 | 备注                                         |
-| ------------ | --------- | -------- | -------------------------------------------- |
-| `flag`       | `boolean` | 必须     | 请求是否成功，`true`成功，`false`失败`       |
-| `errorMsg`   | `string`  | 非必须   | 如果请求失败，返回一个错误信息               |
-| `data`       | `list`    | 必须     | 包含了用户购物车的信息                       |
-| \|- `id`     | `number`  | 必须     | 购物车条目 ID                                |
-| \|- `pid`    | `number`  | 必须     | 商品 ID                                      |
-| \|- `uid`    | `number`  | 必须     | 当前的用户ID                                 |
-| \|- `status` | `number`  | 必须     | 购物车条目状态，这里返回的都是 1，即未删除的 |
-| \|- `count`  | `number`  | 必须     | 商品数量                                     |
+| 名称                  | 类型        | 是否必须 | 备注                                         |
+| --------------------- | ----------- | -------- | -------------------------------------------- |
+| `flag`                | `boolean`   | 必须     | 请求是否成功，`true`成功，`false`失败`       |
+| `errorMsg`            | `string`    | 非必须   | 如果请求失败，返回一个错误信息               |
+| `data`                | `list`      | 必须     | 包含了用户购物车的信息                       |
+| \|- `id`              | `number`    | 必须     | 购物车条目 ID                                |
+| \|- `pid`             | `number`    | 必须     | 商品 ID                                      |
+| \|- `uid`             | `number`    | 必须     | 当前的用户ID                                 |
+| \|- `status`          | `number`    | 必须     | 购物车条目状态，这里返回的都是 1，即未删除的 |
+| \|- `count`           | `number`    | 必须     | 商品数量                                     |
+| \|- `product`         | `object`    | 必须     | 商品信息                                     |
+| \|\|- `id`            | `number`    | 必须     | 商品 ID                                      |
+| \|\|- `name`          | `string`    | 必须     | 商品名称                                     |
+| \|\|- `subTitle`      | `string`    | 非必需   | 商品小标题                                   |
+| \|\|- `originalPrice` | `number`    | 必须     | 商品原价                                     |
+| \|\|- `promotePrice`  | `number`    | 必须     | 商品促销价                                   |
+| \|\|- `stock`         | `number`    | 必须     | 商品库存                                     |
+| \|\|- `cid`           | `number`    | 必须     | 商品类型                                     |
+| \|\|- `createDate`    | `timestamp` | 必须     | 商品添加时间                                 |
+| \|- `imageId`         | `number`    | 必须     | 商品图片 ID                                  |
 
 ##### 响应数据样例
 
@@ -1203,7 +1330,18 @@ GET http://localhost:8729/store/shoppingCart/getShoppingCart?id=1 HTTP/1.1
 			"pid": 87,
 			"uid": 1,
 			"count": 10,
-			"status": 1
+			"status": 1,
+			"product": {
+				"id": 87,
+				"name": "Konka/康佳 LED32S1卧室32吋安卓智能无线WIFI网络液晶平板电视机",
+				"subTitle": "32吋电视机 8核智能 网络 全国联保 送货上门",
+				"originalPrice": 1699,
+				"promotePrice": 1104.35,
+				"stock": 98,
+				"cid": 83,
+				"createDate": 1471077812000
+			},
+			"imageId": 629
 		}
 	],
 	"errorMsg": null

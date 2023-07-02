@@ -14,15 +14,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/shoppingCart/*")
+@WebServlet("/cart/*")
 public class ShoppingCartServlet extends BaseServlet {
     private final ShoppingCartService shoppingCartService = new ShoppingCartServiceImpl();
 
     /**
      * 查询用户购物车
      */
-    public void getShoppingCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("------getShoppingCart------");
+    public void show(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("------show------");
         ResultInfo info = new ResultInfo();
         try {
             info.setData(shoppingCartService.getShoppingCartByUserId(
@@ -139,5 +139,26 @@ public class ShoppingCartServlet extends BaseServlet {
         }
         writeJsonValue(response,info);
 
+    }
+
+    /**
+     * 获取购物车商品数量
+     */
+    public void getCount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("------getCount------");
+        ResultInfo info = new ResultInfo();
+        try {
+            info.setData(shoppingCartService.getShoppingCartCount(
+                    Integer.parseInt(request.getParameter("id"))
+            ));
+            info.setFlag(true);
+        } catch (NumberFormatException e) {
+            info.setFlag(false);
+            info.setErrorMsg("请给出正确数据类型!");
+        } catch (Exception e) {
+            info.setFlag(false);
+            info.setErrorMsg("获取失败!");
+        }
+        writeJsonValue(response, info);
     }
 }
