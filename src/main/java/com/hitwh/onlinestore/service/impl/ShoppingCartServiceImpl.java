@@ -27,4 +27,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public Integer getShoppingCartCount(int id) {
         return shoppingCartDAO.getCount(id);
     }
+
+    @Override
+    public boolean addGoods(ShoppingCart shoppingCart) {
+        return shoppingCartDAO.addGoods(shoppingCart);
+    }
+
+    @Override
+    public boolean deleteGoods(int uid, int pid) {
+        return shoppingCartDAO.deleteGoods(uid,pid);
+    }
+
+    @Override
+    public boolean alterGoodNumber(ShoppingCart shoppingCart) {
+        return shoppingCartDAO.alterGoodsNumber(shoppingCart);
+    }
 }

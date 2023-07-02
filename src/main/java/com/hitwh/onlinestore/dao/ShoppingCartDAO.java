@@ -9,6 +9,9 @@ public interface ShoppingCartDAO {
      * 根据用户ID返回当前用户购物车内容
      */
     List<ShoppingCart> queryByUserId(Integer userId);
+    boolean addGoods(ShoppingCart shoppingCart);
+    boolean deleteGoods(int uid,int pid);
+    boolean alterGoodsNumber(ShoppingCart shoppingCart);
 
     /**
      * 根据用户ID查询购物车商品数量

@@ -20,4 +20,17 @@ public class CommentDAOImpl implements CommentDAO {
             return null;
         }
     }
+
+    @Override
+    public boolean addComment(Comment comment) {
+        try{
+            String sql = "INSERT INTO comment(content,uid,pid) VALUES(?,?,?)";
+            jdbcTemplate.update(sql,comment.getContent(),comment.getUid(),comment.getPid());
+            return true;
+        }catch (Exception e)
+        {
+            System.out.println(e.toString());
+            return false;
+        }
+    }
 }

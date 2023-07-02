@@ -1,6 +1,8 @@
 package com.hitwh.onlinestore.web.servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hitwh.onlinestore.bean.ResultInfo;
+import com.hitwh.onlinestore.bean.ShoppingCart;
 import com.hitwh.onlinestore.service.ShoppingCartService;
 import com.hitwh.onlinestore.service.impl.ShoppingCartServiceImpl;
 
@@ -9,6 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/cart/*")
 public class ShoppingCartServlet extends BaseServlet {
@@ -33,6 +37,108 @@ public class ShoppingCartServlet extends BaseServlet {
             info.setErrorMsg("获取失败!");
         }
         writeJsonValue(response, info);
+    }
+
+    public void addGoods(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        System.out.println("adding goods...");
+        ShoppingCart shoppingCart = new ShoppingCart();
+        ResultInfo resultInfo = new ResultInfo();
+        try{
+            shoppingCart.setCount(Integer.parseInt(request.getParameter("count")));
+            shoppingCart.setPid(Integer.parseInt(request.getParameter("pid")));
+            shoppingCart.setUid(Integer.parseInt(request.getParameter("uid")));
+            shoppingCart.setStatus(1);
+            boolean addFlag=shoppingCartService.addGoods(shoppingCart);
+            if(addFlag){
+                resultInfo.setErrorMsg(null);
+                resultInfo.setFlag(true);
+            }
+            else
+            {
+                resultInfo.setErrorMsg("fail to insert!!!(db)");
+                resultInfo.setFlag(false);
+            }
+        }catch (Exception e){
+            System.out.println(e.toString());
+            resultInfo.setFlag(false);
+            resultInfo.setErrorMsg("fail to add goods!");
+        }
+        writeJsonValue(response,resultInfo);
+    }
+
+    public void deleteGoods(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        int uid,pid;
+        ResultInfo info = new ResultInfo();
+        try{
+            uid=Integer.parseInt(request.getParameter("uid"));
+            pid=Integer.parseInt(request.getParameter("pid"));
+            boolean delStatus=shoppingCartService.deleteGoods(uid,pid);
+            if(delStatus)
+            {
+                info.setFlag(true);
+                info.setErrorMsg(null);
+            }
+            else {
+                info.setErrorMsg("fail to del!!!(db)");
+                info.setFlag(false);
+            }
+
+
+        }catch (Exception e){
+            info.setFlag(false);
+            info.setErrorMsg("fail to del!!!");
+        }
+        writeJsonValue(response,info);
+    }
+
+    public void deleteGoodsByList(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ResultInfo info = new ResultInfo();
+        try {
+            List<ShoppingCart> shoppingCarts = objectMapper.readValue(request.getParameter("cartList"), objectMapper.getTypeFactory().constructParametricType(List.class, ShoppingCart.class));
+            for(ShoppingCart item : shoppingCarts) {
+                boolean delFlag=shoppingCartService.deleteGoods(item.getUid(),item.getPid());
+                if(!delFlag)
+                {
+                    info.setFlag(false);
+                    info.setErrorMsg("fail to delete list!!!(db)");
+                    break;
+                }
+            }
+            info.setFlag(true);
+            info.setErrorMsg(null);
+        }catch (Exception e) {
+            System.out.println(e.toString());
+            info.setFlag(false);
+            info.setErrorMsg("fail to delete list!!!");
+        }
+        writeJsonValue(response,info);
+    }
+
+    public void alterGoodsNumber(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        ResultInfo info = new ResultInfo();
+        try {
+            shoppingCart.setPid(Integer.parseInt(request.getParameter("pid")));
+            shoppingCart.setUid(Integer.parseInt(request.getParameter("uid")));
+            shoppingCart.setCount(Integer.parseInt(request.getParameter("count")));
+            boolean alterFlag = shoppingCartService.alterGoodNumber(shoppingCart);
+            if(alterFlag){
+                info.setFlag(true);
+                info.setErrorMsg(null);
+            }
+            else
+            {
+                info.setFlag(false);
+                info.setErrorMsg("fail to alter!!!(db)");
+            }
+        }catch (Exception e){
+            System.out.println(e.toString());
+            info.setErrorMsg("fail to alter!!!");
+            info.setFlag(false);
+        }
+        writeJsonValue(response,info);
+
     }
 
     /**
