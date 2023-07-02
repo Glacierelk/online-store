@@ -21,4 +21,9 @@ public interface CategoryService {
      * 添加商品分类
      */
     boolean addCategory(String categoryName);
+
+    /*
+     * 根据分类cid获取商品内容
+     */
+    Object cidCategoryProperty(int i);
 }
