@@ -71,4 +71,17 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO {
             return 0;
         }
     }
+
+    @Override
+    public boolean getCartStatus(int pid, int uid) {
+        String sql = "SELECT id FROM shopping_cart WHERE uid=? AND pid=? AND status=1";
+        try {
+            ShoppingCart shoppingCart=jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(ShoppingCart.class),uid,pid);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+
 }

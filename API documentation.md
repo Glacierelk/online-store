@@ -1624,3 +1624,56 @@ Content-Type: application/json
 
 
 
+### 查看商品是否在购物车中
+
+#### 基本信息
+
+> 请求路径：`/shoppingCart/checkCartStatus`
+>
+> 请求方式：GET
+>
+> 接口描述：该接口用于查看商品是否在购物车中
+
+#### 请求参数
+
+##### 参数说明
+
+| pid  | Integer | 是   | 商品id |
+| ---- | ------- | ---- | ------ |
+| uid  | Integer | 是   | 用户id |
+| pid  | Integer | 是   | 商品id |
+
+##### 请求样例	
+
+```http
+GET http://localhost:8729/store/shoppingCart/checkCartStatus?uid=1&pid=87 HTTP/1.1
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| `errorMsg`     | `string`  | 非必须 | 如果请求失败，返回一个错误信息 |
+| -------------- | --------- | ------ | ------------------------------ |
+| `flag`         | `boolean` | 必须   | 请求是否成功                   |
+| `data`         | `boolean` | 必须   | 请求到的状态信息               |
+| \|- `errorMsg` | `String`  | 必须   | 请求失败的提示信息             |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"errorMsg": null
+    "data":"true"
+}
+~~~
+
+
+
+
+

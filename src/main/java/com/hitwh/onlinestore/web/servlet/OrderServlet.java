@@ -103,7 +103,6 @@ public class OrderServlet extends BaseServlet {
 
         // 创建ObjectMapper实例
         ObjectMapper mapper = new ObjectMapper();
-
         // 从request的输入流中读取并解析JSON数据为Order对象
         Order order = mapper.readValue(request.getReader(), Order.class);
 
