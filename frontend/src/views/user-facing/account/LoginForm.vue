@@ -8,16 +8,17 @@
       <el-form class="form-wrap" label-width="60px">
         <h2 align="center">登录</h2>
         <el-form-item class="label" label="用户名" prop="username">
-          <el-input v-model.trim="username" clearable required></el-input>
+          <el-input v-model.trim="username" clearable required @keyup.enter="submitForm"></el-input>
         </el-form-item>
         <el-form-item class="label" label="密码" prop="password">
-          <el-input v-model.trim="password" clearable required show-password type="password"></el-input>
+          <el-input v-model.trim="password" clearable required show-password type="password"
+                    @keyup.enter="submitForm"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="danger" @click="submitForm">登录</el-button>
         </el-form-item>
         <el-form-item>
-          <router-link to="/user/register" class="register">没有账号？注册新账号</router-link>
+          <router-link class="register" to="/user/register">没有账号？注册新账号</router-link>
         </el-form-item>
       </el-form>
     </div>
@@ -30,6 +31,7 @@
 
 <script setup>
 import axios from "axios";
+
 axios.defaults.withCredentials = true;
 import Header from "@/components/user-facing/header-footer/LoginAndRegisterHeader.vue";
 import Footer from "@/components/user-facing/header-footer/FooterComponents.vue";
@@ -50,11 +52,16 @@ function submitForm() {
     return false;
   }
 
+  if (username.value === "" || password.value === "") {
+    alert("用户名或密码不能为空！");
+    return false;
+  }
+
   //TODO 修改地址
   axios.post('/user/login', qs.stringify({
-        "username": username.value,
-        "password": password.value,
-      }))
+    "username": username.value,
+    "password": password.value,
+  }))
       .then((res) => {
         // console.log(res);
         // if (res.status === 204) {
@@ -111,6 +118,7 @@ function submitForm() {
 
 .form-wrap {
   width: 400px;
+  height: 300px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -125,7 +133,7 @@ h2 {
   width: 100%;
 }
 
-.el-button--danger{
+.el-button--danger {
   width: 100%;
   margin-top: 10px;
 }
@@ -135,7 +143,6 @@ h2 {
 }
 
 .register {
-  margin-top: 16px;
   text-align: right;
 }
 

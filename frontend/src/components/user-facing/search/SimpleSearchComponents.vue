@@ -29,6 +29,7 @@ function handle(item) {
   margin-left: auto;
   margin-right: auto;
   //border: red 1px solid;
+  height: 50px;
 }
 
 td {
