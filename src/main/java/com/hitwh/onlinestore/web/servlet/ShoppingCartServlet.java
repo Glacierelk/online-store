@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @WebServlet("/cart/*")
@@ -68,12 +69,11 @@ public class ShoppingCartServlet extends BaseServlet {
 
     //TODO 接收参数错误
     public void deleteGoods(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        int uid,pid;
+        int id;
         ResultInfo info = new ResultInfo();
         try{
-            uid=Integer.parseInt(request.getParameter("uid"));
-            pid=Integer.parseInt(request.getParameter("pid"));
-            boolean delStatus=shoppingCartService.deleteGoods(uid,pid);
+            id=Integer.parseInt(request.getParameter("id"));
+            boolean delStatus=shoppingCartService.deleteGoods(id);
             if(delStatus)
             {
                 info.setFlag(true);
@@ -97,9 +97,10 @@ public class ShoppingCartServlet extends BaseServlet {
         ObjectMapper objectMapper = new ObjectMapper();
         ResultInfo info = new ResultInfo();
         try {
-            List<ShoppingCart> shoppingCarts = objectMapper.readValue(request.getParameter("cartList"), objectMapper.getTypeFactory().constructParametricType(List.class, ShoppingCart.class));
-            for(ShoppingCart item : shoppingCarts) {
-                boolean delFlag=shoppingCartService.deleteGoods(item.getUid(),item.getPid());
+            List<Integer> shoppingCarts = objectMapper.readValue(request.getParameter("id"), objectMapper.getTypeFactory().constructParametricType(List.class, Integer.class));
+            System.out.println(shoppingCarts);
+            for(Integer item : shoppingCarts) {
+                boolean delFlag=shoppingCartService.deleteGoods(item);
                 if(!delFlag)
                 {
                     info.setFlag(false);

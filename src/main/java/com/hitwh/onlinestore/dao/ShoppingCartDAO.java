@@ -16,7 +16,7 @@ public interface ShoppingCartDAO {
     /**
      * 从购物车删除商品
      */
-    boolean deleteGoods(int uid,int pid);
+    boolean deleteGoods(int id);
     /**
      * 更改购物车中商品的数量
      */

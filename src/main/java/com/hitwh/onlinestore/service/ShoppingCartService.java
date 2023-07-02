@@ -10,7 +10,7 @@ public interface ShoppingCartService {
      */
     List<ShoppingCart> getShoppingCartByUserId(Integer uid);
     boolean addGoods(ShoppingCart shoppingCart);
-    boolean deleteGoods(int uid,int pid);
+    boolean deleteGoods(int id);
     boolean alterGoodNumber(ShoppingCart shoppingCart);
 
     /**
