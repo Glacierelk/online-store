@@ -15,6 +15,7 @@ export default {
       tableData: [],
       summary: 0,
       total: 0,
+      selection: []
     }
   },
   methods: {
@@ -38,7 +39,7 @@ export default {
           })
     },
     deleteCart(cartId) {
-      axios.post('/cart/delete', {
+      axios.post('/cart/deleteGoods', {
         id: cartId
       })
           .then(res => {
@@ -55,6 +56,7 @@ export default {
     },
     handleSelectionChange(selection){
       console.log(selection);
+      this.selection = selection;
       let sum = 0;
       let cnt = 0;
       selection.forEach(item => {
@@ -68,7 +70,24 @@ export default {
       alert("jiesuan")
     },
     deleteCarts() {
-      alert("deleteCarts")
+      if (this.selection.length === 0) {
+        alert("请选择要删除的商品!");
+        return;
+      }
+      axios.post('/cart/deleteGoods', {
+        id: this.selection.map(item => item.id)
+      })
+          .then(res => {
+            if (res.status === 200 && res.data.flag) {
+              alert("删除成功");
+              this.tableData = this.tableData.filter(item => !this.selection.includes(item));
+            } else {
+              alert("删除失败!");
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
     }
   },
   async mounted() {

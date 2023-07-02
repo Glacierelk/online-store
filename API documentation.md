@@ -1531,7 +1531,7 @@ Content-Type: application/json
 
 #### 基本信息
 
-> 请求路径：`/shoppingCart/deleteGoods`
+> 请求路径：`/cart/deleteGoods`
 >
 > 请求方式：DELETE
 >
@@ -1791,11 +1791,10 @@ GET http://localhost:8729/store/shoppingCart/checkCartStatus?uid=1&pid=87 HTTP/1
 ~~~json
 {
 	"flag": true,
-	"errorMsg": null
+	"errorMsg": null,
     "data":"true"
 }
 ~~~
-
 
 
 

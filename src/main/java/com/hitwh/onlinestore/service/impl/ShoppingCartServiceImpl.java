@@ -39,8 +39,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public boolean deleteGoods(int uid, int pid) {
-        return shoppingCartDAO.deleteGoods(uid,pid);
+    public boolean deleteGoods(int id) {
+        return shoppingCartDAO.deleteGoods(id);
     }
 
     @Override
