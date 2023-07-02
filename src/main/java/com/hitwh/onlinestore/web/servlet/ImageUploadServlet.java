@@ -18,7 +18,8 @@ public class ImageUploadServlet extends BaseServlet {
         System.out.println("test");
         try {
             Part part = request.getPart("image");
-            String fileName = generateUniqueFileName(part);
+            String fileName = "test.jpg";
+//            String fileName = generateUniqueFileName(part);
             InputStream input = part.getInputStream();
             OutputStream output = response.getOutputStream();
             IOUtils.copy(input, output);

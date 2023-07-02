@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ProductDAOImpl implements ProductDAO {
     private final JdbcTemplate template = new JdbcTemplate(JDBCUtils.getDataSource());
@@ -89,5 +90,13 @@ public class ProductDAOImpl implements ProductDAO {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    //TODO need to finish
+    @Override
+    public boolean addImageByProductId(int productId, String type, String url) {
+        if (!Objects.equals(type, "type_single") && !Objects.equals(type, "type_detail"))
+            return false;
+        return false;
     }
 }
