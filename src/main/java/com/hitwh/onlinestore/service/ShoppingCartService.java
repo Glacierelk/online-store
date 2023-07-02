@@ -19,4 +19,6 @@ public interface ShoppingCartService {
      * @return integer
      */
     Integer getShoppingCartCount(int id);
+
+    boolean checkCartStatus(int pid,int uid);
 }

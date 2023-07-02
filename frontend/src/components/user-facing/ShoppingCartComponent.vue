@@ -14,7 +14,7 @@ export default {
       show: false,
       tableData: [],
       summary: 0,
-      total: 0
+      total: 0,
     }
   },
   methods: {
