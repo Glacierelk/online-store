@@ -10,4 +10,9 @@ public class PropertyServiceImpl implements PropertyService {
     public boolean addProperty(int cid, String name) {
         return propertyDAO.addProperty(cid, name);
     }
+
+    @Override
+    public boolean changeProperty(int id, String value) {
+        return propertyDAO.changeProperty(id, value);
+    }
 }

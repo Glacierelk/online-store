@@ -37,4 +37,35 @@ public class PropertyServlet extends BaseServlet {
         }
         writeJsonValue(response, info);
     }
+
+
+    /**
+     * 改变属性值
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void change(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ResultInfo info = new ResultInfo();
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String value = request.getParameter("value");
+            if (propertyService.changeProperty(id, value)) {
+                info.setFlag(true);
+            } else {
+                info.setFlag(false);
+                info.setErrorMsg("添加失败");
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            info.setFlag(false);
+            info.setErrorMsg("添加失败, 请检查输入的数据类型");
+        } catch (Exception e) {
+            e.printStackTrace();
+            info.setFlag(false);
+            info.setErrorMsg("添加失败");
+        }
+        writeJsonValue(response, info);
+    }
 }

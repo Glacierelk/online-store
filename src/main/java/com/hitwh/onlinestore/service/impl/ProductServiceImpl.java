@@ -52,4 +52,11 @@ public class ProductServiceImpl implements ProductService {
         products.forEach(product -> product.setImages(productDAO.getImagesByProductId(product.getId())));
         return products;
     }
+
+    @Override
+    public boolean changeProduct(Product product) {
+        System.out.println("changeProduct");
+        product.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        return productDAO.updateProduct(product);
+    }
 }

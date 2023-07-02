@@ -96,7 +96,7 @@ export default {
       inputValue: '',
       tableData: [],
       currentPage: 1, // 当前页码
-      pageSize: 15, // 每页显示的条数
+      pageSize: 10, // 每页显示的条数
     }
   },
   methods: {

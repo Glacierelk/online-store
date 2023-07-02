@@ -93,6 +93,16 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
+    public boolean updateProduct(Product product) {
+        System.out.println("ProductDAOImpl--updateProduct");
+        String sql = "UPDATE product SET name=?, sub_title=?, original_price=?, promote_price=?, stock=?, cid=?, create_date=? WHERE id=?";
+        int count = template.update(sql, product.getName(), product.getSubTitle(), product.getOriginalPrice(),
+                product.getPromotePrice(), product.getStock(), product.getCid(), product.getCreateDate(), product.getId());
+        return count == 1;
+    }
+
+
+    @Override
     public boolean addImageByProductId(int productId, String type, String url) {
         if (!Objects.equals(type, "type_single") && !Objects.equals(type, "type_detail"))
             return false;

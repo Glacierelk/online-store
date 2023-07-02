@@ -54,6 +54,11 @@ public interface ProductDAO {
     ProductImage getImageByProductId(int productId);
 
     /**
+     * 根据商品id修改一个商品
+     */
+    boolean updateProduct(Product product);
+
+    /**
      * 根据商品id给商品添加图片
      * @param productId 商品id
      * @param type 图片类型

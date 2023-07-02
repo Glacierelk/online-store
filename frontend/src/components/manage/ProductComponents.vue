@@ -27,7 +27,34 @@
         <el-input-number v-model="formData.inventory"></el-input-number>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm">提交</el-button>
+        <div class="centered-container">
+        <el-button type="primary" @click="submitAddForm" class="centered-button">提交</el-button>
+        </div>
+      </el-form-item>
+    </el-form>
+  </el-dialog>
+
+  <el-dialog v-model="dialogVisible2" title="修改产品" width="50%">
+    <el-form ref="form" :model="formData" label-width="100px">
+      <el-form-item label="产品名称">
+        <el-input v-model="formData.productName"></el-input>
+      </el-form-item>
+      <el-form-item label="产品小标题">
+        <el-input v-model="formData.productSubtitle"></el-input>
+      </el-form-item>
+      <el-form-item label="原价格">
+        <el-input-number v-model="formData.originalPrice"></el-input-number>
+      </el-form-item>
+      <el-form-item label="优惠价格">
+        <el-input-number v-model="formData.discountedPrice"></el-input-number>
+      </el-form-item>
+      <el-form-item label="库存">
+        <el-input-number v-model="formData.inventory"></el-input-number>
+      </el-form-item>
+      <el-form-item>
+        <div class="centered-container">
+          <el-button type="primary" @click="submitEditForm" class="centered-button">提交</el-button>
+        </div>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -78,7 +105,9 @@ export default {
       tableData: [
       ],
       dialogVisible: false, // 控制对话框的显示与隐藏
+      dialogVisible2: false,
       router : useRouter(),
+      productId:'',
       formData: {
         productName: '',
         productSubtitle: '',
@@ -139,11 +168,22 @@ export default {
           });
     },
     handleEdit(row){
+      this.productId = row.id;
+      this.dialogVisible2 = true; // 打开对话框
       console.log(row.id);
 
     },
     setProperty(row){
       console.log(row.id);
+      this.router.push({
+        path:'/property',
+        query: {
+          name: this.currentCategory ,
+          id:row.id,
+          cid:this.cid,
+        }
+      });
+      console.log("点击了所有分类");
     },
 
     // eslint-disable-next-line no-unused-vars
@@ -156,7 +196,7 @@ export default {
       // 执行相应的逻辑...
     },
 
-    async submitForm() {
+    async submitAddForm() {
       // 在此处提交表单数据的逻辑
       console.log(this.formData);
       event.preventDefault(); // 阻止表单默认提交行为
@@ -195,6 +235,54 @@ export default {
           });
         } else if (showAlert) {
           alert("添加失败，请重试！");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("请求发生错误，请重试！");
+      }
+      window.location.reload();
+    },
+
+    async submitEditForm() {
+      // 在此处提交表单数据的逻辑
+      console.log(this.formData);
+      event.preventDefault(); // 阻止表单默认提交行为
+      // 在这里执行表单提交逻辑
+      let requests = []; // 存储所有请求
+
+      requests.push(
+          axios.post('/product/editProduct', qs.stringify({
+            "id":this.productId,
+            "name": this.formData.productName,
+            "originalPrice": this.formData.originalPrice,
+            "promotePrice": this.formData.discountedPrice,
+            "stock": this.formData.inventory,
+            "subTitle": this.formData.productSubtitle,
+            "cid": this.cid,
+          }))
+      );
+
+      try {
+        const responses = await Promise.all(requests);
+
+        let successAdded = false;
+        let showAlert = false;
+
+        responses.forEach(res => {
+          if (res.data.flag) {
+            successAdded = true; // 设置成功添加标志为true
+          } else {
+            showAlert = true;
+          }
+        });
+
+        if (successAdded) {
+          this.$message({
+            type: 'success',
+            message: "修改成功"
+          });
+        } else if (showAlert) {
+          alert("修改失败，请重试！");
         }
       } catch (error) {
         console.error(error);
@@ -246,5 +334,12 @@ export default {
 .breadcrumb-button-right {
   margin-left: auto;
 }
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 </style>

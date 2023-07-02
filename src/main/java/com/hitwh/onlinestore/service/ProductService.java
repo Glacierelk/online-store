@@ -27,4 +27,10 @@ public interface ProductService {
      * @Param name: 产品名称
      */
     Object search(String name);
+
+    /*
+     * @Description: 修改商品
+     * @Param name: 产品名称
+     */
+    boolean changeProduct(Product product);
 }

@@ -19,4 +19,6 @@ public interface PropertyDAO {
         * 添加商品属性
      */
     boolean addProperty(int cid,String name);
+
+    boolean changeProperty(int id, String value);
 }

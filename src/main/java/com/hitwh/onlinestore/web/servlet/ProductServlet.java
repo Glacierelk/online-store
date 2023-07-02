@@ -110,4 +110,37 @@ public class ProductServlet extends BaseServlet {
         }
         writeJsonValue(response, info);
     }
+
+    /*
+     * @Description: 修改商品
+     * @Param request:产品名称、产品价格、产品库存、产品小标题、产品优惠价格、产品类型id
+     */
+    public void editProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("editProduct");
+        Product product = new Product();
+        ResultInfo info = new ResultInfo();
+        try {
+            product.setId(Integer.parseInt(request.getParameter("id")));
+            product.setName(request.getParameter("name"));
+            product.setOriginalPrice(Double.parseDouble(request.getParameter("originalPrice")));
+            product.setPromotePrice(Double.parseDouble(request.getParameter("promotePrice")));
+            product.setStock(Integer.parseInt(request.getParameter("stock")));
+            product.setSubTitle(request.getParameter("subTitle"));
+            product.setCid(Integer.parseInt(request.getParameter("cid")));
+            System.out.println(product);
+            if (productService.changeProduct(product)) {
+                info.setFlag(true);
+            } else {
+                info.setFlag(false);
+                info.setErrorMsg("添加失败");
+            }
+        } catch (NumberFormatException e) {
+            info.setFlag(false);
+            info.setErrorMsg("添加失败, 请检查输入的数据类型");
+        } catch (Exception e) {
+            info.setFlag(false);
+            info.setErrorMsg("添加失败");
+        }
+        writeJsonValue(response, info);
+    }
 }
