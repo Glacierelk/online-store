@@ -87,19 +87,25 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<OrderItem> getOrderItemsByOrderId(int orderId) {
         String sql = "SELECT\n" +
-                "    oi.id ,\n" +
+                "    oi.id,\n" +
                 "    oi.pid,\n" +
                 "    oi.oid,\n" +
                 "    p.name,\n" +
                 "    p.original_price,\n" +
                 "    p.promote_price,\n" +
-                "    oi.count\n" +
+                "    oi.count,\n" +
+                "    pi.id AS image_id\n" +
                 "FROM\n" +
                 "    online_store.order_item AS oi\n" +
-                "        LEFT JOIN\n" +
-                "    online_store.product AS p ON oi.pid = p.id\n" +
+                "        LEFT JOIN online_store.product AS p ON oi.pid = p.id\n" +
+                "        LEFT JOIN (\n" +
+                "        SELECT pid, MIN(id) AS id\n" +
+                "        FROM online_store.product_image\n" +
+                "        WHERE type = 'type_single'\n" +
+                "        GROUP BY pid\n" +
+                "    ) AS pi ON oi.pid = pi.pid\n" +
                 "WHERE\n" +
-                "    oi.oid = ?;";
+                "        oi.oid = ?;";
         try {
             return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(OrderItem.class), orderId);
         } catch (DataAccessException e) {
