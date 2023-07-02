@@ -1630,13 +1630,13 @@ Content-Type: application/json
 }
 ~~~
 
-
+## 评价
 
 ### 添加商品评价
 
 #### 基本信息
 
-> 请求路径：`/shoppingCart/addComment`
+> 请求路径：`/comment/addComment`
 >
 > 请求方式：POST
 >
@@ -1646,11 +1646,11 @@ Content-Type: application/json
 
 ##### 参数说明
 
-| 参数名  | 类型    | 是否必须 | 备注                   |
-| ------- | ------- | -------- | ---------------------- |
-| pid     | Integer | 是       | 商品id                 |
-| uid     | Integer | 是       | 用户id                 |
-| content | String  | 是       | 用户对于商品评价的内容 |
+| 参数名    | 类型    | 是否必须 | 备注                   |
+| --------- | ------- | -------- | ---------------------- |
+| `pid`     | Integer | 是       | 商品id                 |
+| `uid`     | Integer | 是       | 用户id                 |
+| `content` | String  | 是       | 用户对于商品评价的内容 |
 
 ##### 请求样例	
 
@@ -1673,17 +1673,19 @@ Content-Type: application/json
 
 ##### 参数说明
 
-| `errorMsg`     | `string`  | 非必须 | 如果请求失败，返回一个错误信息 |
-| -------------- | --------- | ------ | ------------------------------ |
-| `flag`         | `boolean` | 必须   | 请求是否成功                   |
-| \|- `errorMsg` | `String`  | 必须   | 请求失败的提示信息             |
+| 参数名     | 类型      | 是否必须 | 备注               |
+| ---------- | --------- | -------- | ------------------ |
+| `flag`     | `boolean` | 必须     | 请求是否成功       |
+| `errorMsg` | `String`  | 必须     | 请求失败的提示信息 |
+| `data`     | `object`  | 非必须   | 该参数在该接口无效 |
 
 ##### 响应数据样例
 
 ~~~json
 {
 	"flag": true,
-	"errorMsg": null
+	"errorMsg": null,
+    "data":null
 }
 ~~~
 
