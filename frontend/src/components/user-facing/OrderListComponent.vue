@@ -12,14 +12,14 @@
     <el-table :data="[order]" style="width: 100%">
       <el-table-column label="订单创建日期" align="center" width="200">
         <template v-slot="{ row }">
-          <div style="margin-bottom: 70px;margin-top: 70px" v-for="(item, index) in row.orderItems" :key="index">
+          <div style="margin-bottom: 70px;margin-top: 70px"  :key="index">
             {{ row.createDate.substring(0, 19) }}
           </div>
         </template>
       </el-table-column>
       <el-table-column label="订单编码" align="center" width="200">
         <template v-slot="{ row }">
-          <div style="margin-bottom: 70px;margin-top: 70px" v-for="(item, index) in row.orderItems" :key="index">
+          <div style="margin-bottom: 70px;margin-top: 70px" :key="index">
             {{ row.orderCode }}
           </div>
         </template>
