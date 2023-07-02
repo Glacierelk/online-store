@@ -9,10 +9,8 @@
     <div @mouseenter="showMenu(index)" @mouseleave="hideMenu(index)" class="productsAsideCategories"  v-for="(category,index) in categories" :key="category.cid" :id="index">
         <div v-for="ps in category.products" :key="ps.id">
           <div class="row show1" v-if="ps.subTitle.length>0">
-            <span v-for="title in ps.subTitle.split(' ')" :key="title" style="margin-left: 30px;">
-              <a :href="'/details?id='+ps.id" v-if="ps.subTitle.length>0">
-                {{title}}
-              </a>
+            <span  v-for="title in ps.subTitle.split(' ')" :key="title" style="margin-left: 30px;">
+              <router-link :to="'/details?id='+ps.id">{{title}}</router-link>
             </span>
             <div style="margin-top: 20px" class="seperator"></div>
           </div>
@@ -44,8 +42,10 @@ import axios from "axios";
           a.style.display="none"
           SwiperComponent.methods.showSwiper()
         },
-    }
+    },
+
   }
+
 
   var categories=[];
   //加上await阻塞请求，直到请求完成后再进行页面的刷新

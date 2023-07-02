@@ -4,7 +4,7 @@
       <div v-for="(category,index) in categories" :key="category.category_name">
         <div @mouseenter="showMenu(index,$event)" @mouseleave="hideMenu(index,$event)" v-if="index<16"  class="eachCategory" >
           <span><img height="18" align="center" class="eachCategoryImg" src="../../../assets/HomePage/Clip.png" alt="clip"></span>
-          <a :href="'/search?keyword='+category.category_name" >{{category.category_name}} </a>
+          <span style="margin-left: 10px" @click="fastSearch(category.category_name)">{{category.category_name}} </span>
           <span></span>
         </div>
       </div>
@@ -19,6 +19,24 @@
 <script setup>
   import ProductsAsideCategoriesComponent from "@/components/user-facing/home-page/ProductsAsideCategoriesComponent.vue";
   import SwiperComponent from "@/components/user-facing/home-page/SwiperComponent.vue";
+  import {defineEmits, ref} from "vue";
+  import {useRouter} from "vue-router";
+  const emit = defineEmits(["search"]);
+  const router = useRouter();
+  let keyword = ref("");
+
+  function fastSearch(item) {
+    keyword.value = item;
+    // alert(keyword.value)
+    search();
+  }
+  const search = () => {
+    // alert(keyword.value)
+    emit('search', keyword.value);
+    if (!window.location.href.includes("search")) {
+      router.push({path: "/search", query: {keyword: keyword.value}});
+    }
+  }
   var categories=ProductsAsideCategoriesComponent.data().categories
   function showMenu(index,e){
     //alert(index);
@@ -28,8 +46,8 @@
   function hideMenu(index,e) {
     e.target.style.backgroundColor="#e2e2e3"
     ProductsAsideCategoriesComponent.methods.hideMenu(index);
-
   }
+
 
 </script>
 
