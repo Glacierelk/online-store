@@ -23,14 +23,14 @@
       <el-table-column prop="name" label="分类名称" width="450" align="center" ></el-table-column>
       <el-table-column label="产品管理" width="450" align="center">
         <template v-slot="scope">
-          <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleButtonClick(scope.row)">
+          <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleManage(scope.row)">
             <i class="fa fa-edit" style="color: blue;"></i>
           </el-button>
         </template>
       </el-table-column>
       <el-table-column label="删除" width="450" align="center">
         <template v-slot="scope">
-          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleButtonClick(scope.row)">
+          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleDelete(scope.row)">
             <i class="fa fa-trash" style="color: red;"></i>
           </el-button>
         </template>
@@ -73,6 +73,7 @@
 import axios from "axios";
 import qs from "qs";
 import { ElMessageBox } from 'element-plus';
+import {useRouter} from "vue-router";
 //import {inject} from "vue";
 
 function range(start, end, step = 1) {
@@ -88,6 +89,7 @@ export default {
       form: {},
       rowCount: [],
       rowCountNum:0,
+      router : useRouter(),
       rowId:0,
       secondDialogVisible: false,
       categoryName: '',
@@ -141,9 +143,14 @@ export default {
       // 更新tableData和total
     },
     handleManage(row) {
-      // 在这里处理按钮点击事件
-      //window.location.href = 'https://localhost:8080/manage/ProductComponents';
-      console.log("管理",row);
+      this.router.push({
+          path:'/product',
+          query: {
+            cid: row.id ,
+            name:row.name,
+          }
+    });
+      console.log("管理", row.cid);
     },
     handleDelete(row) {
       ElMessageBox.confirm('确定要删除吗？', '提示', {
