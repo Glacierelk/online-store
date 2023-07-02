@@ -66,6 +66,7 @@ public class ShoppingCartServlet extends BaseServlet {
         writeJsonValue(response,resultInfo);
     }
 
+    //TODO 接收参数错误
     public void deleteGoods(HttpServletRequest request,HttpServletResponse response) throws IOException {
         int uid,pid;
         ResultInfo info = new ResultInfo();
@@ -91,6 +92,7 @@ public class ShoppingCartServlet extends BaseServlet {
         writeJsonValue(response,info);
     }
 
+    //TODO 接收参数错误
     public void deleteGoodsByList(HttpServletRequest request,HttpServletResponse response) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         ResultInfo info = new ResultInfo();

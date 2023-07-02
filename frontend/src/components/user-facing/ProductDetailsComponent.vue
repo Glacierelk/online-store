@@ -74,7 +74,7 @@
 
           <div align="center">
             <el-button @click="buyProduct" plain type="danger">立即购买</el-button>
-            <el-button @click="addToCart" id="inputToShoppingCart" v-bind:type="buttonType">
+            <el-button @click="addToCart" id="inputToShoppingCart" :type="this.buttonType">
               <i aria-hidden="true" class="fa fa-shopping-cart"></i>
               &nbsp;加入购物车
             </el-button>
@@ -134,7 +134,7 @@ export default {
   name: "ProductDetails",
   data() {
     return {
-      buttonType:buttonType,
+      buttonType:"danger",
       show: false,
       router: useRouter(),
       route: useRoute(),
@@ -162,28 +162,28 @@ export default {
   methods: {
     async getDetails(id) {
       pid=id
-      await axios.get("/user/getUser").then(function (data){
+      await axios.get("/user/getUser").then((data)=>{
         if(!data.data.flag) //如果没查到,即用户未登录
         {
           uid=-1;
-          console.log("flag "+data.data.flag)
-          buttonType="info"
+          // console.log("flag "+data.data.flag)
+          this.buttonType="info"
         }
         else {
           uid=data.data.data.id;
-          console.log(data.data.data.id)
+          // console.log(data.data.data.id)
         }
-      }).catch(function (){
+      }).catch(()=>{
         uid=-1
       })
       if(uid!=-1)
       {
             await axios.get("/cart/checkCartStatus?uid="+uid+"&pid="+id)
-            .then(function (data){
+            .then((data)=>{
               if (data.data.flag)//如果查询成功
               {
-                buttonType=data.data.data?"info":"danger";//是否在购物车中
-                alert(buttonType)
+                this.buttonType=data.data.data?"info":"danger";//是否在购物车中
+                // console.log("buttonType "+buttonType)
               }
               else
               {
@@ -192,18 +192,13 @@ export default {
             })
       }
 
-
       await axios.post('/product/details', qs.stringify({
         id: id
       }))
           .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             if (res.status === 200 && res.data.flag) {
               this.data = res.data.data;
-              // console.log(this.data);
-              // console.log(this.data.name)
-              // console.log(res.data.data.cid);
-              // console.log(this.data.cid + "------");
 
               this.data.images.forEach(item => {
                 if (item.type === "type_single") {
@@ -254,7 +249,7 @@ export default {
       {
         axios.post("/order/createOrder",{
           "uid": uid,
-          "orderItems":[{"pid": pid, "count": this.count}]}).then(function (data){
+          "orderItems":[{"pid": pid, "count": this.count}]}).then((data)=>{
           if(data.data.flag){
             alert("创建订单成功，请到我的订单页面付款~");
           }
@@ -266,27 +261,31 @@ export default {
       }
 
     },
-    addToCart(){
+     addToCart(){
         if (uid==-1)
         {
           alert("请先登录～")
         }
-        else
+        else if(this.buttonType == "info")
+        {
+          alert("已经在购物车中了～")
+        }
+        else if(this.buttonType == "danger")
         {
           axios.post("/cart/addGoods",qs.stringify({
           "uid": uid,
           "pid": pid,
           "count" : this.count,
-        })).then(function (data){
+        })).then((data)=>{
             if (data.data.flag)
             {
               alert("加入成功~");
-              buttonType="info"
+              this.buttonType="info";
             }
             else {
               alert("加入失败~");
             }
-          }).catch(function (){
+          }).catch(()=>{
             alert("加入购物车过程发生异常！");
           })
         }
@@ -298,7 +297,7 @@ export default {
     this.show = true;
   }
 };
-var buttonType="info"
+
 var uid=-1;
 var pid=-1;
 </script>
