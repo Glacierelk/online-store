@@ -304,30 +304,36 @@ GET http://localhost:8080/store/category/homePageCategory HTTP/1.1
 }
 ```
 
-
-## 商品详情
-
-### 根据分类cid获取商品内容
+### 后台添加商品分类属性
 
 #### 基本信息
 
-> 请求路径：`/category/searchCategoryProperty`
+> 请求路径：`/property/add`
 >
-> 请求方式：GET
+> 请求方式：POST
 >
-> 接口描述：该接口根据分类cid获取商品内容
-
-
+> 接口描述：该接口用于后台新增某个商品分类的属性
 
 #### 请求参数
-cid
+
 ##### 参数说明
-分类ID
+
+| 参数名 | 类型     | 是否必须 | 备注                   |
+| ------ | -------- | -------- | ---------------------- |
+| `cid`  | `number` | 必须     | 要新增属性的商品分类id |
+| `name` | `string` | 必须     | 新增的属性名           |
+
 ##### 请求样例
 
-```http
-GET http://localhost:8080/store/category/searchCategoryProperty HTTP/1.1
-```
+~~~HTTP
+POST http://localhost:8080/store/property/add HTTP/1.1
+Content-Type: application/json
+
+{
+	"cid": 60,
+	"name": "颜色"
+}
+~~~
 
 #### 响应数据
 
@@ -337,39 +343,21 @@ GET http://localhost:8080/store/category/searchCategoryProperty HTTP/1.1
 
 ##### 参数说明
 
-| 名称                   | 类型                    | 是否必须 | 备注                                    |
-| ---------------------- |-----------------------| -------- | --------------------------------------- |
-| `flag`                 | `boolean`             | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
-| `errorMsg`             | `string`              | 非必须   | 如果获取失败，返回一个错误信息          |
-| `data`                 | `list`                | 必须     | 分类数据列表                            |
-| \| - `category_name`     | `string`  | 必须     | 分类名称                                |
-| \| - `cid`               | `number`  | 必须     | 分类ID                                  |
-| \| - `name`              | `string`  | 必须     | 商品名称                                |
-| \| - `subTitle`          | `string`  | 非必需   | 商品小标题                              |
-| \| - `originalPrice`     | `number`  | 必须     | 原价                                    |
-| \| - `promotePrice`      | `number`  | 非必需   | 促销价                                  |
-| \| - `stock`             | `number`  | 必须     | 库存                                    |
+| 参数名     | 类型      | 是否必须 | 备注                                |
+| ---------- | --------- | -------- | ----------------------------------- |
+| `flag`     | `boolean` | 必须     | 添加成功返回`true`，否则返回`false` |
+| `data`     | `object`  | 非必须   | 该参数在此请求中无效                |
+| `errorMsg` | `string`  | 非必须   | 若出错返回错误信息                  |
 
 ##### 响应数据样例
 
-```json
+~~~json
 {
-  "flag": true,
-  "data": [
-    {
-      "id": 87,
-      "name": "Konka/康佳 LED32S1卧室32吋安卓智能无线WIFI网络液晶平板电视机",
-      "subTitle": "32吋电视机 8核智能 网络 全国联保 送货上门",
-      "originalPrice": 1699.0,
-      "promotePrice": 1104.35,
-      "stock": 98,
-      "cid": 83,
-      "createDate": 1471077812000
-    }
-  ],
-  "errorMsg": null
+    "flag": true,
+    "data": null,
+    "errorMsg": null
 }
-```
+~~~
 
 ### 后台获取分类信息
 
@@ -530,65 +518,6 @@ Content-Type: application/json
 	"errorMsg": null
 }
 ```
-
-## 商品分类属性
-
-### 后台添加商品分类属性
-
-#### 基本信息
-
-> 请求路径：`/property/add`
->
-> 请求方式：POST
->
-> 接口描述：该接口用于后台新增某个商品分类的属性
-
-#### 请求参数
-
-##### 参数说明
-
-| 参数名 | 类型     | 是否必须 | 备注                   |
-| ------ | -------- | -------- | ---------------------- |
-| `cid`  | `number` | 必须     | 要新增属性的商品分类id |
-| `name` | `string` | 必须     | 新增的属性名           |
-
-##### 请求样例
-
-~~~HTTP
-POST http://localhost:8080/store/property/add HTTP/1.1
-Content-Type: application/json
-
-{
-	"cid": 60,
-	"name": "颜色"
-}
-~~~
-
-#### 响应数据
-
-##### 参数格式
-
-`application\json`
-
-##### 参数说明
-
-| 参数名     | 类型      | 是否必须 | 备注                                |
-| ---------- | --------- | -------- | ----------------------------------- |
-| `flag`     | `boolean` | 必须     | 添加成功返回`true`，否则返回`false` |
-| `data`     | `object`  | 非必须   | 该参数在此请求中无效                |
-| `errorMsg` | `string`  | 非必须   | 若出错返回错误信息                  |
-
-##### 响应数据样例
-
-~~~json
-{
-    "flag": true,
-    "data": null,
-    "errorMsg": null
-}
-~~~
-
-
 
 ## 商品
 
@@ -900,6 +829,74 @@ Content-Type: application/json
 		}
 	],
 	"errorMsg": null
+}
+```
+
+### 根据分类 `cid` 获取商品内容
+
+#### 基本信息
+
+> 请求路径：`/category/searchCategoryProperty`
+>
+> 请求方式：GET
+>
+> 接口描述：该接口根据分类cid获取商品内容
+
+
+
+#### 请求参数
+
+cid
+
+##### 参数说明
+
+分类ID
+
+##### 请求样例
+
+```http
+GET http://localhost:8080/store/category/searchCategoryProperty HTTP/1.1
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application\json`
+
+##### 参数说明
+
+| 名称                 | 类型      | 是否必须 | 备注                                    |
+| -------------------- | --------- | -------- | --------------------------------------- |
+| `flag`               | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
+| `errorMsg`           | `string`  | 非必须   | 如果获取失败，返回一个错误信息          |
+| `data`               | `list`    | 必须     | 分类数据列表                            |
+| \| - `category_name` | `string`  | 必须     | 分类名称                                |
+| \| - `cid`           | `number`  | 必须     | 分类ID                                  |
+| \| - `name`          | `string`  | 必须     | 商品名称                                |
+| \| - `subTitle`      | `string`  | 非必需   | 商品小标题                              |
+| \| - `originalPrice` | `number`  | 必须     | 原价                                    |
+| \| - `promotePrice`  | `number`  | 非必需   | 促销价                                  |
+| \| - `stock`         | `number`  | 必须     | 库存                                    |
+
+##### 响应数据样例
+
+```json
+{
+  "flag": true,
+  "data": [
+    {
+      "id": 87,
+      "name": "Konka/康佳 LED32S1卧室32吋安卓智能无线WIFI网络液晶平板电视机",
+      "subTitle": "32吋电视机 8核智能 网络 全国联保 送货上门",
+      "originalPrice": 1699.0,
+      "promotePrice": 1104.35,
+      "stock": 98,
+      "cid": 83,
+      "createDate": 1471077812000
+    }
+  ],
+  "errorMsg": null
 }
 ```
 
