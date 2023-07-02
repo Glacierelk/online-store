@@ -34,7 +34,7 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 import Header from "@/components/user-facing/header-footer/LoginAndRegisterHeader.vue";
-import Footer from "@/components/user-facing/header-footer/FooterComponents.vue";
+import Footer from "@/components/user-facing/header-footer/FooterComponent.vue";
 import {ref} from "vue";
 import {ElForm, ElFormItem, ElInput, ElButton} from "element-plus";
 import {useRouter} from "vue-router";

@@ -90,7 +90,16 @@ checkLogin();
 
 function toCart() {
   router.push({
-    path: "/cart",
+    path: "/user/cart",
+    query: {
+      id: userId.value
+    }
+  });
+}
+
+function toOrder() {
+  router.push({
+    path: "/user/order",
     query: {
       id: userId.value
     }
@@ -117,8 +126,8 @@ function toCart() {
 
 
     <div v-if="isLogin" class="pull-right">
-      <a href="#">我的订单</a>
-      <span style="cursor: pointer" @click="toCart()">
+      <span style="cursor: pointer"  @click="toOrder">我的订单</span>
+      <span style="cursor: pointer" @click="toCart">
         <i aria-hidden="true" class="fa fa-shopping-cart"></i>
         购物车&nbsp;<strong>{{ userCartCount }}</strong>&nbsp;件
       </span>
