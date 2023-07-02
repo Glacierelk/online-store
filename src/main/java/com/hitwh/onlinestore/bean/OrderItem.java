@@ -8,6 +8,31 @@ public class OrderItem {
     private Double originalPrice;
     private Double promotePrice;
     private int count;
+    private int imageId;
+
+
+    @Override
+    public String
+    toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", pid=" + pid +
+                ", oid=" + oid +
+                ", name='" + name + '\'' +
+                ", originalPrice=" + originalPrice +
+                ", promotePrice=" + promotePrice +
+                ", count=" + count +
+                ", imageId=" + imageId +
+                '}';
+    }
+
+    public int getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
 
     public OrderItem() {
     }
@@ -68,16 +93,4 @@ public class OrderItem {
         this.count = count;
     }
 
-    @Override
-    public String toString() {
-        return "OrderItem{" +
-                "id=" + id +
-                ", pid=" + pid +
-                ", oid=" + oid +
-                ", name='" + name + '\'' +
-                ", originalPrice=" + originalPrice +
-                ", promotePrice=" + promotePrice +
-                ", count=" + count +
-                '}';
-    }
 }

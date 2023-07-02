@@ -73,8 +73,8 @@
           </div>
 
           <div align="center">
-            <el-button plain type="danger">立即购买</el-button>
-            <el-button type="danger">
+            <el-button @click="buyProduct" plain type="danger">立即购买</el-button>
+            <el-button @click="addToCart" id="inputToShoppingCart" :type="this.buttonType">
               <i aria-hidden="true" class="fa fa-shopping-cart"></i>
               &nbsp;加入购物车
             </el-button>
@@ -134,11 +134,13 @@ export default {
   name: "ProductDetails",
   data() {
     return {
+      buttonType:"danger",
       show: false,
       router: useRouter(),
       route: useRoute(),
       count: 0,
       leftImage: "",
+      pid:pid,
       data: {
         id: 0,
         name: "",
@@ -159,17 +161,44 @@ export default {
   },
   methods: {
     async getDetails(id) {
+      pid=id
+      await axios.get("/user/getUser").then((data)=>{
+        if(!data.data.flag) //如果没查到,即用户未登录
+        {
+          uid=-1;
+          // console.log("flag "+data.data.flag)
+          this.buttonType="info"
+        }
+        else {
+          uid=data.data.data.id;
+          // console.log(data.data.data.id)
+        }
+      }).catch(()=>{
+        uid=-1
+      })
+      if(uid!=-1)
+      {
+            await axios.get("/cart/checkCartStatus?uid="+uid+"&pid="+id)
+            .then((data)=>{
+              if (data.data.flag)//如果查询成功
+              {
+                this.buttonType=data.data.data?"info":"danger";//是否在购物车中
+                // console.log("buttonType "+buttonType)
+              }
+              else
+              {
+                alert("查询是否在购物车中失败")
+              }
+            })
+      }
+
       await axios.post('/product/details', qs.stringify({
         id: id
       }))
           .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             if (res.status === 200 && res.data.flag) {
               this.data = res.data.data;
-              // console.log(this.data);
-              // console.log(this.data.name)
-              // console.log(res.data.data.cid);
-              // console.log(this.data.cid + "------");
 
               this.data.images.forEach(item => {
                 if (item.type === "type_single") {
@@ -181,7 +210,6 @@ export default {
               this.showImages.sort((a, b) => b - a)
               this.detailImages.sort((a, b) => b - a)
               this.leftImage = require("../../assets/productSingle/" + this.showImages[0] + ".jpg");
-
               this.show = true;
             } else {
               alert("获取商品详情失败!");
@@ -211,7 +239,57 @@ export default {
     },
     changeImage(id) {
       this.leftImage = require("../../assets/productSingle/" + id + ".jpg");
-    }
+    },
+    buyProduct(){
+      if(uid==-1)
+      {
+        alert("请先登录~")
+      }
+      else
+      {
+        axios.post("/order/createOrder",{
+          "uid": uid,
+          "orderItems":[{"pid": pid, "count": this.count}]}).then((data)=>{
+          if(data.data.flag){
+            alert("创建订单成功，请到我的订单页面付款~");
+          }
+          else
+          {
+            alert("创建订单失败");
+          }
+        });
+      }
+
+    },
+     addToCart(){
+        if (uid==-1)
+        {
+          alert("请先登录～")
+        }
+        else if(this.buttonType == "info")
+        {
+          alert("已经在购物车中了～")
+        }
+        else if(this.buttonType == "danger")
+        {
+          axios.post("/cart/addGoods",qs.stringify({
+          "uid": uid,
+          "pid": pid,
+          "count" : this.count,
+        })).then((data)=>{
+            if (data.data.flag)
+            {
+              alert("加入成功~");
+              this.buttonType="info";
+            }
+            else {
+              alert("加入失败~");
+            }
+          }).catch(()=>{
+            alert("加入购物车过程发生异常！");
+          })
+        }
+    },
   },
   async mounted() {
     this.show = false;
@@ -220,6 +298,8 @@ export default {
   }
 };
 
+var uid=-1;
+var pid=-1;
 </script>
 
 <style scoped>

@@ -112,15 +112,17 @@
   }
 
   div.footer_desc {
-    border-top-style: solid;
-    border-top-width: 1px;
-    border-top-color: #e7e7e7;
+    //border-top-style: solid;
+    //border-top-width: 1px;
+    //border-top-color: #e7e7e7;
     padding-top: 30px;
     margin-left: 10%;
   }
 
   div.copyright {
     background-color: black;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   #copyright a,span.slash{

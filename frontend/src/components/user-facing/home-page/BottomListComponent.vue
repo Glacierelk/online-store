@@ -6,7 +6,7 @@
       <el-row :gutter="100">
         <el-col v-for="(col,colIndex) in titles[rowIndex]" :key="col" :span="4" class="listCol">
           <div v-if="colIndex<5">
-            <a :href="'/details?id='+categories[rowIndex].products[colIndex].id">
+            <router-link :to="'/details?id='+categories[rowIndex].products[colIndex].id">
               <div class="itemTab" @mouseenter="itemTabHover($event)" @mouseleave="itemTabLeave($event)">
                 <div class="imgTab">
                   <img :src="images[rowIndex][colIndex]" alt="pic" class="imgInTab">
@@ -18,7 +18,7 @@
                   <span class="priceInTab">{{ prices[rowIndex][colIndex] }}</span>
                 </div>
               </div>
-            </a>
+            </router-link>
           </div>
         </el-col>
       </el-row>
@@ -159,5 +159,7 @@ span.divider {
 div.rowTitle {
   margin-bottom: 10px;
 }
-
+.itemTab{
+  cursor: pointer;
+}
 </style>

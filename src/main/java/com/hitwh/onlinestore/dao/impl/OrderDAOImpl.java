@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.beans.Transient;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -87,19 +88,25 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<OrderItem> getOrderItemsByOrderId(int orderId) {
         String sql = "SELECT\n" +
-                "    oi.id ,\n" +
+                "    oi.id,\n" +
                 "    oi.pid,\n" +
                 "    oi.oid,\n" +
                 "    p.name,\n" +
                 "    p.original_price,\n" +
                 "    p.promote_price,\n" +
-                "    oi.count\n" +
+                "    oi.count,\n" +
+                "    pi.id AS image_id\n" +
                 "FROM\n" +
                 "    online_store.order_item AS oi\n" +
-                "        LEFT JOIN\n" +
-                "    online_store.product AS p ON oi.pid = p.id\n" +
+                "        LEFT JOIN online_store.product AS p ON oi.pid = p.id\n" +
+                "        LEFT JOIN (\n" +
+                "        SELECT pid, MIN(id) AS id\n" +
+                "        FROM online_store.product_image\n" +
+                "        WHERE type = 'type_single'\n" +
+                "        GROUP BY pid\n" +
+                "    ) AS pi ON oi.pid = pi.pid\n" +
                 "WHERE\n" +
-                "    oi.oid = ?;";
+                "        oi.oid = ?;";
         try {
             return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(OrderItem.class), orderId);
         } catch (DataAccessException e) {
@@ -109,6 +116,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
+    @Transient
     public boolean updateStatus(int oid, int status) {
         String sql = "UPDATE online_store.`order` SET status = ? WHERE id = ?;";
         String currentDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -138,10 +146,26 @@ public class OrderDAOImpl implements OrderDAO {
             }
             try {
                 jdbcTemplate.update(sql, currentDate, oid);
+
+                //若用户付款，更新购买订单中的商品后的库存
+                if(status == 0){
+                    try {
+                        String updateStockSql = "UPDATE online_store.product AS p\n" +
+                                "         LEFT JOIN online_store.order_item AS oi ON p.id = oi.pid\n" +
+                                "SET p.stock = p.stock - oi.count\n" +
+                                "WHERE oi.oid = ?;";
+                        jdbcTemplate.update(updateStockSql, oid);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return false;
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 return false;
             }
+
+
         }
         return true;
     }

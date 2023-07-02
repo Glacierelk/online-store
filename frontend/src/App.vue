@@ -4,6 +4,7 @@
 
 <script setup>
 import axios from "axios";
+
 axios.defaults.baseURL = 'http://localhost:8729/store';
 </script>
 
@@ -13,6 +14,6 @@ axios.defaults.baseURL = 'http://localhost:8729/store';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  //margin-top: 60px;
+//margin-top: 60px;
 }
 </style>

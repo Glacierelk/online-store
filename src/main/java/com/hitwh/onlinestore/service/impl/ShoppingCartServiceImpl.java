@@ -29,17 +29,23 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    public boolean checkCartStatus(int pid, int uid) {
+        return shoppingCartDAO.getCartStatus(pid,uid);
+    }
+
+    @Override
     public boolean addGoods(ShoppingCart shoppingCart) {
         return shoppingCartDAO.addGoods(shoppingCart);
     }
 
     @Override
-    public boolean deleteGoods(int uid, int pid) {
-        return shoppingCartDAO.deleteGoods(uid,pid);
+    public boolean deleteGoods(int id) {
+        return shoppingCartDAO.deleteGoods(id);
     }
 
     @Override
     public boolean alterGoodNumber(ShoppingCart shoppingCart) {
         return shoppingCartDAO.alterGoodsNumber(shoppingCart);
     }
+
 }

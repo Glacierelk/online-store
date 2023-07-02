@@ -36,13 +36,10 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO {
     }
 
     @Override
-    public boolean deleteGoods(int uid, int pid) {
+    public boolean deleteGoods(int id) {
         String sql="UPDATE shopping_cart SET status=0 WHERE id=?";
-        String sqlCheckStatus="SELECT id FROM shopping_cart WHERE uid=? AND pid=? AND status=1";
-
         try {
-            ShoppingCart result=jdbcTemplate.queryForObject(sqlCheckStatus,new BeanPropertyRowMapper<ShoppingCart>(ShoppingCart.class),uid,pid);
-            jdbcTemplate.update(sql,result.getId());
+            jdbcTemplate.update(sql,id);
             return true;
         }catch (Exception e){
             System.out.println(e.toString());
@@ -71,4 +68,17 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO {
             return 0;
         }
     }
+
+    @Override
+    public boolean getCartStatus(int pid, int uid) {
+        String sql = "SELECT id FROM shopping_cart WHERE uid=? AND pid=? AND status=1";
+        try {
+            ShoppingCart shoppingCart=jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(ShoppingCart.class),uid,pid);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+
 }

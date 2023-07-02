@@ -1,6 +1,7 @@
 package com.hitwh.onlinestore.dao.impl;
 
 import com.hitwh.onlinestore.bean.ProductDetails;
+import com.hitwh.onlinestore.bean.ProductImage;
 import com.hitwh.onlinestore.utils.JDBCUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -22,5 +23,9 @@ class ProductDAOImplTest {
     void queryByName() {
         String sql = "select * from product where name like ?";
         System.out.println(template.query(sql, new BeanPropertyRowMapper<>(ProductDetails.class), "%乐%"));
+    }
+
+    @Test
+    void getImagesByProductId() {
     }
 }
