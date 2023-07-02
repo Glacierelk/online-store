@@ -68,6 +68,7 @@
             <el-button v-if="row.status === 1" @click="remind(row)">催发货</el-button>
             <el-button v-if="row.status === 2" @click="receive(row)">收货</el-button>
             <el-button v-if="row.status === 3" @click="comment(row)">评价</el-button>
+            <i class="fa fas fa-check-circle" style="color: green;font-size: xx-large" v-if="row.status === 4"></i>
           </div>
         </template>
       </el-table-column>
@@ -81,6 +82,7 @@ import axios from 'axios'
 import qs from "qs";
 import router from "@/router";
 import {ElMessageBox} from "element-plus";
+
 
 export default {
   props: {
@@ -204,13 +206,61 @@ export default {
     },
     comment(order) {
       // 实现评价逻辑
-      axios.post('/order/updateStatus', qs.stringify({
-        "id": order.id,
-        "status": order.status
-      })).then(response => {
-        console.log(response.data);
-      })
+      ElMessageBox.prompt('请填写评价', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /\S/,
+        inputErrorMessage: '评价不能为空'
+      }).then(({value}) => {
+        // 创建一个空的 promises 数组，用于存放所有的评价请求
+        let commentPromises = [];
+
+        // 遍历订单中的每个商品
+        order.orderItems.forEach(item => {
+          // 为每个商品创建一个评价请求，并将该请求添加到 promises 数组中
+          let commentPromise = axios.post('/comment/addComment', qs.stringify({
+            "pid": item.pid,
+            "uid": this.userId,
+            "content": value
+          }));
+          commentPromises.push(commentPromise);
+        });
+
+        // 使用 Promise.all 执行所有的评价请求
+        Promise.all(commentPromises)
+            .then(responses => {
+              // 判断所有的评价请求是否都成功
+              let allSuccess = responses.every(response => response.data.flag);
+
+              if (allSuccess) {
+                // 如果所有的评价请求都成功，更新订单状态
+                axios.post('/order/updateStatus', qs.stringify({
+                  "id": order.id,
+                  "status": order.status
+                }));
+                this.$message({
+                  message: '评价成功',
+                  type: 'success'
+                });
+                this.fetchOrders();
+              } else {
+                this.$message({
+                  message: '部分评价失败',
+                  type: 'error'
+                });
+              }
+            })
+            .catch(() => {
+              this.$message({
+                message: '评价失败',
+                type: 'error'
+              });
+            });
+      }).catch(() => {
+        // 用户取消评价
+      });
     }
+
 
   },
   mounted() {
