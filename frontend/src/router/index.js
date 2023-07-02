@@ -24,12 +24,12 @@ const router = createRouter({
                     component: () => import('@/views/user-facing/account/RegisterForm.vue')
                 },
                 {
-                    path: '/cart',
+                    path: 'cart',
                     name: 'Cart',
                     component: () => import('../views/user-facing/ShoppingCartView.vue'),
                 },
                 {
-                    path: '/order',
+                    path: 'order',
                     name: 'Order',
                     component: () => import('../views/user-facing/OrderListView.vue'),
                 }
