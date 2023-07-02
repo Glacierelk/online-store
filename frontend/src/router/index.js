@@ -55,6 +55,11 @@ const router = createRouter({
             name: 'Details',
             component: () => import('../views/user-facing/ProductDetailsView.vue'),
         },
+        {
+            path: '/upload',
+            name: 'Upload',
+            component: () => import('../views/UploadImage.vue'),
+        }
     ]
 })
 

@@ -6,7 +6,6 @@ import {useRouter} from "vue-router";
 
 const router = useRouter();
 const userCartCount = ref(0);
-//TODO 获取用户订单数量API
 const userName = ref("");
 const userId = ref("");
 const isLogin = ref(false);
