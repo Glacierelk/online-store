@@ -6,17 +6,19 @@
       <el-row :gutter="100">
         <el-col v-for="(col,colIndex) in titles[rowIndex]" :key="col" :span="4" class="listCol">
           <div v-if="colIndex<5">
-            <div class="itemTab" @mouseenter="itemTabHover($event)" @mouseleave="itemTabLeave($event)">
-              <div class="imgTab">
-                <img :src="images[rowIndex][colIndex]" alt="pic" class="imgInTab">
+            <a :href="'/details?id='+categories[rowIndex].products[colIndex].id">
+              <div class="itemTab" @mouseenter="itemTabHover($event)" @mouseleave="itemTabLeave($event)">
+                <div class="imgTab">
+                  <img :src="images[rowIndex][colIndex]" alt="pic" class="imgInTab">
+                </div>
+                <div class="textTab">
+                  <span class="textInTab">{{ titles[rowIndex][colIndex] }}</span>
+                </div>
+                <div class="priceTab">
+                  <span class="priceInTab">{{ prices[rowIndex][colIndex] }}</span>
+                </div>
               </div>
-              <div class="textTab">
-                <span class="textInTab">{{ titles[rowIndex][colIndex] }}</span>
-              </div>
-              <div class="priceTab">
-                <span class="priceInTab">{{ prices[rowIndex][colIndex] }}</span>
-              </div>
-            </div>
+            </a>
           </div>
         </el-col>
       </el-row>
@@ -29,7 +31,6 @@
 
 <script>
 import ProductsAsideCategoriesComponent from "@/components/user-facing/home-page/ProductsAsideCategoriesComponent.vue";
-
 export default {
   name: "BottomListComponent",
   data() {
@@ -48,7 +49,7 @@ export default {
     itemTabLeave: function (e) {
       e.target.style.borderColor = "white"
       e.target.style.opacity = 1
-    }
+    },
   }
 }
 

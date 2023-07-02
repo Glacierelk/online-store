@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CommentDAO {
     public List<Comment> getCommentsByProductId(int productId);
+    public boolean addComment(Comment comment);
 }

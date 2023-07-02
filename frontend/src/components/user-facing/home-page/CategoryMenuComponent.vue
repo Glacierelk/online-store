@@ -4,7 +4,7 @@
       <div v-for="(category,index) in categories" :key="category.category_name">
         <div @mouseenter="showMenu(index,$event)" @mouseleave="hideMenu(index,$event)" v-if="index<16"  class="eachCategory" >
           <span><img height="18" align="center" class="eachCategoryImg" src="../../../assets/HomePage/Clip.png" alt="clip"></span>
-          <a href="#" >{{category.category_name}} </a>
+          <a :href="'/search?keyword='+category.category_name" >{{category.category_name}} </a>
           <span></span>
         </div>
       </div>

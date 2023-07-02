@@ -14,4 +14,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public List<ShoppingCart> getShoppingCartByUserId(Integer uid) {
         return shoppingCartDAO.queryByUserId(uid);
     }
+
+    @Override
+    public boolean addGoods(ShoppingCart shoppingCart) {
+        return shoppingCartDAO.addGoods(shoppingCart);
+    }
+
+    @Override
+    public boolean deleteGoods(int uid, int pid) {
+        return shoppingCartDAO.deleteGoods(uid,pid);
+    }
 }

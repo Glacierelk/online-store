@@ -20,4 +20,33 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO {
             return null;
         }
     }
+
+    @Override
+    public boolean addGoods(ShoppingCart shoppingCart) {
+        String sql = "INSERT INTO shopping_cart(pid,count,uid,status) VALUES(?,?,?,?)";
+        try{
+            jdbcTemplate.update(sql,shoppingCart.getPid(),shoppingCart.getCount(),shoppingCart.getUid(),shoppingCart.getStatus());
+            System.out.println("insert suc");
+            return true;
+        }catch (Exception e)
+        {
+            System.out.println(e.toString());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteGoods(int uid, int pid) {
+        String sql="UPDATE shopping_cart SET status=0 WHERE id=?";
+        String sqlCheckStatus="SELECT id FROM shopping_cart WHERE uid=? AND pid=? AND status=1";
+
+        try {
+            ShoppingCart result=jdbcTemplate.queryForObject(sqlCheckStatus,new BeanPropertyRowMapper<ShoppingCart>(ShoppingCart.class),uid,pid);
+            jdbcTemplate.update(sql,result.getId());
+            return true;
+        }catch (Exception e){
+            System.out.println(e.toString());
+            return false;
+        }
+    }
 }

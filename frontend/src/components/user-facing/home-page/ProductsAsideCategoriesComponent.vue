@@ -7,14 +7,15 @@
     <!--  :id="index"可以改成:id="'tab'+index" 这样比较安全  -->
     <!--  :id="index"可以改成:id="'tab'+index" 这样比较安全  -->
     <div @mouseenter="showMenu(index)" @mouseleave="hideMenu(index)" class="productsAsideCategories"  v-for="(category,index) in categories" :key="category.cid" :id="index">
-        <div class="row show1" v-for="ps in category.products" :key="ps.id">
-          <span v-for="title in ps.subTitle.split(' ')" :key="title" style="margin-left: 30px;">
-            <a href="#" v-if="ps.subTitle.length>0">
-              {{title}}
-            </a>
-          </span>
-
-          <div style="margin-top: 20px" class="seperator"></div>
+        <div v-for="ps in category.products" :key="ps.id">
+          <div class="row show1" v-if="ps.subTitle.length>0">
+            <span v-for="title in ps.subTitle.split(' ')" :key="title" style="margin-left: 30px;">
+              <a :href="'/details?id='+ps.id" v-if="ps.subTitle.length>0">
+                {{title}}
+              </a>
+            </span>
+            <div style="margin-top: 20px" class="seperator"></div>
+          </div>
         </div>
     </div>
   </div>
@@ -65,7 +66,7 @@ import axios from "axios";
 div.productsAsideCategories {
   position: relative;
   width: 100%;
-  height: 606px;
+  height: 546px;
   background-color: white;
   /* 	padding-bottom:10px; */
   margin-left: 198px;
