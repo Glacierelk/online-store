@@ -52,4 +52,9 @@ public interface ProductDAO {
      * 根据商品id获取一个商品图片
      */
     ProductImage getImageByProductId(int productId);
+
+    /**
+     * 根据商品id修改一个商品
+     */
+    boolean updateProduct(Product product);
 }

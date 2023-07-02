@@ -46,6 +46,11 @@ const router = createRouter({
             component: () => import('../components/manage/ProductComponents.vue'),
         },
         {
+            path: '/property',
+            name: 'Property',
+            component: () => import('../components/manage/ProductSetProperty'),
+        },
+        {
             path: '/search',
             name: 'Search',
             component: () => import('../views/user-facing/SearchResultView.vue'),

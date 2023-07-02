@@ -564,6 +564,37 @@ Content-Type: application/json
 }
 ~~~
 
+### 后台添加商品分类属性
+
+#### 基本信息
+
+> 请求路径：`/property/change`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于后台新增某个商品分类的属性
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型     | 是否必须 | 备注     |
+| ----- | -------- | -------- |--------|
+| `id`  | `number` | 必须     | 要修改的属性 |
+| `name` | `string` | 必须     | 属性的值   |
+
+##### 请求样例
+
+~~~HTTP
+POST http://localhost:8080/store/property/change HTTP/1.1
+Content-Type: application/json
+
+{
+	"id": 60,
+	"name": "好好好"
+}
+~~~
+
 #### 响应数据
 
 ##### 参数格式
@@ -624,6 +655,51 @@ POST http://localhost:8080/store/product/add HTTP/1.1
 Content-Type: application/json
 
 {
+	"name": "test",
+	"originalPrice": 100.0,
+	"promotePrice": 89.0,
+	"stock": 233,
+	"subTitle": "tset",
+	"cid": 71
+}
+```
+
+
+## 商品
+
+### 后台修改商品
+
+#### 基本信息
+
+> 请求路径：`/product/editProduct`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于后台新增一个商品
+
+
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名          | 类型     | 是否必须 | 备注              |
+| --------------- | -------- | -------- | ----------------- |
+| `name`          | `string` | 必须     | 要新增的商品名称  |
+| `subTitle`      | `string` | 非必需   | 商品小标题        |
+| `originalPrice` | `number` | 必须     | 商品原价          |
+| `stock`         | `number` | 必须     | 商品库存          |
+| `promotePrice`  | `number` | 非必需   | 商品活动价        |
+| `cid`           | `number` | 必须     | 商品所属的分类 ID |
+
+##### 请求样例
+
+```http
+POST http://localhost:8080/store/product/editProduct HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":83,
 	"name": "test",
 	"originalPrice": 100.0,
 	"promotePrice": 89.0,

@@ -49,5 +49,12 @@ public class PropertyDAOImpl implements PropertyDAO {
 
     }
 
+    @Override
+    public boolean changeProperty(int id, String value) {
+        String sql = "UPDATE property_value SET value = ? WHERE id=?";
+        int count = template.update(sql,value,id);
+        return count == 1;
+    }
+
 
 }
