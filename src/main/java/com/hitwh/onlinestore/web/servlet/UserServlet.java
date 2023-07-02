@@ -118,6 +118,7 @@ public class UserServlet extends BaseServlet {
             info.setFlag(false);
             info.setErrorMsg("获取在线用户信息失败");
         }
+        System.out.println(info);
         writeJsonValue(response, info);
     }
 
