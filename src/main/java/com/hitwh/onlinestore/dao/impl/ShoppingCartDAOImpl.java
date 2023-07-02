@@ -37,10 +37,9 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO {
 
     @Override
     public boolean deleteGoods(int id) {
-        String sql="UPDATE shopping_cart SET status=0 WHERE id=?";
+        String sql="UPDATE shopping_cart SET status=0 WHERE id=? and status=1";
         try {
-            jdbcTemplate.update(sql,id);
-            return true;
+            return jdbcTemplate.update(sql,id) > 0;
         }catch (Exception e){
             System.out.println(e.toString());
             return false;
