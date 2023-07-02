@@ -1,6 +1,7 @@
 package com.hitwh.onlinestore.dao.impl;
 
 import com.hitwh.onlinestore.bean.Category;
+import com.hitwh.onlinestore.bean.Product;
 import com.hitwh.onlinestore.dao.CategoryDAO;
 import com.hitwh.onlinestore.utils.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -50,5 +51,16 @@ public class CategoryDAOImpl implements CategoryDAO {
         String sql = "delete from category where id = ?";
         int count = jdbcTemplate.update(sql, id);
         return count != 0;
+    }
+
+    @Override
+    public List<Product> getPropertyByCid(int cid) {
+        System.out.println(cid);
+        try {
+            String sql = "select * from product where cid  = ? ";
+            return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Product.class),cid);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

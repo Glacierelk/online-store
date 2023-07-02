@@ -34,6 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryAndProduct;
     }
 
+
     @Override
     public Object listAllCategories() {
         return categoryDAO.listAllCategories();
@@ -48,4 +49,9 @@ public class CategoryServiceImpl implements CategoryService {
     public boolean addCategory(String categoryName) {
         return categoryDAO.addCategory(categoryName);
     }
+
+    @Override
+    public Object cidCategoryProperty(int i) {
+        System.out.println(i);
+        return categoryDAO.getPropertyByCid(i);}
 }

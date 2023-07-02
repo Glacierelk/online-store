@@ -1,6 +1,7 @@
 package com.hitwh.onlinestore.dao;
 
 import com.hitwh.onlinestore.bean.Category;
+import com.hitwh.onlinestore.bean.Product;
 
 import java.util.List;
 
@@ -36,4 +37,11 @@ public interface CategoryDAO {
      * @return boolean
      */
     boolean deleteCategory(int id);
+
+    /*
+     * 根据分类cid获取商品内容
+     * @param cid
+     * @return boolean
+     */
+    List<Product> getPropertyByCid(int cid);
 }

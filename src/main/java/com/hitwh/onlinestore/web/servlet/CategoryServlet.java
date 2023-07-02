@@ -89,4 +89,22 @@ public class CategoryServlet extends BaseServlet{
         }
         writeJsonValue(response, info);
     }
+
+    /*
+     * 根据分类cid获取商品内容
+     */
+    public void searchCategoryProperty(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("searchCategoryProperty");
+        ResultInfo info = new ResultInfo();
+        int cid = Integer.parseInt(request.getParameter("cid"));
+        System.out.println(cid);
+        info.setData(categoryService.cidCategoryProperty(cid));
+        if (info.getData() != null){
+            info.setFlag(true);
+        }else {
+            info.setFlag(false);
+            info.setErrorMsg("根据分类cid获取商品内容失败");
+        }
+        writeJsonValue(response, info);
+    }
 }
