@@ -24,4 +24,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public boolean deleteGoods(int uid, int pid) {
         return shoppingCartDAO.deleteGoods(uid,pid);
     }
+
+    @Override
+    public boolean alterGoodNumber(ShoppingCart shoppingCart) {
+        return shoppingCartDAO.alterGoodsNumber(shoppingCart);
+    }
 }

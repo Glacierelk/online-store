@@ -1209,3 +1209,280 @@ GET http://localhost:8729/store/shoppingCart/getShoppingCart?id=1 HTTP/1.1
 	"errorMsg": null
 }
 ~~~
+
+
+
+### 加入商品到购物车中
+
+#### 基本信息
+
+> 请求路径：`/shoppingCart/addGoods`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于添加某个商品添加到购物车中
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型    | 是否必须 | 备注       |
+| ------ | ------- | -------- | ---------- |
+| uid    | Integer | 是       | 用户的id   |
+| pid    | Integer | 是       | 商品的id   |
+| count  | Integer | 是       | 商品的数量 |
+
+##### 请求样例	
+
+```http
+POST http://localhost:8729/store/shoppingCart/addGoods HTTP/1.1
+Content-Type: application/json 
+{
+	"pid": "87",
+	"uid":"1"
+	"count":"10"
+}
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| `errorMsg`     | `string`  | 非必须 | 如果请求失败，返回一个错误信息 |
+| -------------- | --------- | ------ | ------------------------------ |
+| `flag`         | `boolean` | 必须   | 请求是否成功                   |
+| \|- `errorMsg` | `String`  | 必须   | 请求失败的提示信息             |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"errorMsg": null
+}
+~~~
+
+
+
+### 从购物车删除商品
+
+#### 基本信息
+
+> 请求路径：`/shoppingCart/deleteGoods`
+>
+> 请求方式：DELETE
+>
+> 接口描述：该接口用于从购物车中删除商品
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型    | 是否必须 | 备注     |
+| ------ | ------- | -------- | -------- |
+| uid    | Integer | 是       | 用户的id |
+| pid    | Integer | 是       | 商品的id |
+
+##### 请求样例	
+
+```http
+DELETE http://localhost:8729/store/shoppingCart/deleteGoods?uid=1&pid=87 HTTP/1.1
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| `errorMsg`     | `string`  | 非必须 | 如果请求失败，返回一个错误信息 |
+| -------------- | --------- | ------ | ------------------------------ |
+| `flag`         | `boolean` | 必须   | 请求是否成功                   |
+| \|- `errorMsg` | `String`  | 必须   | 请求失败的提示信息             |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"errorMsg": null
+}
+~~~
+
+
+
+### 从购物车批量删除商品
+
+#### 基本信息
+
+> 请求路径：`/shoppingCart/deleteGoodsByList`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于添加某个商品添加到购物车中
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名   | 类型 | 是否必须 | 备注           |
+| -------- | ---- | -------- | -------------- |
+| cartList | list | 是       | 删除商品的列表 |
+
+##### 请求样例	
+
+```http
+POST http://localhost:8729/store/shoppingCart/deleteGoodsByList HTTP/1.1
+Content-Type: application/json
+
+{
+	"cartList":[{"uid":"1","pid":"87"},{"uid":"1","pid":"147"},{"uid":"1","pid":"77"}]
+}
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| `errorMsg`     | `string`  | 非必须 | 如果请求失败，返回一个错误信息 |
+| -------------- | --------- | ------ | ------------------------------ |
+| `flag`         | `boolean` | 必须   | 请求是否成功                   |
+| \|- `errorMsg` | `String`  | 必须   | 请求失败的提示信息             |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"errorMsg": null
+}
+~~~
+
+
+
+### 更新购物车中商品的数量
+
+#### 基本信息
+
+> 请求路径：`/shoppingCart/alterGoodsNumber`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于修改购物车中某个商品的数量
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名 | 类型    | 是否必须 | 备注     |
+| ------ | ------- | -------- | -------- |
+| pid    | Integer | 是       | 商品id   |
+| uid    | Integer | 是       | 用户id   |
+| count  | Integer | 是       | 商品数量 |
+
+##### 请求样例	
+
+```http
+POST http://localhost:8729/store/shoppingCart/deleteGoodsByList HTTP/1.1
+Content-Type: application/json
+
+{
+	"pid":87,
+	"uid":1,
+	"count":111
+}
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| `errorMsg`     | `string`  | 非必须 | 如果请求失败，返回一个错误信息 |
+| -------------- | --------- | ------ | ------------------------------ |
+| `flag`         | `boolean` | 必须   | 请求是否成功                   |
+| \|- `errorMsg` | `String`  | 必须   | 请求失败的提示信息             |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"errorMsg": null
+}
+~~~
+
+
+
+### 添加商品评价
+
+#### 基本信息
+
+> 请求路径：`/shoppingCart/addComment`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于修添加商品的评价
+
+#### 请求参数
+
+##### 参数说明
+
+| 参数名  | 类型    | 是否必须 | 备注                   |
+| ------- | ------- | -------- | ---------------------- |
+| pid     | Integer | 是       | 商品id                 |
+| uid     | Integer | 是       | 用户id                 |
+| content | String  | 是       | 用户对于商品评价的内容 |
+
+##### 请求样例	
+
+```http
+POST http://localhost:8729/store/shoppingCart/addComment HTTP/1.1
+Content-Type: application/json
+
+{
+	"pid":87,
+	"uid":1,
+	"content":"商品很好，孩子很喜欢吃"
+}
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| `errorMsg`     | `string`  | 非必须 | 如果请求失败，返回一个错误信息 |
+| -------------- | --------- | ------ | ------------------------------ |
+| `flag`         | `boolean` | 必须   | 请求是否成功                   |
+| \|- `errorMsg` | `String`  | 必须   | 请求失败的提示信息             |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"errorMsg": null
+}
+~~~
+
+
+
+
+

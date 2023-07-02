@@ -11,4 +11,5 @@ public interface ShoppingCartDAO {
     List<ShoppingCart> queryByUserId(Integer userId);
     boolean addGoods(ShoppingCart shoppingCart);
     boolean deleteGoods(int uid,int pid);
+    boolean alterGoodsNumber(ShoppingCart shoppingCart);
 }
