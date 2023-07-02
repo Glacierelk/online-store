@@ -900,6 +900,63 @@ GET http://localhost:8080/store/category/searchCategoryProperty HTTP/1.1
 }
 ```
 
+### 后台添加商品图片
+
+#### 基本信息
+
+> 请求路径：`/upload/product`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于后台添加某个商品的图片
+
+##### 参数说明
+
+| 参数名     | 类型     | 是否必须 | 备注                                        |
+| ---------- | -------- | -------- | ------------------------------------------- |
+| `filename` | `string` | 必须     | 上传图片的名称                              |
+| `type`     | `string` | 必须     | 图片类型，`type_single` 或者 `type_details` |
+| `pid`      | `number` | 必须     | 商品 ID                                     |
+| `file`     | `object` | 必须     | 待上传的图片                                |
+
+##### 请求样例
+
+```http
+POST http://localhost:8080/store/user/register HTTP/1.1
+Content-Type: application/json
+
+{
+	"file": file,
+	"filename": "test.jpg",
+	"type": "type_single",
+	"pid": 87
+}
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application\json`
+
+##### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                                    |
+| ---------- | --------- | -------- | --------------------------------------- |
+| `flag`     | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
+| `errorMsg` | `string`  | 非必须   | 如果上传失败，返回一个错误信息          |
+| `data`     | `object`  | 非必需   | 此字段在此接口中未使用                  |
+
+##### 响应数据样例
+
+```json
+{
+  "flag": true,
+  "data": null,
+  "errorMsg": null
+}
+```
+
 ## 订单
 
 ### 创建订单

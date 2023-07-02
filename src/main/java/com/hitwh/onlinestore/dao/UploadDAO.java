@@ -6,5 +6,5 @@ public interface UploadDAO {
     /**
      * 上传图片
      */
-    public String uploadImage(String imageName, InputStream input);
+    public String uploadImage(String imageName, InputStream input, String type);
 }

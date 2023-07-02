@@ -6,5 +6,5 @@ public interface UploadService {
     /**
      * 上传图片
      */
-    boolean uploadImage(String imageName, InputStream inputStream);
+    boolean uploadImage(String imageName, InputStream inputStream, String type, Integer pid);
 }

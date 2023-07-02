@@ -13,10 +13,10 @@ public class UploadServiceImpl implements UploadService {
     private final ProductDAO productDAO = new ProductDAOImpl();
 
     @Override
-    public boolean uploadImage(String imageName, InputStream inputStream) {
-        String url = uploadDAO.uploadImage(imageName, inputStream);
+    public boolean uploadImage(String imageName, InputStream inputStream, String type, Integer pid) {
+        String url = uploadDAO.uploadImage(imageName, inputStream, type);
         if (url != null) {
-            return productDAO.addImageByProductId(999, "type_single", url);
+            return productDAO.addImageByProductId(pid, type, url);
         } else {
             return false;
         }
