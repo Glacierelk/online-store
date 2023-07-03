@@ -9,9 +9,9 @@ public class OSSTest {
         String bucketName = "online-store-wenruyv";  // 存储桶名称
         // 创建 OSS 客户端实例
         // RAM用户的访问密钥（AccessKey ID和AccessKey Secret）。
-        String accessKeyId = "LTAI5tGRZzVKdCZ4bDzMjYfS";
+        String accessKeyId = "";
         String endpoint = "oss-cn-beijing.aliyuncs.com";
-        String accessKeySecret = "3SHSYVLwTpwYpfKSAgSV73AkMN0LvT";
+        String accessKeySecret = "";
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 
         try {
