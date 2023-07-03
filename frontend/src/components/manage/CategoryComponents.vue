@@ -12,9 +12,17 @@
     <el-dialog v-model="thirdDialogVisible" title="添加图片">
       <div>
         <input type="file" @change="onFileChange"/>
-        <el-button @click="upload" type="primary" plain>Upload</el-button>
+        <el-button @click="upload" type="primary" plain>上传</el-button>
       </div>
     </el-dialog>
+
+<!--    <el-dialog v-model="thirdDialogVisible" class="custom-dialog" title="添加图片" @closed="handleClose">-->
+<!--      <div>-->
+<!--        <input type="file" @change="onFileChange"/>-->
+<!--        <el-button class="custom-btn" plain type="primary" @click="upload">Upload</el-button>-->
+<!--      </div>-->
+<!--    </el-dialog>-->
+
   </div>
 
   <div class=table-container>
@@ -26,8 +34,8 @@
         width="100"
     >
       <el-table-column align="center" label="分类ID" prop="id" sortable width="100"></el-table-column>
-      <el-table-column header-align="left" align="left" label="分类名称" prop="name" width="1100"></el-table-column>
-      <el-table-column align="center" label="产品管理" width="100" fixed="right">
+      <el-table-column align="left" header-align="left" label="分类名称" prop="name" width="1100"></el-table-column>
+      <el-table-column align="center" fixed="right" label="产品管理" width="100">
         <template v-slot="scope">
           <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small" type="primary"
                      @click="handleManage(scope.row)">
@@ -35,7 +43,7 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="删除" width="100" fixed="right">
+      <el-table-column align="center" fixed="right" label="删除" width="100">
         <template v-slot="scope">
           <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small" type="danger"
                      @click="handleDelete(scope.row)">
@@ -147,6 +155,9 @@ export default {
         //const deleteUrl = 'category/delete?categoryId=' + row.id;
       });
       this.thirdDialogVisible = false;
+    },
+    handleClose() {
+      axios.delete('category/delete?categoryId=' + this.cid);
     },
     // 分页大小改变时触发
     handleSizeChange(val) {
@@ -395,6 +406,30 @@ export default {
 .header-row {
   margin-left: auto;
   margin-right: auto;
+}
+
+
+.el-dialog .upload-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #409eff;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.el-dialog .upload-btn:hover {
+  background-color: #66b1ff;
+}
+
+.el-dialog .upload-btn:active {
+  background-color: #3a8eea;
+}
+
+.el-dialog .upload-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.2);
 }
 
 </style>

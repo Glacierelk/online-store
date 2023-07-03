@@ -1,111 +1,129 @@
 <template>
-  <el-breadcrumb separator="/" class="custom-breadcrumb breadcrumb-center">
-    <el-breadcrumb-item>
-      <a class="category-link" @click="handleClick">所有分类</a>
-    </el-breadcrumb-item>
-    <el-breadcrumb-item v-if="currentCategory">{{ currentCategory }}</el-breadcrumb-item>
-    <el-breadcrumb-item class="breadcrumb-button-right">
-      <el-button type="primary" @click="handleAddProduct">添加商品</el-button>
-    </el-breadcrumb-item>
-  </el-breadcrumb>
+  <div style="width: 97%; margin-left: auto; margin-right: auto;">
+    <el-breadcrumb class="custom-breadcrumb breadcrumb-center" separator="/">
+      <el-breadcrumb-item>
+        <a class="category-link" @click="handleClick">所有分类</a>
+      </el-breadcrumb-item>
+      <el-breadcrumb-item v-if="currentCategory">{{ currentCategory }}</el-breadcrumb-item>
+      <el-breadcrumb-item class="breadcrumb-button-right">
+        <el-button type="primary" @click="handleAddProduct">添加商品</el-button>
+      </el-breadcrumb-item>
+    </el-breadcrumb>
 
-  <el-dialog v-model="dialogVisible" title="新建产品" width="50%">
-    <el-form ref="form" :model="formData" label-width="100px">
-      <el-form-item label="产品名称">
-        <el-input v-model="formData.productName"></el-input>
-      </el-form-item>
-      <el-form-item label="产品小标题">
-        <el-input v-model="formData.productSubtitle"></el-input>
-      </el-form-item>
-      <el-form-item label="原价格">
-        <el-input-number v-model="formData.originalPrice"></el-input-number>
-      </el-form-item>
-      <el-form-item label="优惠价格">
-        <el-input-number v-model="formData.discountedPrice"></el-input-number>
-      </el-form-item>
-      <el-form-item label="库存">
-        <el-input-number v-model="formData.inventory"></el-input-number>
-      </el-form-item>
-      <el-form-item>
-        <div class="centered-container">
-        <el-button type="primary" @click="submitAddForm" class="centered-button">提交</el-button>
-        </div>
-      </el-form-item>
-    </el-form>
-  </el-dialog>
+    <el-dialog v-model="dialogVisible" title="新建产品" width="50%">
+      <el-form ref="form" :model="formData" label-width="100px">
+        <el-form-item label="产品名称">
+          <el-input v-model="formData.productName"></el-input>
+        </el-form-item>
+        <el-form-item label="产品小标题">
+          <el-input v-model="formData.productSubtitle"></el-input>
+        </el-form-item>
+        <el-form-item label="原价格">
+          <el-input-number v-model="formData.originalPrice"></el-input-number>
+        </el-form-item>
+        <el-form-item label="优惠价格">
+          <el-input-number v-model="formData.discountedPrice"></el-input-number>
+        </el-form-item>
+        <el-form-item label="库存">
+          <el-input-number v-model="formData.inventory"></el-input-number>
+        </el-form-item>
+        <el-form-item>
+          <div class="centered-container">
+            <el-button class="centered-button" type="primary" @click="submitAddForm">提交</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
 
-  <el-dialog v-model="dialogVisible2" title="修改产品" width="50%">
-    <el-form ref="form" :model="formData" label-width="100px">
-      <el-form-item label="产品名称">
-        <el-input v-model="formData.productName"></el-input>
-      </el-form-item>
-      <el-form-item label="产品小标题">
-        <el-input v-model="formData.productSubtitle"></el-input>
-      </el-form-item>
-      <el-form-item label="原价格">
-        <el-input-number v-model="formData.originalPrice"></el-input-number>
-      </el-form-item>
-      <el-form-item label="优惠价格">
-        <el-input-number v-model="formData.discountedPrice"></el-input-number>
-      </el-form-item>
-      <el-form-item label="库存">
-        <el-input-number v-model="formData.inventory"></el-input-number>
-      </el-form-item>
-      <el-form-item>
-        <div class="centered-container">
-          <el-button type="primary" @click="submitEditForm" class="centered-button">提交</el-button>
-        </div>
-      </el-form-item>
-    </el-form>
-  </el-dialog>
+    <el-dialog v-model="dialogVisible2" title="修改产品" width="50%">
+      <el-form ref="form" :model="formData" label-width="100px">
+        <el-form-item label="产品名称">
+          <el-input v-model="formData.productName"></el-input>
+        </el-form-item>
+        <el-form-item label="产品小标题">
+          <el-input v-model="formData.productSubtitle"></el-input>
+        </el-form-item>
+        <el-form-item label="原价格">
+          <el-input-number v-model="formData.originalPrice"></el-input-number>
+        </el-form-item>
+        <el-form-item label="优惠价格">
+          <el-input-number v-model="formData.discountedPrice"></el-input-number>
+        </el-form-item>
+        <el-form-item label="库存">
+          <el-input-number v-model="formData.inventory"></el-input-number>
+        </el-form-item>
+        <el-form-item>
+          <div class="centered-container">
+            <el-button class="centered-button" type="primary" @click="submitEditForm">提交</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
 
-  <el-dialog title="添加图片" v-model="thirdDialogVisible">
-    <div>
-      <label for="singleImage">简略图片：</label>
-      <input type="file" id="singleImage"  ref="selectedFile1" @change="onFileChange1" />
-      <label for="detailImage">详情图片：</label>
-      <input type="file" id="detailImage"  ref="selectedFile2" @change="onFileChange2" />
-      <button @click="upload">Upload</button>
+    <el-dialog v-model="singleDialogVisible" title="添加简介图片">
+      <div>
+        <input id="singleImage" ref="selectedFile1" type="file" @change="onFileChange1"/>
+        <el-button @click="uploadSingle" type="primary" plain>上传</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog v-model="detailDialogVisible" title="添加详情图片">
+      <div>
+        <input id="multipleImage" ref="selectedFile2" type="file" @change="onFileChange2"/>
+        <el-button @click="uploadDetail" type="primary" plain>上传</el-button>
+      </div>
+    </el-dialog>
+
+    <div class=table-container>
+      <el-table :data="tableData" stripe style="width: 100%; margin-bottom: 20px">
+        <el-table-column align="center" label="ID" prop="id" width="80"></el-table-column>
+        <el-table-column align="center" label="产品名称" prop="name" width="480"></el-table-column>
+        <el-table-column align="center" label="产品小标题" prop="subTitle" width="480"></el-table-column>
+        <el-table-column align="center" label="原价格" prop="originalPrice" width="100"></el-table-column>
+        <el-table-column align="center" label="优惠价格" prop="promotePrice" width="100"></el-table-column>
+        <el-table-column align="center" label="库存数量" prop="stock" width="100"></el-table-column>
+        <el-table-column align="center" fixed="right" label="编辑" width="100">
+          <template v-slot="scope">
+            <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small" type="primary"
+                       @click="handleEdit(scope.row)">
+              <i class="fa fa-edit" style="color: blue;"></i>
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" fixed="right" label="删除" width="100">
+          <template v-slot="scope">
+            <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small"
+                       @click="handleDelete(scope.row)">
+              <i class="fa fa-trash" style="color: red;"></i>
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" fixed="right" label="设置属性" width="100">
+          <template v-slot="scope">
+            <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small"
+                       @click="setProperty(scope.row)">
+              <i class="fa fas fa-plus" style="color: green;"></i>
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" fixed="right" label="添加简介图片" width="120">
+          <template v-slot="scope">
+            <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small"
+                       @click="setSingle(scope.row)">
+              <i class="fa fas fa-plus" style="color: green;"></i>
+            </el-button>
+          </template>
+        </el-table-column>
+        <el-table-column align="center" fixed="right" label="添加详情图片" width="120">
+          <template v-slot="scope">
+            <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small"
+                       @click="setDetail(scope.row)">
+              <i class="fa fas fa-plus" style="color: green;"></i>
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
-  </el-dialog>
-
-  <div class=table-container>
-    <el-table stripe :data="tableData" style="width: 100%; margin-bottom: 20px">
-      <el-table-column prop="id" label="ID" width="80" align="center"></el-table-column>
-      <el-table-column prop="name" label="产品名称" width="480" align="center"></el-table-column>
-      <el-table-column prop="subTitle" label="产品小标题" width="480" align="center"></el-table-column>
-      <el-table-column prop="originalPrice" label="原价格" width="100" align="center"></el-table-column>
-      <el-table-column prop="promotePrice" label="优惠价格" width="100" align="center"></el-table-column>
-      <el-table-column prop="stock" label="库存数量" width="100" align="center"></el-table-column>
-      <el-table-column label="编辑" width="100" align="center" fixed="right">
-        <template v-slot="scope">
-          <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleEdit(scope.row)">
-            <i class="fa fa-edit" style="color: blue;"></i>
-          </el-button>
-        </template>
-      </el-table-column>
-      <el-table-column label="删除" width="100" align="center" fixed="right">
-        <template v-slot="scope">
-          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleDelete(scope.row)">
-            <i class="fa fa-trash" style="color: red;"></i>
-          </el-button>
-        </template>
-      </el-table-column>
-      <el-table-column label="设置属性" width="100" align="center" fixed="right">
-        <template v-slot="scope">
-          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="setProperty(scope.row)">
-            <i class="fa fas fa-plus" style="color: green;"></i>
-          </el-button>
-        </template>
-      </el-table-column>
-      <el-table-column label="添加图片" width="100" align="center" fixed="right">
-        <template v-slot="scope">
-          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="addPicture(scope.row)">
-            <i class="fa fas fa-plus" style="color: green;"></i>
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
   </div>
 </template>
 <script>
@@ -117,17 +135,17 @@ import {ElMessage, ElMessageBox} from "element-plus";
 export default {
   data() {
     return {
-      singleImageContent:'',
-      detailImageContent:'',
+      singleImageContent: '',
+      detailImageContent: '',
       currentCategory: '当前分类',
-      cid:'',
-      tableData: [
-      ],
+      cid: '',
+      tableData: [],
       dialogVisible: false, // 控制对话框的显示与隐藏
       dialogVisible2: false,
-      thirdDialogVisible:false,
-      router : useRouter(),
-      productId:'',
+      singleDialogVisible: false,
+      detailDialogVisible: false,
+      router: useRouter(),
+      productId: '',
       selectedFile1: null,
       selectedFile2: null,
       formData: {
@@ -142,54 +160,133 @@ export default {
   methods: {
     onFileChange1(e) {
       this.selectedFile1 = e.target.files[0];
+      // alert(this.selectedFile1)
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        let image = new Image();
+        image.onload = () => {
+          // alert(image.width)
+          if (image.width > 400 || image.height > 400) {
+            ElMessage.error("图片尺寸过大，请重新选择");
+            this.$refs.selectedFile1.value = '';
+            this.selectedFile1 = null;
+          }
+        };
+        image.src = e.target.result;
+      };
+      reader.readAsDataURL(this.selectedFile1);
     },
     onFileChange2(e) {
       this.selectedFile2 = e.target.files[0];
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        let image = new Image();
+        image.onload = () => {
+          if (image.width > 800) {
+            ElMessage.error("图片尺寸过大，请重新选择");
+            this.$refs.selectedFile2.value = '';
+            this.selectedFile2 = null;
+          }
+        };
+        image.src = e.target.result;
+      };
+      reader.readAsDataURL(this.selectedFile2);
     },
-    upload() {
+    uploadSingle() {
       console.log(this.productId);
 
-      let formData1 = new FormData();
-      formData1.append("file", this.selectedFile1);
-      formData1.append("filename", this.selectedFile1.name);
-      formData1.append("type", "type_single");
-      formData1.append("pid", this.productId);
-      console.log(formData1.get("filename"));
-      console.log(formData1.get("pid"));
+      let formData = new FormData();
+      formData.append("file", this.selectedFile1);
+      formData.append("filename", this.selectedFile1.name);
+      formData.append("type", "type_single");
+      formData.append("pid", this.productId);
+      console.log(formData.get("filename"));
+      console.log(formData.get("pid"));
 
-      let formData2 = new FormData();
-      formData2.append("file", this.selectedFile2);
-      formData2.append("filename", this.selectedFile2.name);
-      formData2.append("type", "type_details");
-      formData2.append("pid", this.productId);
-      console.log(formData2.get("pid"));
-
-      // 发送两个 POST 请求
-      Promise.all([
-        axios.post("/upload/product", formData1, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        }),
-        axios.post("/upload/product", formData2, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        })
-      ]).then(responses => {
-        this.thirdDialogVisible = false;
-        this.$refs.selectedFile1.value = '';
-        this.$refs.selectedFile2.value = '';
-        console.log("Both files uploaded", responses);
-      }).catch(errors => {
-        console.error("File upload failed", errors);
-      });
+      axios.post("/upload/product", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      })
+          .then(res => {
+            this.singleDialogVisible = false;
+            this.$refs.selectedFile1.value = '';
+            console.log("File uploaded", res);
+            if (res.data.flag === true) {
+              ElMessage({
+                message: '上传成功',
+                type: 'success',
+                duration: 2 * 1000
+              });
+            } else {
+              ElMessage({
+                message: '上传失败',
+                type: 'error',
+                duration: 2 * 1000
+              });
+            }
+          })
+          .catch(err => {
+            console.error("File upload failed", err);
+            ElMessage({
+              message: '上传失败',
+              type: 'error',
+              duration: 2 * 1000
+            });
+          });
     },
 
-    addPicture(row) {
+    uploadDetail() {
+      let formData = new FormData();
+      formData.append("file", this.selectedFile2);
+      formData.append("filename", this.selectedFile2.name);
+      formData.append("type", "type_detail");
+      formData.append("pid", this.productId);
+      console.log(formData.get("pid"));
+      console.log(formData.get("filename"));
+      console.log(formData.get("type"));
+
+      axios.post("/upload/product", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      })
+          .then(res => {
+            this.detailDialogVisible = false;
+            this.$refs.selectedFile2.value = '';
+            console.log("File uploaded", res);
+            if (res.data.flag === true) {
+              ElMessage({
+                message: '上传成功',
+                type: 'success',
+                duration: 2 * 1000
+              });
+            } else {
+              ElMessage({
+                message: '上传失败',
+                type: 'error',
+                duration: 2 * 1000
+              });
+            }
+          })
+          .catch(err => {
+            console.error("File upload failed", err);
+            ElMessage({
+              message: '上传失败',
+              type: 'error',
+              duration: 2 * 1000
+            });
+          });
+    },
+
+    setSingle(row) {
       this.productId = row.id;
-      console.log(this.productId);
-      this.thirdDialogVisible = true;
+      this.singleDialogVisible = true;
+    },
+
+    setDetail(row) {
+      this.productId = row.id;
+      this.detailDialogVisible = true;
     },
 
     getData() {
@@ -199,9 +296,9 @@ export default {
       axios.post(postUrl, qs.stringify({
         "cid": this.cid,
       })).then(response => {
-            this.tableData=response.data.data;
-            console.log(this.tableData);
-          })
+        this.tableData = response.data.data;
+        console.log(this.tableData);
+      })
           .catch(error => {
             // 请求失败，处理错误
             console.error('请求数据失败:', error);
@@ -245,7 +342,7 @@ export default {
             // 用户点击了取消按钮或者点击了弹窗外部区域，不执行任何操作
           });
     },
-    handleEdit(row){
+    handleEdit(row) {
       this.productId = row.id;
 
       console.log(row.id);
@@ -257,14 +354,14 @@ export default {
 
       this.dialogVisible2 = true; // 打开对话框
     },
-    setProperty(row){
+    setProperty(row) {
       console.log(row.id);
       this.router.push({
-        path:'/property',
+        path: '/property',
         query: {
-          name: this.currentCategory ,
-          id:row.id,
-          cid:this.cid,
+          name: this.currentCategory,
+          id: row.id,
+          cid: this.cid,
         }
       });
       console.log("点击了所有分类");
@@ -274,7 +371,7 @@ export default {
     handleClick() {
       // 处理点击事件，例如跳转到对应的分类页面
       this.router.push({
-        path:'/manage',
+        path: '/manage',
       });
       console.log("点击了所有分类");
       // 执行相应的逻辑...
@@ -287,16 +384,16 @@ export default {
       // 在这里执行表单提交逻辑
       let requests = []; // 存储所有请求
 
-        requests.push(
-            axios.post('/product/add', qs.stringify({
-              "name": this.formData.productName,
-              "originalPrice": this.formData.originalPrice,
-              "promotePrice": this.formData.discountedPrice,
-              "stock": this.formData.inventory,
-              "subTitle": this.formData.productSubtitle,
-              "cid": this.cid,
-            }))
-        );
+      requests.push(
+          axios.post('/product/add', qs.stringify({
+            "name": this.formData.productName,
+            "originalPrice": this.formData.originalPrice,
+            "promotePrice": this.formData.discountedPrice,
+            "stock": this.formData.inventory,
+            "subTitle": this.formData.productSubtitle,
+            "cid": this.cid,
+          }))
+      );
 
       try {
         const responses = await Promise.all(requests);
@@ -344,7 +441,7 @@ export default {
 
       requests.push(
           axios.post('/product/editProduct', qs.stringify({
-            "id":this.productId,
+            "id": this.productId,
             "name": this.formData.productName,
             "originalPrice": this.formData.originalPrice,
             "promotePrice": this.formData.discountedPrice,

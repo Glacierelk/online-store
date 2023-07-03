@@ -37,7 +37,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<ProductImage> getImagesByProductId(int productId) {
         try {
-            String sql = "select id, type from product_image where pid = ?";
+            String sql = "select * from product_image where pid = ?";
             return template.query(sql, new BeanPropertyRowMapper<>(ProductImage.class), productId);
         } catch (Exception e) {
             return null;
@@ -54,8 +54,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public ProductDetails queryForDetailsById(int id) {
         try {
-            String sql = "select id, name, sub_title, original_price, promote_price, stock, cid, " +
-                    "create_date from product where id = ?";
+            String sql = "select * from product where id = ?";
             return template.queryForObject(sql, new BeanPropertyRowMapper<>(ProductDetails.class), id);
         } catch (Exception e) {
             return null;
