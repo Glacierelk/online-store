@@ -46,6 +46,29 @@ public class ImageUploadServlet extends BaseServlet {
         }
     }
 
+    public void category(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("category");
+        ResultInfo info = new ResultInfo();
+        try {
+            Part part = request.getPart("file");
+            String fileName = request.getParameter("filename");
+            fileName = generateUniqueFileName(fileName);
+            InputStream input = part.getInputStream();
+            info.setFlag(uploadService.uploadImage(fileName, input,
+                    "category", Integer.valueOf(request.getParameter("id"))));
+            System.out.println(fileName);
+        } catch (NumberFormatException e) {
+            info.setFlag(false);
+            info.setErrorMsg("请输入正确的商品分类id");
+        } catch (Exception e) {
+            info.setFlag(false);
+            info.setErrorMsg("上传失败");
+            e.printStackTrace();
+        } finally {
+            writeJsonValue(response, info);
+        }
+    }
+
     private String generateUniqueFileName(String originalFileName) {
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
         return UUID.randomUUID().toString() + extension;

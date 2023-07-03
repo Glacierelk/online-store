@@ -1,6 +1,6 @@
 # 天猫商城 API 文档
 
-`BaseURL: http://localhost:8080/store` 
+`BaseURL: http://localhost:8729/store` 
 
 ## 用户
 
@@ -30,7 +30,7 @@
 ##### 请求样例
 
 ```http
-POST http://localhost:8080/store/user/register HTTP/1.1
+POST http://localhost:8729/store/user/register HTTP/1.1
 Content-Type: application/json
 
 {
@@ -87,7 +87,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ~~~http
-POST http://localhost:8080/store/user/login HTTP/1.1
+POST http://localhost:8729/store/user/login HTTP/1.1
 Content-Type: application/json
 
 {
@@ -141,7 +141,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ~~~http
-GET http://localhost:8080/store/user/getUser HTTP/1.1
+GET http://localhost:8729/store/user/getUser HTTP/1.1
 ~~~
 
 #### 响应数据
@@ -189,7 +189,7 @@ GET http://localhost:8080/store/user/getUser HTTP/1.1
 ##### 请求样例
 
 ~~~http
-GET http://localhost:8080/store/user/logout HTTP/1.1
+GET http://localhost:8729/store/user/logout HTTP/1.1
 ~~~
 
 #### 响应数据
@@ -239,7 +239,7 @@ GET http://localhost:8080/store/user/logout HTTP/1.1
 ##### 请求样例
 
 ```http
-GET http://localhost:8080/store/category/homePageCategory HTTP/1.1
+GET http://localhost:8729/store/category/homePageCategory HTTP/1.1
 ```
 
 #### 响应数据
@@ -251,12 +251,13 @@ GET http://localhost:8080/store/category/homePageCategory HTTP/1.1
 ##### 参数说明
 
 | 名称                   | 类型      | 是否必须 | 备注                                    |
-| ---------------------- | --------- | -------- | --------------------------------------- |
+| ---------------------- | --------- | -------- | :-------------------------------------- |
 | `flag`                 | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
 | `errorMsg`             | `string`  | 非必须   | 如果获取失败，返回一个错误信息          |
 | `data`                 | `list`    | 必须     | 分类数据列表                            |
 | \|- `category_name`    | `string`  | 必须     | 分类名称                                |
 | \|- `cid`              | `number`  | 必须     | 分类ID                                  |
+| \|- `category_image`   | `string`  | 非必需   | 分类图片 OSS 访问地址                   |
 | \|- `products`         | `list`    | 必须     | 当前分类的商品                          |
 | \|- \|- `id`           | `number`  | 必须     | 商品ID                                  |
 | \|- \|- `name`         | `string`  | 必须     | 商品名称                                |
@@ -267,6 +268,7 @@ GET http://localhost:8080/store/category/homePageCategory HTTP/1.1
 | \|- \|- `images`       | `list`    | 必须     | 商品图片                                |
 | \|- \|- \|- `id`       | `number`  | 必须     | 图片 ID                                 |
 | \|- \|- \|- `type`     | `string`  | 必须     | 图片分类                                |
+| \|- \|- \|- `urlPath`  | `string`  | 非必需   | OSS 访问地址                            |
 
 ##### 响应数据样例
 
@@ -275,6 +277,7 @@ GET http://localhost:8080/store/category/homePageCategory HTTP/1.1
 	"flag": true,
 	"data": [
 		{
+			"category_image": null,
 			"category_name": "安全座椅",
 			"cid": 60,
 			"products": [
@@ -291,7 +294,8 @@ GET http://localhost:8080/store/category/homePageCategory HTTP/1.1
 						{
 							"id": 10144,
 							"pid": 0,
-							"type": "type_single"
+							"type": "type_single",
+							"urlPath": null
 						}
 					],
 					"properties": null,
@@ -326,7 +330,7 @@ GET http://localhost:8080/store/category/homePageCategory HTTP/1.1
 ##### 请求样例
 
 ~~~HTTP
-POST http://localhost:8080/store/property/add HTTP/1.1
+POST http://localhost:8729/store/property/add HTTP/1.1
 Content-Type: application/json
 
 {
@@ -380,7 +384,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ```http
-GET http://localhost:8080/store/category/listAllCategories HTTP/1.1
+GET http://localhost:8729/store/category/listAllCategories HTTP/1.1
 ```
 
 #### 响应数据
@@ -437,7 +441,7 @@ GET http://localhost:8080/store/category/listAllCategories HTTP/1.1
 ##### 请求样例 
 
 ```http
-DELETE http://localhost:8080/store/category/delete?categoryId=84
+DELETE http://localhost:8729/store/category/delete?categoryId=84
 ```
 
 #### 响应数据
@@ -487,7 +491,7 @@ DELETE http://localhost:8080/store/category/delete?categoryId=84
 ##### 请求样例
 
 ```http
-POST http://localhost:8080/store/category/add HTTP/1.1
+POST http://localhost:8729/store/category/add HTTP/1.1
 Content-Type: application/json
 
 {
@@ -519,8 +523,6 @@ Content-Type: application/json
 }
 ```
 
-## 商品分类属性
-
 ### 后台添加商品分类属性
 
 #### 基本信息
@@ -543,7 +545,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ~~~HTTP
-POST http://localhost:8080/store/property/add HTTP/1.1
+POST http://localhost:8729/store/property/add HTTP/1.1
 Content-Type: application/json
 
 {
@@ -574,7 +576,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ~~~HTTP
-POST http://localhost:8080/store/property/change HTTP/1.1
+POST http://localhost:8729/store/property/change HTTP/1.1
 Content-Type: application/json
 
 {
@@ -607,7 +609,60 @@ Content-Type: application/json
 }
 ~~~
 
+### 后台添加商品分类图片
 
+#### 基本信息
+
+> 请求路径：`/upload/category`
+>
+> 请求方式：POST
+>
+> 接口描述：该接口用于后台添加某个商品的图片
+
+##### 参数说明
+
+| 参数名     | 类型     | 是否必须 | 备注           |
+| ---------- | -------- | -------- | -------------- |
+| `filename` | `string` | 必须     | 上传图片的名称 |
+| `id`       | `number` | 必须     | 商品分类 ID    |
+| `file`     | `object` | 必须     | 待上传的图片   |
+
+##### 请求样例
+
+```http
+POST http://localhost:8729/store/upload/category HTTP/1.1
+Content-Type: application/json
+
+{
+	"file": file,
+	"filename": "test.jpg",
+	"id": 87
+}
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application\json`
+
+##### 参数说明
+
+| 名称       | 类型      | 是否必须 | 备注                                    |
+| ---------- | --------- | -------- | --------------------------------------- |
+| `flag`     | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
+| `errorMsg` | `string`  | 非必须   | 如果上传失败，返回一个错误信息          |
+| `data`     | `object`  | 非必需   | 此字段在此接口中未使用                  |
+
+##### 响应数据样例
+
+```json
+{
+  "flag": true,
+  "data": null,
+  "errorMsg": null
+}
+```
 
 ## 商品
 
@@ -639,7 +694,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ```http
-POST http://localhost:8080/store/product/add HTTP/1.1
+POST http://localhost:8729/store/product/add HTTP/1.1
 Content-Type: application/json
 
 {
@@ -651,9 +706,6 @@ Content-Type: application/json
 	"cid": 71
 }
 ```
-
-
-## 商品
 
 ### 后台修改商品
 
@@ -683,7 +735,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ```http
-POST http://localhost:8080/store/product/editProduct HTTP/1.1
+POST http://localhost:8729/store/product/editProduct HTTP/1.1
 Content-Type: application/json
 
 {
@@ -744,7 +796,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ```http
-DELETE http://localhost:8080/store/product/delete?id=999
+DELETE http://localhost:8729/store/product/delete?id=999
 ```
 
 #### 响应数据
@@ -794,7 +846,7 @@ DELETE http://localhost:8080/store/product/delete?id=999
 ##### 请求样例
 
 ```http
-POST http://localhost:8080/store/product/details HTTP/1.1
+POST http://localhost:8729/store/product/details HTTP/1.1
 Content-Type: application/json
 
 {
@@ -846,18 +898,19 @@ Content-Type: application/json
 	"flag": true,
 	"data": {
 		"id": 87,
-		"name": "Konka/康佳 LED32S1卧室32吋安卓智能无线WIFI网络液晶平板电视机",
-		"subTitle": "32吋电视机 8核智能 网络 全国联保 送货上门",
-		"originalPrice": 1699,
-		"promotePrice": 1104.35,
-		"stock": 98,
+		"name": "2",
+		"subTitle": "2",
+		"originalPrice": 2,
+		"promotePrice": 2,
+		"stock": 0,
 		"cid": 83,
-		"createDate": 1471077812000,
+		"createDate": 1688345852000,
 		"images": [
 			{
 				"id": 629,
 				"pid": 0,
-				"type": "type_single"
+				"type": "type_single",
+				"urlPath": null
 			}
 		],
 		"properties": [
@@ -865,7 +918,7 @@ Content-Type: application/json
 				"id": 716,
 				"pid": 87,
 				"name": "操作系统",
-				"value": "VIDAA"
+				"value": "windows"
 			}
 		],
 		"comments": [
@@ -873,9 +926,9 @@ Content-Type: application/json
 				"id": 1,
 				"content": "哈哈哈",
 				"uid": 30,
-				"username": "张三",
 				"pid": 87,
-				"create_date": "2023-06-29 22:15:46.0"
+				"create_date": "2023-06-29 22:15:46.0",
+				"username": "test001"
 			}
 		]
 	},
@@ -904,7 +957,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ```http
-POST http://localhost:8080/store/product/search HTTP/1.1
+POST http://localhost:8729/store/product/search HTTP/1.1
 Content-Type: application/json
 
 {
@@ -990,7 +1043,7 @@ cid
 ##### 请求样例
 
 ```http
-GET http://localhost:8080/store/category/searchCategoryProperty HTTP/1.1
+GET http://localhost:8729/store/category/searchCategoryProperty HTTP/1.1
 ```
 
 #### 响应数据
@@ -1057,7 +1110,7 @@ GET http://localhost:8080/store/category/searchCategoryProperty HTTP/1.1
 ##### 请求样例
 
 ```http
-POST http://localhost:8080/store/user/register HTTP/1.1
+POST http://localhost:8729/store/upload/product HTTP/1.1
 Content-Type: application/json
 
 {
@@ -1121,7 +1174,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ~~~HTTP
-POST http://localhost:8080/store/product/search HTTP/1.1
+POST http://localhost:8729/store/product/search HTTP/1.1
 Content-Type: application/json
 
 {
@@ -1161,8 +1214,6 @@ Content-Type: application/json
 }
 ~~~
 
-
-
 ### 获取所有订单
 
 #### 基本信息
@@ -1182,7 +1233,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ~~~HTTP
-GET http://localhost:8080/order/getAllOrders HTTP/1.1
+GET http://localhost:8729/order/getAllOrders HTTP/1.1
 ~~~
 
 #### 响应数据
@@ -1520,8 +1571,6 @@ GET http://localhost:8729/store/cart/getCount?id=1 HTTP/1.1
 }
 ~~~
 
-
-
 ### 获取用户购物车
 
 #### 基本信息
@@ -1604,8 +1653,6 @@ GET http://localhost:8729/store/cart/show?id=1 HTTP/1.1
 }
 ~~~
 
-
-
 ### 加入商品到购物车中
 
 #### 基本信息
@@ -1660,8 +1707,6 @@ Content-Type: application/json
 }
 ~~~
 
-
-
 ### 从购物车删除商品
 
 #### 基本信息
@@ -1708,8 +1753,6 @@ DELETE http://localhost:8729/store/shoppingCart/deleteGoods?uid=1&pid=87 HTTP/1.
 	"errorMsg": null
 }
 ~~~
-
-
 
 ### 从购物车批量删除商品
 
@@ -1761,8 +1804,6 @@ Content-Type: application/json
 	"errorMsg": null
 }
 ~~~
-
-
 
 ### 更新购物车中商品的数量
 
@@ -1819,7 +1860,56 @@ Content-Type: application/json
 }
 ~~~
 
+### 查看商品是否在购物车中
 
+#### 基本信息
+
+> 请求路径：`/shoppingCart/checkCartStatus`
+>
+> 请求方式：GET
+>
+> 接口描述：该接口用于查看商品是否在购物车中
+
+#### 请求参数
+
+##### 参数说明
+
+| pid  | Integer | 是   | 商品id |
+| ---- | ------- | ---- | ------ |
+| uid  | Integer | 是   | 用户id |
+| pid  | Integer | 是   | 商品id |
+
+##### 请求样例	
+
+```http
+GET http://localhost:8729/store/shoppingCart/checkCartStatus?uid=1&pid=87 HTTP/1.1
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| `errorMsg`     | `string`  | 非必须 | 如果请求失败，返回一个错误信息 |
+| -------------- | --------- | ------ | ------------------------------ |
+| `flag`         | `boolean` | 必须   | 请求是否成功                   |
+| `data`         | `boolean` | 必须   | 请求到的状态信息               |
+| \|- `errorMsg` | `String`  | 必须   | 请求失败的提示信息             |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"errorMsg": null,
+    "data":"true"
+}
+~~~
+
+## 评价
 
 ### 添加商品评价
 
@@ -1877,61 +1967,4 @@ Content-Type: application/json
     "data":null
 }
 ~~~
-
-
-
-
-
-### 查看商品是否在购物车中
-
-#### 基本信息
-
-> 请求路径：`/shoppingCart/checkCartStatus`
->
-> 请求方式：GET
->
-> 接口描述：该接口用于查看商品是否在购物车中
-
-#### 请求参数
-
-##### 参数说明
-
-| pid  | Integer | 是   | 商品id |
-| ---- | ------- | ---- | ------ |
-| uid  | Integer | 是   | 用户id |
-| pid  | Integer | 是   | 商品id |
-
-##### 请求样例	
-
-```http
-GET http://localhost:8729/store/shoppingCart/checkCartStatus?uid=1&pid=87 HTTP/1.1
-```
-
-#### 响应数据
-
-##### 参数格式
-
-`application/json`
-
-##### 参数说明
-
-| `errorMsg`     | `string`  | 非必须 | 如果请求失败，返回一个错误信息 |
-| -------------- | --------- | ------ | ------------------------------ |
-| `flag`         | `boolean` | 必须   | 请求是否成功                   |
-| `data`         | `boolean` | 必须   | 请求到的状态信息               |
-| \|- `errorMsg` | `String`  | 必须   | 请求失败的提示信息             |
-
-##### 响应数据样例
-
-~~~json
-{
-	"flag": true,
-	"errorMsg": null,
-    "data":"true"
-}
-~~~
-
-
-
-
 

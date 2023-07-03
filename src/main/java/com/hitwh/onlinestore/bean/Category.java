@@ -3,13 +3,15 @@ package com.hitwh.onlinestore.bean;
 public class Category {
     private int id;
     private String name;
+    private String urlPath;
 
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public Category() {
+    }
+
+    public Category(int id, String name, String urlPath) {
+        this.id = id;
+        this.name = name;
+        this.urlPath = urlPath;
     }
 
     public int getId() {
@@ -26,5 +28,22 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUrlPath() {
+        return urlPath;
+    }
+
+    public void setUrlPath(String urlPath) {
+        this.urlPath = urlPath;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", urlPath='" + urlPath + '\'' +
+                '}';
     }
 }

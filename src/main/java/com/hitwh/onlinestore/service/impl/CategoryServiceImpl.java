@@ -26,6 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
             Map<String, Object> categoryMap = new HashMap<>();
             categoryMap.put("cid", category.getId());
             categoryMap.put("category_name", category.getName());
+            categoryMap.put("category_image", category.getUrlPath());
             List<ProductDetails> products = productDAO.homePageGetProductsByCategoryId(category.getId());
             products.forEach(product -> product.setImages(productDAO.getImagesByProductId(product.getId())));
             categoryMap.put("products", products);

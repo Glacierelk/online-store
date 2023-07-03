@@ -12,7 +12,9 @@ function handle(item) {
   <table id="simpleSearch">
     <tr>
       <td style="margin-right: 50%; text-align: left">
-        <img src="../../../assets/header/simpleLogo.png" alt="logo" style="float: left" />
+        <router-link to="/">
+          <img src="https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/header/simpleLogo.png" alt="logo" style="float: left" />
+        </router-link>
       </td>
       <td style="text-align: right">
         <SearchBox @click="handle" style="float: right;" />

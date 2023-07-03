@@ -3,13 +3,14 @@
     <tr>
       <td>
         <div class="imgDiv">
-          <a href="#">
-            <img id="logo" alt="logo" class="logo" src="../../../assets/header/logo.gif">
-          </a>
+          <router-link to="/">
+            <img id="logo" alt="logo" class="logo"
+                 src="https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/header/logo.gif">
+          </router-link>
         </div>
       </td>
       <td>
-        <SearchBox @search="handle" />
+        <SearchBox @search="handle"/>
       </td>
     </tr>
   </table>
@@ -20,6 +21,7 @@ import SearchBox from "@/components/user-facing/search/SearchBox.vue";
 import {defineEmits} from "vue";
 
 const emit = defineEmits(["search"]);
+
 function handle(item) {
   emit("search", item);
 }

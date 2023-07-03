@@ -44,4 +44,12 @@ public interface CategoryDAO {
      * @return boolean
      */
     List<Product> getPropertyByCid(int cid);
+
+    /**
+     * 根据商品种类id添加图片
+     * @param pid 商品种类id
+     * @param url 图片url
+     * @return boolean
+     */
+    boolean addImageByCategoryId(Integer pid, String url);
 }

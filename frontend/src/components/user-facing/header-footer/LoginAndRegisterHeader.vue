@@ -3,7 +3,9 @@
 </script>
 
 <template>
-  <img src="../../../assets/header/simpleLogo.png" alt="logo" id="logo">
+  <router-link to="/">
+    <img src="https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/header/simpleLogo.png" alt="logo" id="logo">
+  </router-link>
 </template>
 
 <style scoped>
