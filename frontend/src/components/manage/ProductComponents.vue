@@ -59,6 +59,16 @@
     </el-form>
   </el-dialog>
 
+  <el-dialog title="添加图片" v-model="thirdDialogVisible">
+    <div>
+      <label for="singleImage">简略图片：</label>
+      <input type="file" id="singleImage" @change="onFileChange1" />
+      <label for="detailImage">详情图片：</label>
+      <input type="file" id="detailImage" @change="onFileChange2" />
+      <button @click="upload">Upload</button>
+    </div>
+  </el-dialog>
+
   <div class=table-container>
     <el-table stripe :data="tableData" style="width: 100%; margin-bottom: 20px">
       <el-table-column prop="id" label="ID" width="80" align="center"></el-table-column>
@@ -88,6 +98,13 @@
           </el-button>
         </template>
       </el-table-column>
+      <el-table-column label="添加图片" width="100" align="center" fixed="right">
+        <template v-slot="scope">
+          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="addPicture(scope.row)">
+            <i class="fa fas fa-plus" style="color: green;"></i>
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -106,8 +123,11 @@ export default {
       ],
       dialogVisible: false, // 控制对话框的显示与隐藏
       dialogVisible2: false,
+      thirdDialogVisible:false,
       router : useRouter(),
       productId:'',
+      selectedFile1: null,
+      selectedFile2: null,
       formData: {
         productName: '',
         productSubtitle: '',
@@ -118,6 +138,51 @@ export default {
     };
   },
   methods: {
+    onFileChange1(e) {
+      this.selectedFile1 = e.target.files[0];
+    },
+    onFileChange2(e) {
+      this.selectedFile2 = e.target.files[0];
+    },
+    upload() {
+      console.log(this.productId);
+      let formData = new FormData();
+
+      formData.append("file", this.selectedFile1);
+      formData.append("filename", this.selectedFile1.name);
+      formData.append("type", "type_single")
+      formData.append("pid", this.productId)
+      axios.post("/upload/product", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(response => {
+        console.log("file uploaded", response);
+      }).catch(error => {
+        console.error("file upload failed", error);
+      });
+
+
+      formData.append("file", this.selectedFile2);
+      formData.append("filename", this.selectedFile2.name);
+      formData.append("type", "type_details")
+      formData.append("pid", this.productId)
+      axios.post("/upload/product", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(response => {
+        console.log("file uploaded", response);
+      }).catch(error => {
+        console.error("file upload failed", error);
+      });
+    },
+
+    addPicture(row) {
+      this.productId = row.id;
+      this.thirdDialogVisible = true;
+    },
+
     getData() {
       const postUrl = 'category/searchCategoryProperty';
 

@@ -6,17 +6,25 @@ import com.hitwh.onlinestore.dao.CategoryDAO;
 import com.hitwh.onlinestore.utils.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 public class CategoryDAOImpl implements CategoryDAO {
     private final JdbcTemplate jdbcTemplate = new JdbcTemplate(JDBCUtils.getDataSource());
 
     @Override
-    public boolean addCategory(String name) {
-        String sql = "insert into category(name) values(?)";
-        int count = jdbcTemplate.update(sql, name);
-        return count != 0;
+    public int addCategory(String name) {
+        String sql1 = "insert into category(name) values(?)";
+        jdbcTemplate.update(sql1, name);
+
+        String sql2 = "SELECT id FROM category WHERE name = ?";
+        int id =  jdbcTemplate.queryForObject(sql2, Integer.class, name);
+
+        return id;
     }
 
     @Override

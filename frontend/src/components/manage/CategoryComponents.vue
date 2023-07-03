@@ -1,19 +1,26 @@
 <template >
   <div id = "categoryC">
-  <el-button
-      type="primary"
-      @click="addCategory"
-      style="position: absolute; top: 5px; right: 5px;width: 8%;font-size: 15px; margin-bottom: 0"
-  >添加分类
-  </el-button>
+<!--  <el-button-->
+<!--      type="primary"-->
+<!--      @click="addCategory"-->
+<!--      style="position: absolute; top: 5px; right: 5px;width: 8%;font-size: 15px; margin-bottom: 0"-->
+<!--  >添加分类-->
+<!--  </el-button>-->
 
-    <el-dialog title="添加" v-model="secondDialogVisible">
+    <el-dialog title="添加属性" v-model="secondDialogVisible">
       <el-form :model="form" label-width="150px" @submit="submitForm">
         <el-form-item v-for="index in rowCount" :label="`属性 ${index}`" :key="index">
           <el-input v-model="form[`input${index}`]"></el-input>
         </el-form-item>
         <el-button type="primary" native-type="submit">提交</el-button>
       </el-form>
+    </el-dialog>
+
+    <el-dialog title="添加图片" v-model="thirdDialogVisible">
+      <div>
+        <input type="file" @change="onFileChange" />
+        <button @click="upload">Upload</button>
+      </div>
     </el-dialog>
   </div>
 
@@ -43,6 +50,7 @@
         </template>
       </el-table-column>
     </el-table>
+
     <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
       <div style="flex-grow: 1; display: flex; justify-content: center;">
         <el-pagination
@@ -56,6 +64,7 @@
         ></el-pagination>
       </div>
       <div>
+
         <el-button
             type="primary"
             @click="addCategory"
@@ -64,9 +73,8 @@
         </el-button>
       </div>
     </div>
-
-
   </div>
+
 </template>
 
 <script>
@@ -86,20 +94,43 @@ export default {
 //  inject:['ReloadComponent.vue'],                                 //注入App里的reload方法
   data() {
     return {
+      cid:'',
+      selectedFile: null,
       form: {},
       rowCount: [],
       rowCountNum:0,
       router : useRouter(),
       rowId:0,
       secondDialogVisible: false,
+      thirdDialogVisible: false,
       categoryName: '',
       inputValue: '',
       tableData: [],
+      total:0,
       currentPage: 1, // 当前页码
       pageSize: 10, // 每页显示的条数
     }
   },
   methods: {
+    onFileChange(e) {
+      this.selectedFile = e.target.files[0];
+    },
+    upload() {
+      let formData = new FormData();
+      formData.append("file", this.selectedFile);
+      formData.append("filename", this.selectedFile.name);
+      formData.append("id", this.cid);
+      axios.post("/upload/category", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(response => {
+        console.log("file uploaded", response);
+        window.location.reload();
+      }).catch(error => {
+        console.error("file upload failed", error);
+      });
+    },
     // 分页大小改变时触发
     handleSizeChange(val) {
       this.pageSize = val;
@@ -209,14 +240,16 @@ export default {
         axios.post('category/add', qs.stringify({
           "categoryName": value,
         })).then((res) => {
-          console.log(res);
+          this.cid = res.data.data;
+          console.log("cid是"+this.cid);
           if (res.data.flag) {
             this.$message({
               type: 'success',
               message: '你新建的种类是: ' + value,
             });
-            console.log(value);
-            window.location.reload();
+            //console.log(value);
+            this.thirdDialogVisible = true
+            //window.location.reload();
           } else {
             alert("添加失败，请重试！");
           }
@@ -310,6 +343,13 @@ export default {
 .el-button {
   align-items: center;
   --el-font-size-base: 15px;
+
+}
+
+
+.fileupload {
+  width: 100%;
+  height: 100%;
 
 }
 
