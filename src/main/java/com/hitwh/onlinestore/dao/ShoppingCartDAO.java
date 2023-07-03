@@ -20,7 +20,7 @@ public interface ShoppingCartDAO {
     /**
      * 更改购物车中商品的数量
      */
-    boolean alterGoodsNumber(ShoppingCart shoppingCart);
+    boolean alterGoodsNumber(int id,int count);
     /**
      * 根据用户ID查询购物车商品数量
      * @param id 用户ID

@@ -47,10 +47,10 @@ public class ShoppingCartDAOImpl implements ShoppingCartDAO {
     }
 
     @Override
-    public boolean alterGoodsNumber(ShoppingCart shoppingCart) {
-        String sql = "UPDATE shopping_cart SET count=? WHERE pid=? AND uid=? AND status=1";
+    public boolean alterGoodsNumber(int id, int count) {
+        String sql = "UPDATE shopping_cart SET count=? WHERE id=? AND status=1";
         try {
-            jdbcTemplate.update(sql,shoppingCart.getCount(),shoppingCart.getPid(),shoppingCart.getUid());
+            jdbcTemplate.update(sql,count,id);
             return true;
         }catch (Exception e){
             System.out.println(e.toString());
