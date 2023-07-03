@@ -15,7 +15,7 @@
                   <span class="textInTab">{{ titles[rowIndex][colIndex] }}</span>
                 </div>
                 <div class="priceTab">
-                  <span class="priceInTab">{{ prices[rowIndex][colIndex] }}</span>
+                  <span class="priceInTab">￥ {{ prices[rowIndex][colIndex].toFixed(2) }}</span>
                 </div>
               </div>
             </router-link>
@@ -62,7 +62,6 @@ for (let i = 0; i < categories.length; i++) {
   prices.push([]);
   titles.push([]);
   for (let j = 0; j < categories[i].products.length; j++) {
-    //require中文件的路径必须使用拼接的方式，不要写死，require中文件的路径必须要使用拼接的方式，不要写死
     //require中文件的路径必须使用拼接的方式，不要写死
     let src = require('../../../assets/productSingleMiddle/' + categories[i].products[j].images[0].id + '.jpg');
     images[i].push(src);//直接取第一张图片

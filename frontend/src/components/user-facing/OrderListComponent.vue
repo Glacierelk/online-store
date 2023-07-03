@@ -68,7 +68,7 @@
             <el-button v-if="row.status === 1" @click="remind(row)">催发货</el-button>
             <el-button v-if="row.status === 2" @click="receive(row)">收货</el-button>
             <el-button v-if="row.status === 3" @click="comment(row)">评价</el-button>
-            <i class="fa fas fa-check-circle" style="color: green;font-size: xx-large" v-if="row.status === 4"></i>
+            <i class="fa fas fa-check-circle" v-if="row.status === 4" style="color: green;font-size: xx-large" ></i>
           </div>
         </template>
       </el-table-column>
@@ -115,7 +115,7 @@ export default {
       console.log(event.index);
       if (event.index === '0') {
         this.currentOrders = this.allOrders
-      } else {
+      } else if(this.allOrders){
         this.currentOrders = this.allOrders.filter(order => order.status === parseInt(event.index-1))
       }
     },
@@ -143,8 +143,10 @@ export default {
             this.$message({
               message: '付款成功',
               type: 'success'
+
             })
             this.fetchOrders()
+            this.activeTab = '0'
           } else {
             this.$message({
               message: '付款失败',
@@ -169,6 +171,7 @@ export default {
             type: 'success'
           })
           this.fetchOrders()
+          this.activeTab = '0'
         } else {
           this.$message({
             message: '发货失败',
@@ -194,6 +197,7 @@ export default {
               type: 'success'
             })
             this.fetchOrders()
+            this.activeTab = '0'
           } else {
             this.$message({
               message: '收货失败',
@@ -243,6 +247,7 @@ export default {
                   type: 'success'
                 });
                 this.fetchOrders();
+                this.activeTab = '0'
               } else {
                 this.$message({
                   message: '部分评价失败',
