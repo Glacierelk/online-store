@@ -22,6 +22,7 @@
 <script>
 import SwiperComponent from "@/components/user-facing/home-page/SwiperComponent.vue";
 import axios from "axios";
+import {ElMessage} from "element-plus";
   export default {
     data(){
       return{
@@ -52,10 +53,10 @@ import axios from "axios";
   await axios.get("/category/homePageCategory").then(function (response){
     categories=response.data.data
     //alert(categories)
-  },function (err){
-    alert(err)
+  },function (){
+    ElMessage.error("连接失败！！！")
   }).catch(function (){
-    alert("连接失败！！！")
+    ElMessage.error("连接失败！！！")
   })
 
 

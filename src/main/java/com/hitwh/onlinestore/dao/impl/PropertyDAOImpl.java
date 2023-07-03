@@ -4,7 +4,6 @@ import com.hitwh.onlinestore.bean.ProductProperties;
 import com.hitwh.onlinestore.bean.Property;
 import com.hitwh.onlinestore.dao.PropertyDAO;
 import com.hitwh.onlinestore.utils.JDBCUtils;
-import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -26,7 +25,13 @@ public class PropertyDAOImpl implements PropertyDAO {
 
     @Override
     public List<ProductProperties> getPropertiesByProductId(int id) {
-        String sql = "select * from product_properties_view where pid = ?";
+        String sql = "SELECT " +
+                "  COALESCE(id, '') AS id," +
+                "  COALESCE(pid, '') AS pid," +
+                "  COALESCE(name, '') AS name," +
+                "  COALESCE(value, '') AS value " +
+                "FROM product_properties_view " +
+                "WHERE pid = ?;";
         try {
             return template.query(sql, new BeanPropertyRowMapper<>(ProductProperties.class), id);
         } catch (Exception e) {
