@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     getImagePath(imageId) {
-      return require(`@/assets/productSingleSmall/${imageId}.jpg`);
+      return 'https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/'+imageId+'.jpg';
     },
     async changeCount(cartId, count) {
       await axios.post('/cart/changeCount', {
