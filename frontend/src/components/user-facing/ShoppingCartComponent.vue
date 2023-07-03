@@ -223,7 +223,6 @@ export default {
         v-if="show"
         :data="tableData"
         :header-cell-style="{'text-align':'center'}"
-        class="cart-show"
         stripe
         width="100%"
         @selection-change="handleSelectionChange"

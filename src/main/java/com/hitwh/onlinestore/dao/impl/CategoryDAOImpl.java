@@ -18,13 +18,19 @@ public class CategoryDAOImpl implements CategoryDAO {
 
     @Override
     public int addCategory(String name) {
-        String sql1 = "insert into category(name) values(?)";
-        jdbcTemplate.update(sql1, name);
+        try {
+            String sql1 = "insert into category(name) values(?)";
+            int count = jdbcTemplate.update(sql1, name);
+            if (count == 0) {
+                return 0;
+            }
 
-        String sql2 = "SELECT id FROM category WHERE name = ?";
-        int id =  jdbcTemplate.queryForObject(sql2, Integer.class, name);
-
-        return id;
+            String sql2 = "SELECT id FROM category WHERE name = ?";
+            return jdbcTemplate.queryForObject(sql2, Integer.class, name);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     @Override

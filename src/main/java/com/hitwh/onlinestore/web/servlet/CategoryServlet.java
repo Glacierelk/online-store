@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @WebServlet("/category/*")
 public class CategoryServlet extends BaseServlet{
@@ -81,11 +82,11 @@ public class CategoryServlet extends BaseServlet{
             info.setErrorMsg("添加商品分类失败");
         } else {
             info.setData(categoryService.addCategory(categoryName));
-            if (info.getData()!= null) {
+            if (info.getData()!= null && !Objects.equals(info.getData(), 0)) {
                 info.setFlag(true);
             } else {
                 info.setFlag(false);
-                info.setErrorMsg("添加商品分类失败");
+                info.setErrorMsg(Objects.equals(info.getData(), 0) ? "该分类已存在" : "添加商品分类失败");
             }
         }
         writeJsonValue(response, info);

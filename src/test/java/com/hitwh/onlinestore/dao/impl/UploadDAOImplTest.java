@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class UploadDAOImplTest {
     private final String endpoint = "oss-cn-beijing.aliyuncs.com";
     // RAM用户的访问密钥（AccessKey ID和AccessKey Secret）。
-    private final String accessKeyId = "LTAI5tL1ZRoXNZY6VcxRyetX";
-    private final String accessKeySecret = "TGXnJdiXeYrcFtbZgkms0jq0Ev71m1";
+    private final String accessKeyId = "";
+    private final String accessKeySecret = "";
     // 使用代码嵌入的RAM用户的访问密钥配置访问凭证。
     private final CredentialsProvider credentialsProvider = new DefaultCredentialProvider(accessKeyId, accessKeySecret);
     private final String bucketName = "online-store-wenruyv";
