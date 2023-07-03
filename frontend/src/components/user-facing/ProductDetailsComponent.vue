@@ -14,7 +14,7 @@
           <table class="product-show-left">
             <tr>
               <td>
-                <div class="big-show-div">
+                <div class="big-show-div" style="height: auto;object-fit: cover">
                   <img :src="leftImage" alt="商品图片" class="big-show-image"/>
                 </div>
               </td>
