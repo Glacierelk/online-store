@@ -7,9 +7,16 @@ public class ShoppingCart {
     private Integer count; // 商品数量
     private Integer status; // 商品状态
     private Product product; // 商品信息
-    private Integer imageId; // 商品图片ID
+    private ProductImage image; // 商品图片
 
     public ShoppingCart() {
+    }
+
+    public ShoppingCart(Integer pid, Integer uid, Integer count, Integer status) {
+        this.pid = pid;
+        this.uid = uid;
+        this.count = count;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -60,22 +67,12 @@ public class ShoppingCart {
         this.product = product;
     }
 
-    public Integer getImageId() {
-        return imageId;
+    public ProductImage getImage() {
+        return image;
     }
 
-    public void setImageId(Integer imageId) {
-        this.imageId = imageId;
-    }
-
-    public ShoppingCart(Integer id, Integer pid, Integer uid, Integer count, Integer status, Product product, Integer imageId) {
-        this.id = id;
-        this.pid = pid;
-        this.uid = uid;
-        this.count = count;
-        this.status = status;
-        this.product = product;
-        this.imageId = imageId;
+    public void setImage(ProductImage image) {
+        this.image = image;
     }
 
     @Override
@@ -87,7 +84,7 @@ public class ShoppingCart {
                 ", count=" + count +
                 ", status=" + status +
                 ", product=" + product +
-                ", imageId=" + imageId +
+                ", image=" + image +
                 '}';
     }
 }

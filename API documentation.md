@@ -862,34 +862,39 @@ Content-Type: application/json
 
 ##### 参数说明
 
-| 名称                  | 类型        | 是否必须 | 备注                                    |
-| --------------------- | ----------- | -------- | --------------------------------------- |
-| `flag`                | `boolean`   | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
-| `errorMsg`            | `string`    | 非必须   | 如果删除失败，返回一个错误信息          |
-| `data`                | `object`    | 必需     | 包含了商品的详细信息                    |
-| \|- `id`              | `number`    | 必须     | 商品ID                                  |
-| \|- `name`            | `string`    | 必须     | 商品名称                                |
-| \|- `subTitle`        | `string`    | 非必需   | 商品小标题                              |
-| \|- `originalPrice`   | `number`    | 必须     | 商品价格                                |
-| \|- `promotePrice`    | `number`    | 非必需   | 商品折扣价格                            |
-| \|- `stock`           | `number`    | 必须     | 库存                                    |
-| \|- `cid`             | `number`    | 必须     | 商品类型                                |
-| \|- `createDate`      | `number`    | 必须     | 商品创建日期                            |
-| \|- `images`          | `list`      | 必须     | 商品图片列表                            |
-| \|\|- `id`            | `number`    | 必须     | 图片 ID                                 |
-| \|\|- `type`          | `string`    | 必须     | 图片类型                                |
-| \|- `properties`      | `list`      | 必须     | 属性列表                                |
-| \|\|- `id`            | `number`    | 必须     | 属性 ID                                 |
-| \|\|- `pid`           | `number`    | 必须     | 商品 ID                                 |
-| \|\|- `propertyName`  | `string`    | 必须     | 属性名称                                |
-| \|\|- `propertyValue` | `string`    | 必须     | 属性值                                  |
-| \|- `comments`        | `list`      | 必须     | 评价列表                                |
-| \|\|- `id`            | `number`    | 必须     | 评价 ID                                 |
-| \|\|- `content`       | `string`    | 必须     | 评价内容                                |
-| \|\|- `uid`           | `number`    | 必须     | 做评价用户 ID                           |
-| \|\|- `pid`           | `number`    | 必须     | 被评价商品 ID                           |
-| \|\|- `create_date`   | `timestamp` | 必须     | 评价日期                                |
-| \|\|- `username`      | `string`    | 必须     | 评价用户名                              |
+| 名称                | 类型        | 是否必须 | 备注                                    |
+| ------------------- | ----------- | -------- | --------------------------------------- |
+| `flag`              | `boolean`   | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
+| `errorMsg`          | `string`    | 非必须   | 如果删除失败，返回一个错误信息          |
+| `data`              | `object`    | 必需     | 包含了商品的详细信息                    |
+| \|- `id`            | `number`    | 必须     | 商品ID                                  |
+| \|- `name`          | `string`    | 必须     | 商品名称                                |
+| \|- `subTitle`      | `string`    | 非必需   | 商品小标题                              |
+| \|- `originalPrice` | `number`    | 必须     | 商品价格                                |
+| \|- `promotePrice`  | `number`    | 非必需   | 商品折扣价格                            |
+| \|- `stock`         | `number`    | 必须     | 库存                                    |
+| \|- `cid`           | `number`    | 必须     | 商品类型                                |
+| \|- `createDate`    | `number`    | 必须     | 商品创建日期                            |
+| \|- `images`        | `list`      | 必须     | 商品图片列表                            |
+| \|\|- `id`          | `number`    | 必须     | 图片 ID                                 |
+| \|\|- `type`        | `string`    | 必须     | 图片类型                                |
+| \|\|- `urlPath`     | `string`    | 非必需   | 图片 OSS 访问地址                       |
+| \|- `properties`    | `list`      | 必须     | 属性列表                                |
+| \|\|- `id`          | `number`    | 必须     | 属性 ID                                 |
+| \|\|- `pid`         | `number`    | 必须     | 商品 ID                                 |
+| \|\|- `name`        | `string`    | 必须     | 属性名称                                |
+| \|\|- `value`       | `string`    | 必须     | 属性值                                  |
+| \|- `comments`      | `list`      | 必须     | 评价列表                                |
+| \|\|- `id`          | `number`    | 必须     | 评价 ID                                 |
+| \|\|- `content`     | `string`    | 必须     | 评价内容                                |
+| \|\|- `uid`         | `number`    | 必须     | 做评价用户 ID                           |
+| \|\|- `pid`         | `number`    | 必须     | 被评价商品 ID                           |
+| \|\|- `create_date` | `timestamp` | 必须     | 评价日期                                |
+| \|\|- `username`    | `string`    | 必须     | 评价用户名                              |
+| \|- `category`      | `object`    | 必须     | 分类信息                                |
+| \|\|- `id`          | `number`    | 必须     | 分类 ID                                 |
+| \|\|- `name`        | `string`    | 必须     | 分类名称                                |
+| \|\|- `urlPath`     | `string`    | 非必需   | 分类图片 OSS 访问地址                   |
 
 ##### 响应数据样例
 
@@ -930,7 +935,12 @@ Content-Type: application/json
 				"create_date": "2023-06-29 22:15:46.0",
 				"username": "test001"
 			}
-		]
+		],
+		"category": {
+			"id": 83,
+			"name": "平板电视",
+			"urlPath": null
+		}
 	},
 	"errorMsg": null
 }
@@ -989,6 +999,7 @@ Content-Type: application/json
 | \|- `images`        | `list`    | 必须     | 商品图片列表                            |
 | \|\|- `id`          | `number`  | 必须     | 图片 ID                                 |
 | \|\|- `type`        | `string`  | 必须     | 图片类型                                |
+| \|\|- `urlPath`     | `string`  | 非必需   | 图片 OSS 访问地址                       |
 
 ##### 响应数据样例
 
@@ -1002,18 +1013,20 @@ Content-Type: application/json
 			"subTitle": "全国联保 清洗烘干 气泡按摩 座圈加热 断电冲水",
 			"originalPrice": 8960,
 			"promotePrice": 8512,
-			"stock": 62,
+			"stock": 42,
 			"cid": 82,
-			"createDate": 1471192641000,
+			"createDate": 1688299760000,
 			"images": [
 				{
 					"id": 1276,
 					"pid": 0,
-					"type": "type_single"
+					"type": "type_single",
+					"urlPath": null
 				}
 			],
 			"properties": null,
-			"comments": null
+			"comments": null,
+			"category": null
 		}
 	],
 	"errorMsg": null
@@ -1028,22 +1041,24 @@ Content-Type: application/json
 >
 > 请求方式：GET
 >
-> 接口描述：该接口根据分类cid获取商品内容
+> 接口描述：该接口根据分类 `cid` 获取商品内容
 
 
 
 #### 请求参数
 
-cid
+| 参数名 | 类型     | 是否必须 | 备注   |
+| ------ | -------- | -------- | ------ |
+| `cid`  | `number` | 必须     | 分类ID |
 
 ##### 参数说明
 
-分类ID
+分类 ID
 
 ##### 请求样例
 
 ```http
-GET http://localhost:8729/store/category/searchCategoryProperty HTTP/1.1
+GET http://localhost:8729/store/category/searchCategoryProperty?cid=1 HTTP/1.1
 ```
 
 #### 响应数据
@@ -1372,41 +1387,130 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
     "flag": true,
     "data": [
         {
-            "id": 1,
-            "orderCode": "202306281219233704899",
+            "id": 15,
+            "orderCode": "202307030924442033156",
             "address": null,
-            "productCount": 35,
-            "totalPrice": 47277.99987792969,
+            "productCount": 1,
+            "totalPrice": 1216,
             "post": null,
             "receiver": null,
-            "receiverTel": "13587168037",
-            "userMessage": "好",
-            "createDate": "2023-06-30 09:17:16.0",
-            "payDate": "2023-08-30 09:15:21.0",
-            "deliveryDate": "2023-09-30 09:15:25.0",
-            "confirmDate": "2023-06-24 09:15:10.0",
+            "receiverTel": null,
+            "userMessage": null,
+            "createDate": "2023-07-03 09:24:44.0",
+            "payDate": "2023-07-03 09:24:52.0",
+            "deliveryDate": "2023-07-03 09:24:56.0",
+            "confirmDate": "2023-07-03 09:25:00.0",
             "orderItems": [
                 {
-                    "id": 1,
-                    "pid": 87,
-                    "oid": 1,
-                    "name": "Konka/康佳 LED32S1卧室32吋安卓智能无线WIFI网络液晶平板电视机",
-                    "originalPrice": 1699,
-                    "promotePrice": 1104.35,
-                    "count": 20
-                },
+                    "id": 17,
+                    "pid": 960,
+                    "oid": 15,
+                    "name": "REEBABY儿童安全座椅9个月-12岁宝宝婴儿汽车用坐椅车载 3C认证",
+                    "originalPrice": 1280,
+                    "promotePrice": 1216,
+                    "count": 1,
+                    "imageId": 10166
+                }
+            ],
+            "uid": 1,
+            "status": 4
+        },
+        {
+            "id": 16,
+            "orderCode": "202307030928532314443",
+            "address": null,
+            "productCount": 10,
+            "totalPrice": 11994.000244140625,
+            "post": null,
+            "receiver": null,
+            "receiverTel": null,
+            "userMessage": null,
+            "createDate": "2023-07-03 09:28:53.0",
+            "payDate": "2023-07-03 09:29:01.0",
+            "deliveryDate": null,
+            "confirmDate": null,
+            "orderItems": [
                 {
-                    "id": 2,
-                    "pid": 88,
-                    "oid": 1,
-                    "name": "Hisense/海信 LED49EC320A 49吋led液晶电视机智能网络平板电视50",
-                    "originalPrice": 2799,
-                    "promotePrice": 1679.4,
-                    "count": 15
+                    "id": 18,
+                    "pid": 959,
+                    "oid": 16,
+                    "name": "好孩子汽车儿童安全座椅goodbaby9个月－12岁宝宝座椅cs668侧碰王",
+                    "originalPrice": 1999,
+                    "promotePrice": 1199.4,
+                    "count": 10,
+                    "imageId": 10155
                 }
             ],
             "uid": 1,
             "status": 1
+        },
+        {
+            "id": 17,
+            "orderCode": "202307031053448934374",
+            "address": null,
+            "productCount": 1,
+            "totalPrice": 1491,
+            "post": null,
+            "receiver": null,
+            "receiverTel": null,
+            "userMessage": null,
+            "createDate": "2023-07-03 10:53:44.0",
+            "payDate": null,
+            "deliveryDate": null,
+            "confirmDate": null,
+            "orderItems": [
+                {
+                    "id": 19,
+                    "pid": 731,
+                    "oid": 17,
+                    "name": "西服套装男夏季新郎结婚礼服三件套伴郎服薄款西服大码西装男套装",
+                    "originalPrice": 1988,
+                    "promotePrice": 1491,
+                    "count": 1,
+                    "imageId": 7648
+                }
+            ],
+            "uid": 1,
+            "status": 0
+        },
+        {
+            "id": 18,
+            "orderCode": "202307031053530972677",
+            "address": null,
+            "productCount": 2,
+            "totalPrice": 1720.6000061035156,
+            "post": null,
+            "receiver": null,
+            "receiverTel": null,
+            "userMessage": null,
+            "createDate": "2023-07-03 10:53:53.0",
+            "payDate": null,
+            "deliveryDate": null,
+            "confirmDate": null,
+            "orderItems": [
+                {
+                    "id": 20,
+                    "pid": 731,
+                    "oid": 18,
+                    "name": "西服套装男夏季新郎结婚礼服三件套伴郎服薄款西服大码西装男套装",
+                    "originalPrice": 1988,
+                    "promotePrice": 1491,
+                    "count": 1,
+                    "imageId": 7648
+                },
+                {
+                    "id": 21,
+                    "pid": 787,
+                    "oid": 18,
+                    "name": "酷队秋季运动鞋情侣鞋跑步鞋潮男鞋子透气休闲鞋飞织低帮潮鞋系带",
+                    "originalPrice": 328,
+                    "promotePrice": 229.6,
+                    "count": 1,
+                    "imageId": 8264
+                }
+            ],
+            "uid": 1,
+            "status": 0
         }
     ],
     "errorMsg": null
@@ -1622,7 +1726,11 @@ GET http://localhost:8729/store/cart/show?id=1 HTTP/1.1
 | \|\|- `stock`         | `number`    | 必须     | 商品库存                                     |
 | \|\|- `cid`           | `number`    | 必须     | 商品类型                                     |
 | \|\|- `createDate`    | `timestamp` | 必须     | 商品添加时间                                 |
-| \|- `imageId`         | `number`    | 必须     | 商品图片 ID                                  |
+| \|- `image`           | `object`    | 必须     | 商品图片信息                                 |
+| \|\|- `id`            | `number`    | 必须     | 图片 ID                                      |
+| \|\|- `pid`           | `number`    | 必须     | 商品 ID                                      |
+| \|\|- `type`          | `string`    | 必须     | 图片类型，这里类型仅会是 `type_single`       |
+| \|\|- `urlPath`       | `string`    | 非必需   | 图片 OSS 访问地址                            |
 
 ##### 响应数据样例
 
@@ -1631,22 +1739,27 @@ GET http://localhost:8729/store/cart/show?id=1 HTTP/1.1
 	"flag": true,
 	"data": [
 		{
-			"id": 1,
-			"pid": 87,
+			"id": 37,
+			"pid": 960,
 			"uid": 1,
-			"count": 10,
+			"count": 1,
 			"status": 1,
 			"product": {
-				"id": 87,
-				"name": "Konka/康佳 LED32S1卧室32吋安卓智能无线WIFI网络液晶平板电视机",
-				"subTitle": "32吋电视机 8核智能 网络 全国联保 送货上门",
-				"originalPrice": 1699,
-				"promotePrice": 1104.35,
-				"stock": 98,
-				"cid": 83,
-				"createDate": 1471077812000
+				"id": 960,
+				"name": "REEBABY儿童安全座椅9个月-12岁宝宝婴儿汽车用坐椅车载 3C认证",
+				"subTitle": "睿睿熊定制款 合金钢骨架 全国包邮",
+				"originalPrice": 1280,
+				"promotePrice": 1216,
+				"stock": 70,
+				"cid": 60,
+				"createDate": 1688347493000
 			},
-			"imageId": 629
+			"image": {
+				"id": 10166,
+				"pid": 960,
+				"type": "type_single",
+				"urlPath": null
+			}
 		}
 	],
 	"errorMsg": null
@@ -1667,17 +1780,18 @@ GET http://localhost:8729/store/cart/show?id=1 HTTP/1.1
 
 ##### 参数说明
 
-| 参数名 | 类型    | 是否必须 | 备注       |
-| ------ | ------- | -------- | ---------- |
-| uid    | Integer | 是       | 用户的id   |
-| pid    | Integer | 是       | 商品的id   |
-| count  | Integer | 是       | 商品的数量 |
+| 参数名  | 类型      | 是否必须 | 备注       |
+| ------- | --------- | -------- | ---------- |
+| `uid`   | `Integer` | 是       | 用户的id   |
+| `pid`   | `Integer` | 是       | 商品的id   |
+| `count` | `Integer` | 是       | 商品的数量 |
 
 ##### 请求样例	
 
 ```http
 POST http://localhost:8729/store/shoppingCart/addGoods HTTP/1.1
 Content-Type: application/json 
+
 {
 	"pid": "87",
 	"uid":"1"

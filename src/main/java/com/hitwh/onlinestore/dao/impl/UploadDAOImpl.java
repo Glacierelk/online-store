@@ -4,25 +4,24 @@ import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
-import com.aliyun.oss.common.auth.CredentialsProvider;
-import com.aliyun.oss.common.auth.DefaultCredentialProvider;
+import com.aliyun.oss.common.auth.CredentialsProviderFactory;
+import com.aliyun.oss.common.auth.EnvironmentVariableCredentialsProvider;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
 import com.hitwh.onlinestore.dao.UploadDAO;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Objects;
 
 public class UploadDAOImpl implements UploadDAO {
     private final String endpoint = "oss-cn-beijing.aliyuncs.com";
-    // RAM用户的访问密钥（AccessKey ID和AccessKey Secret）。
-    private final String accessKeyId = "LTAI5tL1ZRoXNZY6VcxRyetX";
-    private final String accessKeySecret = "TGXnJdiXeYrcFtbZgkms0jq0Ev71m1";
-    // 使用代码嵌入的RAM用户的访问密钥配置访问凭证。
-    private final CredentialsProvider credentialsProvider = new DefaultCredentialProvider(accessKeyId, accessKeySecret);
-    private final String bucketName = "online-store-wenruyv";
+    // 使用环境变量中获取的RAM用户的访问密钥配置访问凭证。
+    private final EnvironmentVariableCredentialsProvider credentialsProvider =
+            CredentialsProviderFactory.newEnvironmentVariableCredentialsProvider();
     private final OSS ossClient = new OSSClientBuilder().build(endpoint, credentialsProvider);
+
+    public UploadDAOImpl() throws com.aliyuncs.exceptions.ClientException {
+    }
 
     @Override
     public String uploadImage(String imageName, InputStream input, String type) {
@@ -35,6 +34,7 @@ public class UploadDAOImpl implements UploadDAO {
                 return null;
             }
             // 创建PutObjectRequest对象。
+            String bucketName = "online-store-wenruyv";
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, imageName, input);
             // 创建PutObject请求。
             PutObjectResult result = ossClient.putObject(putObjectRequest);

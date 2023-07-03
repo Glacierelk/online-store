@@ -11,19 +11,24 @@ import com.hitwh.onlinestore.service.UploadService;
 import java.io.InputStream;
 
 public class UploadServiceImpl implements UploadService {
-    private final UploadDAO uploadDAO = new UploadDAOImpl();
     private final ProductDAO productDAO = new ProductDAOImpl();
     private final CategoryDAO categoryDAO = new CategoryDAOImpl();
 
     @Override
     public boolean uploadImage(String imageName, InputStream inputStream, String type, Integer id) {
-        String url = uploadDAO.uploadImage(imageName, inputStream, type);
-        if (url != null) {
-            if (type.equals("category"))
-                return categoryDAO.addImageByCategoryId(id, url);
-            else
-                return productDAO.addImageByProductId(id, type, url);
-        } else {
+        try {
+            UploadDAO uploadDAO = new UploadDAOImpl();
+            String url = uploadDAO.uploadImage(imageName, inputStream, type);
+            if (url != null) {
+                if (type.equals("category"))
+                    return categoryDAO.addImageByCategoryId(id, url);
+                else
+                    return productDAO.addImageByProductId(id, type, url);
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
