@@ -11,7 +11,7 @@ public interface CategoryDAO {
      * @param category name
      * @return boolean
      */
-    boolean addCategory(String name);
+    int addCategory(String name);
 
     /*
      * 根据种类id返回商品种类

@@ -1,7 +1,6 @@
 package com.hitwh.onlinestore.service.impl;
 
 import com.hitwh.onlinestore.bean.Category;
-import com.hitwh.onlinestore.bean.Product;
 import com.hitwh.onlinestore.bean.ProductDetails;
 import com.hitwh.onlinestore.dao.CategoryDAO;
 import com.hitwh.onlinestore.dao.ProductDAO;
@@ -47,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public boolean addCategory(String categoryName) {
+    public int addCategory(String categoryName) {
         return categoryDAO.addCategory(categoryName);
     }
 
