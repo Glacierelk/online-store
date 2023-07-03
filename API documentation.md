@@ -1321,41 +1321,130 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
     "flag": true,
     "data": [
         {
-            "id": 1,
-            "orderCode": "202306281219233704899",
+            "id": 15,
+            "orderCode": "202307030924442033156",
             "address": null,
-            "productCount": 35,
-            "totalPrice": 47277.99987792969,
+            "productCount": 1,
+            "totalPrice": 1216,
             "post": null,
             "receiver": null,
-            "receiverTel": "13587168037",
-            "userMessage": "好",
-            "createDate": "2023-06-30 09:17:16.0",
-            "payDate": "2023-08-30 09:15:21.0",
-            "deliveryDate": "2023-09-30 09:15:25.0",
-            "confirmDate": "2023-06-24 09:15:10.0",
+            "receiverTel": null,
+            "userMessage": null,
+            "createDate": "2023-07-03 09:24:44.0",
+            "payDate": "2023-07-03 09:24:52.0",
+            "deliveryDate": "2023-07-03 09:24:56.0",
+            "confirmDate": "2023-07-03 09:25:00.0",
             "orderItems": [
                 {
-                    "id": 1,
-                    "pid": 87,
-                    "oid": 1,
-                    "name": "Konka/康佳 LED32S1卧室32吋安卓智能无线WIFI网络液晶平板电视机",
-                    "originalPrice": 1699,
-                    "promotePrice": 1104.35,
-                    "count": 20
-                },
+                    "id": 17,
+                    "pid": 960,
+                    "oid": 15,
+                    "name": "REEBABY儿童安全座椅9个月-12岁宝宝婴儿汽车用坐椅车载 3C认证",
+                    "originalPrice": 1280,
+                    "promotePrice": 1216,
+                    "count": 1,
+                    "imageId": 10166
+                }
+            ],
+            "uid": 1,
+            "status": 4
+        },
+        {
+            "id": 16,
+            "orderCode": "202307030928532314443",
+            "address": null,
+            "productCount": 10,
+            "totalPrice": 11994.000244140625,
+            "post": null,
+            "receiver": null,
+            "receiverTel": null,
+            "userMessage": null,
+            "createDate": "2023-07-03 09:28:53.0",
+            "payDate": "2023-07-03 09:29:01.0",
+            "deliveryDate": null,
+            "confirmDate": null,
+            "orderItems": [
                 {
-                    "id": 2,
-                    "pid": 88,
-                    "oid": 1,
-                    "name": "Hisense/海信 LED49EC320A 49吋led液晶电视机智能网络平板电视50",
-                    "originalPrice": 2799,
-                    "promotePrice": 1679.4,
-                    "count": 15
+                    "id": 18,
+                    "pid": 959,
+                    "oid": 16,
+                    "name": "好孩子汽车儿童安全座椅goodbaby9个月－12岁宝宝座椅cs668侧碰王",
+                    "originalPrice": 1999,
+                    "promotePrice": 1199.4,
+                    "count": 10,
+                    "imageId": 10155
                 }
             ],
             "uid": 1,
             "status": 1
+        },
+        {
+            "id": 17,
+            "orderCode": "202307031053448934374",
+            "address": null,
+            "productCount": 1,
+            "totalPrice": 1491,
+            "post": null,
+            "receiver": null,
+            "receiverTel": null,
+            "userMessage": null,
+            "createDate": "2023-07-03 10:53:44.0",
+            "payDate": null,
+            "deliveryDate": null,
+            "confirmDate": null,
+            "orderItems": [
+                {
+                    "id": 19,
+                    "pid": 731,
+                    "oid": 17,
+                    "name": "西服套装男夏季新郎结婚礼服三件套伴郎服薄款西服大码西装男套装",
+                    "originalPrice": 1988,
+                    "promotePrice": 1491,
+                    "count": 1,
+                    "imageId": 7648
+                }
+            ],
+            "uid": 1,
+            "status": 0
+        },
+        {
+            "id": 18,
+            "orderCode": "202307031053530972677",
+            "address": null,
+            "productCount": 2,
+            "totalPrice": 1720.6000061035156,
+            "post": null,
+            "receiver": null,
+            "receiverTel": null,
+            "userMessage": null,
+            "createDate": "2023-07-03 10:53:53.0",
+            "payDate": null,
+            "deliveryDate": null,
+            "confirmDate": null,
+            "orderItems": [
+                {
+                    "id": 20,
+                    "pid": 731,
+                    "oid": 18,
+                    "name": "西服套装男夏季新郎结婚礼服三件套伴郎服薄款西服大码西装男套装",
+                    "originalPrice": 1988,
+                    "promotePrice": 1491,
+                    "count": 1,
+                    "imageId": 7648
+                },
+                {
+                    "id": 21,
+                    "pid": 787,
+                    "oid": 18,
+                    "name": "酷队秋季运动鞋情侣鞋跑步鞋潮男鞋子透气休闲鞋飞织低帮潮鞋系带",
+                    "originalPrice": 328,
+                    "promotePrice": 229.6,
+                    "count": 1,
+                    "imageId": 8264
+                }
+            ],
+            "uid": 1,
+            "status": 0
         }
     ],
     "errorMsg": null

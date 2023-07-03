@@ -43,17 +43,22 @@ import qs from "qs";
 const router = useRouter();
 const username = ref("");
 const password = ref("");
+import {ElMessage} from "element-plus";
 
 function submitForm() {
-  // alert(username.value)
-  // alert(password.value)
+
   if (username.value === "admin" || password.value === "admin") {
     router.push('/manage')
     return false;
   }
 
   if (username.value === "" || password.value === "") {
-    alert("用户名或密码不能为空！");
+
+    ElMessage({
+      message: '用户名或密码不能为空!',
+      type: 'error',
+      duration: 2 * 1000
+    });
     return false;
   }
 
@@ -69,16 +74,28 @@ function submitForm() {
         // }
         //
         if (res.data.flag) {
-          alert("登录成功,即将跳转！");
+          ElMessage({
+            message: '登录成功!',
+            type: 'success',
+            duration: 2 * 1000
+          });
           router.push('/');
         } else {
-          alert("登录失败，请重试！");
+          ElMessage({
+            message: '登录失败，请重试!',
+            type: 'error',
+            duration: 2 * 1000
+          });
           username.value = "";
           password.value = "";
         }
       })
       .catch(() => {
-        alert("登录失败，请重试！");
+        ElMessage({
+          message: '登录失败，请重试!',
+          type: 'error',
+          duration: 2 * 1000
+        });
         username.value = "";
         password.value = "";
       });

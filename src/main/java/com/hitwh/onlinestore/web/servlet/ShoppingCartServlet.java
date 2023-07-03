@@ -124,13 +124,11 @@ public class ShoppingCartServlet extends BaseServlet {
     }
 
     public void alterGoodsNumber(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ShoppingCart shoppingCart = new ShoppingCart();
+        int shoppingCartId = Integer.parseInt(request.getParameter("id"));
+        int count = Integer.parseInt(request.getParameter("count"));
         ResultInfo info = new ResultInfo();
         try {
-            shoppingCart.setPid(Integer.parseInt(request.getParameter("pid")));
-            shoppingCart.setUid(Integer.parseInt(request.getParameter("uid")));
-            shoppingCart.setCount(Integer.parseInt(request.getParameter("count")));
-            boolean alterFlag = shoppingCartService.alterGoodNumber(shoppingCart);
+            boolean alterFlag = shoppingCartService.alterGoodNumber(shoppingCartId,count);
             if (alterFlag) {
                 info.setFlag(true);
                 info.setErrorMsg(null);

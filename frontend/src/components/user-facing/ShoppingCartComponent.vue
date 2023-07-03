@@ -2,7 +2,8 @@
 import axios from "axios";
 import {useRouter} from "vue-router";
 import qs from "qs";
-import {ref} from "vue";
+import {ElMessageBox,ElMessage} from "element-plus";
+
 export default {
   props: {
     userId: {
@@ -16,23 +17,48 @@ export default {
       tableData: [],
       summary: 0,
       total: 0,
-      ids: ref([])
+      ids: [],
+      selectedItems: [],
     }
   },
   methods: {
+    handleSelectionChange(selection) {
+      // console.log(selection);
+      let sum = 0;
+      let cnt = 0;
+      this.ids = [];
+      this.selectedItems = [];
+      selection.forEach(item => {
+        sum += item.count * item.product.promotePrice;
+        cnt += item.count;
+        // console.log(item);
+        // console.log(item.id);
+        this.ids.push(item.id);
+        this.selectedItems.push({pid: item.pid, count: item.count});
+      })
+      this.summary = sum.toFixed(2);
+      this.total = cnt;
+      // this.ids = this.selectedItems.map(item => item.id);
+      console.log(this.selectedItems);
+      console.log(this.ids);
+    },
     getImagePath(imageId) {
       return require(`@/assets/productSingleSmall/${imageId}.jpg`);
     },
     async changeCount(cartId, count) {
-      await axios.post('/cart/changeCount', {
+      await axios.post('/cart/alterGoodsNumber', qs.stringify({
         id: cartId,
         count: count
-      })
+      }))
           .then(res => {
             if (res.status === 200 && res.data.flag) {
               console.log("修改成功");
             } else {
-              alert("修改失败!");
+              ElMessage({
+                message: '修改失败!',
+                type: 'error',
+                duration: 2 * 1000
+              });
             }
           })
           .catch(err => {
@@ -50,48 +76,97 @@ export default {
               console.log("删除成功");
               this.tableData = this.tableData.filter(item => item.id !== cartId);
             } else {
-              alert("删除失败!");
+              ElMessage({
+                message: '删除失败!',
+                type: 'error',
+                duration: 2 * 1000
+              });
             }
           })
           .catch(err => {
             console.log(err);
           })
     },
-    handleSelectionChange(selection){
-      // console.log(selection);
-      let sum = 0;
-      let cnt = 0;
-      let temp = [];
-      selection.forEach(item => {
-        sum += item.count * item.product.promotePrice;
-        cnt += item.count;
-        // console.log(item);
-        // console.log(item.id);
-        temp.push(item.id);
-      })
-      this.summary = sum.toFixed(2);
-      this.total = cnt;
-      console.log(temp);
-      this.ids.value = temp;
-      console.log(this.ids.value);
-    },
+
     settlement() {
-      alert("jiesuan")
+      ElMessageBox.confirm('确定要结算吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 用户点击了“确定”，执行结算操作
+        const orderData = {
+          uid: this.userId,
+          orderItems: this.selectedItems
+        }
+        // console.log(orderData);
+        axios.post('/order/createOrder', orderData)
+            .then(res => {
+              if (res.status === 200 && res.data.flag) {
+                ElMessage({
+                  message: '结算成功',
+                  type: 'success',
+                  duration: 2 * 1000
+                });
+                //删除购物车中已经结算的商品
+                // this.tableData = this.tableData.filter(item => !this.ids.includes(item.id));
+                console.log("删除结算商品");
+                console.log(this.ids);
+                axios.post('/cart/deleteGoodsByList', {
+                  id: this.ids
+                })
+                    .then(res => {
+                      if (res.status === 200 && res.data.flag) {
+                        console.log("删除结算商品成功");
+                        this.tableData = this.tableData.filter(item => !this.ids.includes(item.id));
+                      } else {
+                        console.log("删除失败!");
+                      }
+                    })
+                    .catch(err => {
+                      console.log(err);
+                    })
+              } else {
+                ElMessage({
+                  message: '结算失败',
+                  type: 'error',
+                  duration: 2 * 1000
+                });
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            })
+      }).catch(() => {
+        // 用户点击了“取消”，不执行任何操作
+      });
     },
     deleteCarts() {
-      if (this.ids.value.length === 0) {
-        alert("请选择要删除的商品!");
+      if (this.ids.length === 0) {
+        ElMessage({
+          message: '请选择要删除的商品',
+          type: 'warning',
+          duration: 2 * 1000
+        });
         return;
       }
       axios.post('/cart/deleteGoodsByList', {
-        id: this.ids.value
+        id: this.ids
       })
           .then(res => {
             if (res.status === 200 && res.data.flag) {
-              alert("删除成功");
-              this.tableData = this.tableData.filter(item => !this.ids.value.includes(item.id));
+              ElMessage({
+                message: '删除成功',
+                type: 'success',
+                duration: 2 * 1000
+              });
+              this.tableData = this.tableData.filter(item => !this.ids.includes(item.id));
             } else {
-              alert("删除失败!");
+              ElMessage({
+                message: '删除失败',
+                type: 'error',
+                duration: 2 * 1000
+              });
             }
           })
           .catch(err => {
@@ -100,15 +175,18 @@ export default {
     }
   },
   async mounted() {
-    // alert(this.userId);
     this.show = false;
     await axios.get('/cart/show?id=' + this.userId)
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.status === 200 && res.data.flag) {
             this.tableData = res.data.data;
           } else {
-            alert("获取购物车失败!");
+            ElMessage({
+              message: '获取购物车失败!',
+              type: 'error',
+              duration: 2 * 1000
+            });
             useRouter().back();
           }
         })
@@ -133,7 +211,7 @@ export default {
         @selection-change="handleSelectionChange"
         width="100%"
     >
-      <el-table-column type="selection" width="80" align="center" fixed="left" />
+      <el-table-column type="selection" width="80" align="center" fixed="left"/>
 
       <el-table-column label="商品图片" prop="imageId" align="center" width="100">
         <template v-slot="scope">
@@ -145,7 +223,7 @@ export default {
 
       <el-table-column label="单价" prop="product.promotePrice" align="center" width="200">
         <template v-slot="scope">
-          <span class="price-show">￥&nbsp;{{scope.row.product.promotePrice}}</span>
+          <span class="price-show">￥&nbsp;{{ scope.row.product.promotePrice }}</span>
         </template>
       </el-table-column>
 
@@ -158,7 +236,7 @@ export default {
 
       <el-table-column label="总价" align="center" width="150" fixed="right">
         <template v-slot="scope">
-          <span class="price-show">￥&nbsp;{{scope.row.product.promotePrice * scope.row.count}}</span>
+          <span class="price-show">￥&nbsp;{{ scope.row.product.promotePrice * scope.row.count }}</span>
         </template>
       </el-table-column>
 
