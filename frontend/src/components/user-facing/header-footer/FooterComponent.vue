@@ -6,7 +6,7 @@
   <div id="footer" class="footer" style="display: block;">
     <div id="footer_ensure" class="footer_ensure">
       <a href="https://www.tmall.com/">
-        <img src="../../../assets/footer/ensure.png" alt="ensure">
+        <img src="https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/footer/ensure.png" alt="ensure">
       </a>
     </div>
 
@@ -43,13 +43,13 @@
       </div>
       <div class="descColumn">
         <span class="descColumnTitle">手机天猫</span>
-        <a href="#" ><img src="../../../assets/footer/ma.png" alt="ma"></a>
+        <a href="#" ><img src="https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/footer/ma.png" alt="ma"></a>
       </div>
 
     </div>
 
     <div style="clear:both"></div>
-    <img id="cateye" class="cateye" src="../../../assets/footer/cateye.png" alt="cateye">
+    <img id="cateye" class="cateye" src="https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/footer/cateye.png" alt="cateye">
     <div id="copyright" class="copyright">
       <div class="white_link" >
         <a href="#" >关于天猫</a> &nbsp;
@@ -87,8 +87,8 @@
         <span>互联网药品信息服务资质证书编号：浙-（经营性）-2012-0005</span>
         <div class="copyRightYear">© 2003-2016 TMALL.COM 版权所有</div>
         <div style="margin-top: 1%; margin-bottom: 5px">
-          <img src="../../../assets/footer/copyRight1.jpg" alt="copyRight1">
-          <img src="../../../assets/footer/copyRight2.jpg" alt="copyRight2">
+          <img src="https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/footer/copyRight1.jpg" alt="copyRight1">
+          <img src="https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/footer/copyRight2.jpg" alt="copyRight2">
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div id="guidePage">
-    <img id="catear" :style="{ visibility:'hidden'}" alt="catear" class="catear" src="../../../assets/HomePage/catear.png"/>
+    <img id="catear" :style="{ visibility:'hidden'}" alt="catear" class="catear" src="https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/HomePage/catear.png"/>
     <div id="categoryWithCarousel" class="categoryWithCarousel">
       <div class="headbar show1">
         <div class="head">

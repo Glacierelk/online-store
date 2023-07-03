@@ -31,10 +31,10 @@ function fastSearch(item) {
       <button class="searchButton" @click="search">搜索</button>
     </div>
     <div class="searchBelow">
-      <span class="bottomItem" v-for="(category,index) in categories" :key="category.cid">
-        <span v-if="index<3" class="item" @click="fastSearch(category.category_name)">{{ category.category_name }}</span>
-        &nbsp;&nbsp;
-        <span v-if="index<2">|</span>
+      <span v-for="(category,index) in categories" :key="category.cid" class="bottomItem">
+        <span v-if="index<3" class="item" style="margin-left: auto; margin-right: auto"
+              @click="fastSearch(category.category_name)">{{ category.category_name }}</span>
+        <span v-if="index<2" style="margin-left: 5%; margin-right: 5%">|</span>
       </span>
     </div>
   </div>
@@ -85,9 +85,10 @@ div.searchDiv button {
   text-decoration: none;
 }
 
-span.item{
+span.item {
   margin-left: 10%;
 }
+
 .searchButton {
   width: 15%;
 }
