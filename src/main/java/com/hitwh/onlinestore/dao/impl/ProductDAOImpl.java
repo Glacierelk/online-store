@@ -37,7 +37,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public List<ProductImage> getImagesByProductId(int productId) {
         try {
-            String sql = "select id, type from product_image where pid = ?";
+            String sql = "select * from product_image where pid = ?";
             return template.query(sql, new BeanPropertyRowMapper<>(ProductImage.class), productId);
         } catch (Exception e) {
             return null;
@@ -54,8 +54,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public ProductDetails queryForDetailsById(int id) {
         try {
-            String sql = "select id, name, sub_title, original_price, promote_price, stock, cid, " +
-                    "create_date from product where id = ?";
+            String sql = "select * from product where id = ?";
             return template.queryForObject(sql, new BeanPropertyRowMapper<>(ProductDetails.class), id);
         } catch (Exception e) {
             return null;
@@ -104,7 +103,8 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public boolean addImageByProductId(int productId, String type, String url) {
-        if (!Objects.equals(type, "type_single") && !Objects.equals(type, "type_detail"))
+        if (!Objects.equals(type, "type_single") && !Objects.equals(type, "type_detail")
+                && !Objects.equals(type, "type_single_small") && !Objects.equals(type, "type_single_middle"))
             return false;
         String sql = "insert into product_image(pid, type, url_path) values(?, ?, ?)";
         int count = template.update(sql, productId, type, url);

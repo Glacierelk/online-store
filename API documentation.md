@@ -902,44 +902,28 @@ Content-Type: application/json
 {
 	"flag": true,
 	"data": {
-		"id": 87,
-		"name": "2",
-		"subTitle": "2",
-		"originalPrice": 2,
-		"promotePrice": 2,
-		"stock": 0,
-		"cid": 83,
-		"createDate": 1688345852000,
-		"images": [
-			{
-				"id": 629,
-				"pid": 0,
-				"type": "type_single",
-				"urlPath": null
-			}
-		],
+		"id": 1008,
+		"name": "aaa",
+		"subTitle": "qqq",
+		"originalPrice": 1,
+		"promotePrice": 1,
+		"stock": 1,
+		"cid": 140,
+		"createDate": 1688388684000,
+		"images": [],
 		"properties": [
 			{
-				"id": 716,
-				"pid": 87,
-				"name": "操作系统",
-				"value": "windows"
+				"id": 0,
+				"pid": 1008,
+				"name": "sss",
+				"value": ""
 			}
 		],
-		"comments": [
-			{
-				"id": 1,
-				"content": "哈哈哈",
-				"uid": 30,
-				"pid": 87,
-				"create_date": "2023-06-29 22:15:46.0",
-				"username": "test001"
-			}
-		],
+		"comments": [],
 		"category": {
-			"id": 83,
-			"name": "平板电视",
-			"urlPath": null
+			"id": 140,
+			"name": "test001",
+			"urlPath": "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/category/d2a9f626-df13-44ed-a206-ca4a61682256.jpg"
 		}
 	},
 	"errorMsg": null
@@ -1115,12 +1099,12 @@ GET http://localhost:8729/store/category/searchCategoryProperty?cid=1 HTTP/1.1
 
 ##### 参数说明
 
-| 参数名     | 类型     | 是否必须 | 备注                                        |
-| ---------- | -------- | -------- | ------------------------------------------- |
-| `filename` | `string` | 必须     | 上传图片的名称                              |
-| `type`     | `string` | 必须     | 图片类型，`type_single` 或者 `type_details` |
-| `pid`      | `number` | 必须     | 商品 ID                                     |
-| `file`     | `object` | 必须     | 待上传的图片                                |
+| 参数名     | 类型     | 是否必须 | 备注                                                         |
+| ---------- | -------- | -------- | ------------------------------------------------------------ |
+| `filename` | `string` | 必须     | 上传图片的名称                                               |
+| `type`     | `string` | 必须     | 图片类型，`type_single` 、`type_detail`、`type_single_middle`、`type_single_small` |
+| `pid`      | `number` | 必须     | 商品 ID                                                      |
+| `file`     | `object` | 必须     | 待上传的图片                                                 |
 
 ##### 请求样例
 

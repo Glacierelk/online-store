@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 <template>
   <div v-if="show" id="mainBody">
     <table class="product-show">
@@ -14,8 +12,8 @@
           <table class="product-show-left">
             <tr>
               <td>
-                <div class="big-show-div" style="height: auto;object-fit: cover">
-                  <img :src="leftImage" alt="商品图片" class="big-show-image"/>
+                <div class="big-show-div">
+                  <img :src="leftImage" alt="商品图片" class="big-show-image" />
                 </div>
               </td>
             </tr>
@@ -198,7 +196,7 @@ export default {
         id: id
       }))
           .then(res => {
-            // console.log(res.data);
+            console.log(res.data);
             if (res.status === 200 && res.data.flag) {
               this.data = res.data.data;
 
@@ -395,6 +393,7 @@ var pid = -1;
 
 .top-ad-image {
   width: 100%;
+  height: auto;
 }
 
 .table-content {
