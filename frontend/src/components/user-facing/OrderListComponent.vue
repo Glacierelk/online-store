@@ -108,7 +108,7 @@ export default {
       })
     },
     getImagePath(imageId) {
-      return require(`@/assets/productSingleSmall/${imageId}.jpg`);
+      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/"+imageId+".jpg"
     },
     handleClick(event) {
       // 按照选中的标签筛选订单
