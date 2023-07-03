@@ -25,6 +25,7 @@ public class UploadDAOImpl implements UploadDAO {
 
     @Override
     public String uploadImage(String imageName, InputStream input, String type) {
+        System.out.println("uploadImage------" + type);
         try {
             if (Objects.equals(type, "type_single")) {
                 imageName = "productSingle/" + imageName;
@@ -32,6 +33,10 @@ public class UploadDAOImpl implements UploadDAO {
                 imageName = "productDetail/" + imageName;
             } else if (Objects.equals(type, "category")) {
                 imageName = "category/" + imageName;
+            } else if (Objects.equals(type, "type_single_middle")) {
+                imageName = "productSingleMiddle/" + imageName;
+            } else if (Objects.equals(type, "type_single_small")) {
+                imageName = "productSingleSmall/" + imageName;
             } else {
                 return null;
             }

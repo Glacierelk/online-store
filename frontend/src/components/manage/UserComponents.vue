@@ -1,31 +1,31 @@
 <template>
   <div>
-    <el-table stripe :data="userData.slice((currentPage-1)*pageSize, currentPage*pageSize)" style="width: 100%">
-      <el-table-column sortable prop="id" label="用户ID" align="center" width="450"></el-table-column>
-      <el-table-column prop="username" label="用户名称" align="center" width="450"></el-table-column>
-      <el-table-column prop="email" label="用户邮箱" align="center" width="450"></el-table-column>
-      <el-table-column prop="address" label="用户地址" align="center" width="450"></el-table-column>
+    <el-table :data="userData.slice((currentPage-1)*pageSize, currentPage*pageSize)" stripe style="width: 100%">
+      <el-table-column align="center" label="用户ID" prop="id" sortable width="450"></el-table-column>
+      <el-table-column align="center" label="用户名称" prop="username" width="450"></el-table-column>
+      <el-table-column align="center" label="用户邮箱" prop="email" width="450"></el-table-column>
+      <el-table-column align="center" label="用户地址" prop="address" width="450"></el-table-column>
       <el-table-column
-          label="操作"
           fixed="right"
+          label="操作"
           width="170"
       >
         <template v-slot="scope">
-          <el-button @click="confirmDelete(scope.row.id)" type="danger" size="small">删除</el-button>
+          <el-button size="small" type="danger" @click="confirmDelete(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-      <div class="pagination-container">
-        <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-            :current-page="currentPage"
-            :page-sizes="[5, 10, 20, 50]"
-            :page-size="pageSize"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="userData.length">
-        </el-pagination>
-      </div>
+    <div class="pagination-container">
+      <el-pagination
+          :current-page="currentPage"
+          :page-size="pageSize"
+          :page-sizes="[5, 10, 20, 50]"
+          :total="userData.length"
+          layout="total, sizes, prev, pager, next, jumper"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange">
+      </el-pagination>
+    </div>
   </div>
 </template>
 

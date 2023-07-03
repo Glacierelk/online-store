@@ -60,17 +60,17 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog v-model="singleDialogVisible" title="添加简介图片">
+    <el-dialog v-model="singleDialogVisible" title="添加简介图片（建议 800px * 800px）">
       <div>
         <input id="singleImage" ref="selectedFile1" type="file" @change="onFileChange1"/>
-        <el-button @click="uploadSingle" type="primary" plain>上传</el-button>
+        <el-button plain type="primary" @click="uploadSingle">上传</el-button>
       </div>
     </el-dialog>
 
-    <el-dialog v-model="detailDialogVisible" title="添加详情图片">
+    <el-dialog v-model="detailDialogVisible" title="添加详情图片（建议宽度 790px）">
       <div>
         <input id="multipleImage" ref="selectedFile2" type="file" @change="onFileChange2"/>
-        <el-button @click="uploadDetail" type="primary" plain>上传</el-button>
+        <el-button plain type="primary" @click="uploadDetail">上传</el-button>
       </div>
     </el-dialog>
 
@@ -147,6 +147,8 @@ export default {
       router: useRouter(),
       productId: '',
       selectedFile1: null,
+      selectedFile1Middle: null,
+      selectedFile1Small: null,
       selectedFile2: null,
       formData: {
         productName: '',
@@ -160,16 +162,58 @@ export default {
   methods: {
     onFileChange1(e) {
       this.selectedFile1 = e.target.files[0];
+      if (this.selectedFile1.type !== "image/jpeg" && this.selectedFile1.type !== "image/png") {
+        ElMessage.error("图片格式不正确，请重新选择");
+        this.$refs.selectedFile1.value = '';
+        this.selectedFile1 = null;
+        return;
+      }
       // alert(this.selectedFile1)
       let reader = new FileReader();
       reader.onload = (e) => {
         let image = new Image();
         image.onload = () => {
           // alert(image.width)
-          if (image.width > 400 || image.height > 400) {
-            ElMessage.error("图片尺寸过大，请重新选择");
+          if (image.width > 1200 || image.height > 1200) {
+            ElMessage.error("图片尺寸应小于 1200px * 1200px，请重新选择");
             this.$refs.selectedFile1.value = '';
             this.selectedFile1 = null;
+          } else {
+            let canvas = document.createElement('canvas');
+            let context = canvas.getContext('2d');
+
+            // 设置新的宽度和高度
+            let newWidth = 800;
+            let newHeight = newWidth * image.height / image.width;
+
+            // 将图片绘制到 canvas 上并调整大小
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+            context.drawImage(image, 0, 0, newWidth, newHeight);
+
+            // 将 canvas 转换为新的图片文件
+            canvas.toBlob((blob) => {
+              // 将新的图片文件传递给后端
+              this.selectedFile1 = new File([blob], name + "-origin.jpg", {type: "image/jpeg"});
+            }, "image/jpeg");
+
+            newWidth = 217;
+            newHeight = newWidth * image.height / image.width;
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+            context.drawImage(image, 0, 0, newWidth, newHeight);
+            canvas.toBlob((blob) => {
+              this.selectedFile1Middle = new File([blob], name + "-middle.jpg", {type: "image/jpeg"});
+            }, "image/jpeg");
+
+            newWidth = 56;
+            newHeight = newWidth * image.height / image.width;
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+            context.drawImage(image, 0, 0, newWidth, newHeight);
+            canvas.toBlob((blob) => {
+              this.selectedFile1Small = new File([blob], name + "-small.jpg", {type: "image/jpeg"});
+            }, "image/jpeg");
           }
         };
         image.src = e.target.result;
@@ -183,7 +227,7 @@ export default {
         let image = new Image();
         image.onload = () => {
           if (image.width > 800) {
-            ElMessage.error("图片尺寸过大，请重新选择");
+            ElMessage.error("图片宽度应小于 800px，请重新选择");
             this.$refs.selectedFile2.value = '';
             this.selectedFile2 = null;
           }
@@ -193,26 +237,46 @@ export default {
       reader.readAsDataURL(this.selectedFile2);
     },
     uploadSingle() {
-      console.log(this.productId);
+      // console.log(this.productId);
+
+      let name = String(Date.now()) + ".jpg";
 
       let formData = new FormData();
       formData.append("file", this.selectedFile1);
-      formData.append("filename", this.selectedFile1.name);
+      formData.append("filename", "origin_" + name);
       formData.append("type", "type_single");
       formData.append("pid", this.productId);
-      console.log(formData.get("filename"));
-      console.log(formData.get("pid"));
+      // console.log(formData.get("filename"));
+      // console.log(formData.get("pid"));
 
-      axios.post("/upload/product", formData, {
+      let formData2 = new FormData();
+      formData2.append("file", this.selectedFile1Middle);
+      formData2.append("filename", "middle_" + name);
+      formData2.append("type", "type_single_middle");
+      formData2.append("pid", this.productId);
+      // console.log(formData2.get("filename"));
+
+      let formData3 = new FormData();
+      formData3.append("file", this.selectedFile1Small);
+      formData3.append("filename", "small_" + name);
+      formData3.append("type", "type_single_small");
+      formData3.append("pid", this.productId);
+      // console.log(formData3.get("filename"));
+
+      let config = {
         headers: {
           "Content-Type": "multipart/form-data"
         }
-      })
-          .then(res => {
+      };
+      axios.all([
+        axios.post("/upload/product", formData, config),
+        axios.post("/upload/product", formData2, config),
+        axios.post("/upload/product", formData3, config),
+      ])
+          .then(axios.spread((res1, res2, res3) => {
             this.singleDialogVisible = false;
-            this.$refs.selectedFile1.value = '';
-            console.log("File uploaded", res);
-            if (res.data.flag === true) {
+            // console.log("File uploaded", res1, res2, res3);
+            if (res1.data.flag === true && res2.data.flag === true && res3.data.flag === true) {
               ElMessage({
                 message: '上传成功',
                 type: 'success',
@@ -225,26 +289,32 @@ export default {
                 duration: 2 * 1000
               });
             }
-          })
-          .catch(err => {
-            console.error("File upload failed", err);
+          }))
+          .catch(() => {
+            // console.error("File upload failed", err);
             ElMessage({
               message: '上传失败',
               type: 'error',
               duration: 2 * 1000
             });
           });
+
+
+      this.$refs.selectedFile1.value = '';
+      this.selectedFile1 = null;
+      this.selectedFile1Middle = null;
+      this.selectedFile1Small = null;
     },
 
     uploadDetail() {
       let formData = new FormData();
       formData.append("file", this.selectedFile2);
-      formData.append("filename", this.selectedFile2.name);
+      formData.append("filename", String(Date.now()) + this.selectedFile2.name);
       formData.append("type", "type_detail");
       formData.append("pid", this.productId);
-      console.log(formData.get("pid"));
-      console.log(formData.get("filename"));
-      console.log(formData.get("type"));
+      // console.log(formData.get("pid"));
+      // console.log(formData.get("filename"));
+      // console.log(formData.get("type"));
 
       axios.post("/upload/product", formData, {
         headers: {
@@ -254,7 +324,7 @@ export default {
           .then(res => {
             this.detailDialogVisible = false;
             this.$refs.selectedFile2.value = '';
-            console.log("File uploaded", res);
+            // console.log("File uploaded", res);
             if (res.data.flag === true) {
               ElMessage({
                 message: '上传成功',
@@ -269,8 +339,8 @@ export default {
               });
             }
           })
-          .catch(err => {
-            console.error("File upload failed", err);
+          .catch(() => {
+            // console.error("File upload failed", err);
             ElMessage({
               message: '上传失败',
               type: 'error',
@@ -297,11 +367,16 @@ export default {
         "cid": this.cid,
       })).then(response => {
         this.tableData = response.data.data;
-        console.log(this.tableData);
+        // console.log(this.tableData);
       })
-          .catch(error => {
+          .catch(() => {
             // 请求失败，处理错误
-            console.error('请求数据失败:', error);
+            // console.error('请求数据失败:', error);
+            ElMessage({
+              message: '请求数据失败',
+              type: 'error',
+              duration: 2 * 1000
+            });
           });
       // 根据当前页码和每页显示的条数从后端获取数据
       // 更新tableData和total
@@ -309,11 +384,11 @@ export default {
     handleAddProduct() {
       // 处理按钮点击事件的逻辑
       this.dialogVisible = true; // 打开对话框
-      console.log("按钮被点击");
+      // console.log("按钮被点击");
     },
 
     handleDelete(row) {
-      console.log(row.id);
+      // console.log(row.id);
       ElMessageBox.confirm('确定要删除吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -326,11 +401,12 @@ export default {
             axios.delete(deleteUrl)
                 .then(() => {
                   // 删除成功，刷新页面
-                  window.location.reload();
+                  // window.location.reload();
+                  this.tableData = this.tableData.filter(item => item.id !== row.id);
                 })
-                .catch(error => {
+                .catch(() => {
                   // 处理删除失败的情况
-                  console.error(error);
+                  // console.error(error);
                   ElMessage({
                     type: 'error',
                     message: '删除失败，请重试！',
@@ -345,7 +421,7 @@ export default {
     handleEdit(row) {
       this.productId = row.id;
 
-      console.log(row.id);
+      // console.log(row.id);
       this.formData.productName = row.name;
       this.formData.productSubtitle = row.subTitle;
       this.formData.originalPrice = row.originalPrice;
@@ -355,7 +431,7 @@ export default {
       this.dialogVisible2 = true; // 打开对话框
     },
     setProperty(row) {
-      console.log(row.id);
+      // console.log(row.id);
       this.router.push({
         path: '/property',
         query: {
@@ -364,22 +440,21 @@ export default {
           cid: this.cid,
         }
       });
-      console.log("点击了所有分类");
+      // console.log("点击了所有分类");
     },
 
-    // eslint-disable-next-line no-unused-vars
     handleClick() {
       // 处理点击事件，例如跳转到对应的分类页面
       this.router.push({
         path: '/manage',
       });
-      console.log("点击了所有分类");
+      // console.log("点击了所有分类");
       // 执行相应的逻辑...
     },
 
     async submitAddForm() {
       // 在此处提交表单数据的逻辑
-      console.log(this.formData);
+      // console.log(this.formData);
       event.preventDefault(); // 阻止表单默认提交行为
       // 在这里执行表单提交逻辑
       let requests = []; // 存储所有请求
@@ -422,19 +497,20 @@ export default {
           });
         }
       } catch (error) {
-        console.error(error);
+        // console.error(error);
         ElMessage({
           type: 'error',
           message: "请求发生错误，请重试！",
           duration: 2 * 1000
         });
       }
-      window.location.reload();
+      // window.location.reload();
+      this.getData();
     },
 
     async submitEditForm() {
       // 在此处提交表单数据的逻辑
-      console.log(this.formData);
+      // console.log(this.formData);
       event.preventDefault(); // 阻止表单默认提交行为
       // 在这里执行表单提交逻辑
       let requests = []; // 存储所有请求
@@ -479,21 +555,22 @@ export default {
           });
         }
       } catch (error) {
-        console.error(error);
+        // console.error(error);
         ElMessage({
           type: 'error',
           message: "请求发生错误，请重试！",
           duration: 2 * 1000
         });
       }
-      window.location.reload();
+      // window.location.reload();
+      this.getData();
     }
   },
   created() {
     this.cid = this.$route.query.cid;
     this.currentCategory = this.$route.query.name;
     // 使用获取到的 cid 值进行后续操作
-    console.log(this.cid);
+    // console.log(this.cid);
   },
   mounted() {
     this.getData(); // 页面加载时初始化数据

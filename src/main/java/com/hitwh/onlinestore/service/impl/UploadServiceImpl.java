@@ -19,10 +19,9 @@ public class UploadServiceImpl implements UploadService {
         try {
             UploadDAO uploadDAO = new UploadDAOImpl();
             String url = uploadDAO.uploadImage(imageName, inputStream, type);
-            System.out.println(url);
+            System.out.println(url + "   uploadImage");
             if (url != null) {
                 if (type.equals("category")) {
-//                    System.out.println(url + "*********");
                     return categoryDAO.addImageByCategoryId(id, url);
                 }
                 else

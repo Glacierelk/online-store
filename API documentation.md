@@ -1099,12 +1099,12 @@ GET http://localhost:8729/store/category/searchCategoryProperty?cid=1 HTTP/1.1
 
 ##### 参数说明
 
-| 参数名     | 类型     | 是否必须 | 备注                                       |
-| ---------- | -------- | -------- | ------------------------------------------ |
-| `filename` | `string` | 必须     | 上传图片的名称                             |
-| `type`     | `string` | 必须     | 图片类型，`type_single` 或者 `type_detail` |
-| `pid`      | `number` | 必须     | 商品 ID                                    |
-| `file`     | `object` | 必须     | 待上传的图片                               |
+| 参数名     | 类型     | 是否必须 | 备注                                                         |
+| ---------- | -------- | -------- | ------------------------------------------------------------ |
+| `filename` | `string` | 必须     | 上传图片的名称                                               |
+| `type`     | `string` | 必须     | 图片类型，`type_single` 、`type_detail`、`type_single_middle`、`type_single_small` |
+| `pid`      | `number` | 必须     | 商品 ID                                                      |
+| `file`     | `object` | 必须     | 待上传的图片                                                 |
 
 ##### 请求样例
 
