@@ -44,8 +44,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public boolean alterGoodNumber(ShoppingCart shoppingCart) {
-        return shoppingCartDAO.alterGoodsNumber(shoppingCart);
+    public boolean alterGoodNumber(int id,int count) {
+        return shoppingCartDAO.alterGoodsNumber(id,count);
     }
 
 }

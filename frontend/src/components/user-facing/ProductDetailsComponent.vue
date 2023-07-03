@@ -129,6 +129,7 @@
 import axios from "axios";
 import qs from 'qs';
 import {useRouter, useRoute} from "vue-router";
+import {ElMessage} from "element-plus";
 
 export default {
   name: "ProductDetails",
@@ -187,7 +188,11 @@ export default {
               }
               else
               {
-                alert("查询是否在购物车中失败")
+                ElMessage({
+                  message: '查询是否在购物车中失败',
+                  type: 'error',
+                  duration: 2 * 1000
+                });
               }
             })
       }
@@ -212,12 +217,20 @@ export default {
               this.leftImage = "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingle/" + this.showImages[0] + ".jpg";
               this.show = true;
             } else {
-              alert("获取商品详情失败!");
+              ElMessage({
+                message: '获取商品详情失败',
+                type: 'error',
+                duration: 2 * 1000
+              });
               this.router.back();
             }
           })
           .catch(() => {
-            alert("获取商品详情失败!");
+            ElMessage({
+              message: '获取商品详情失败',
+              type: 'error',
+              duration: 2 * 1000
+            });
             this.router.back();
           })
     },
@@ -243,7 +256,11 @@ export default {
     buyProduct(){
       if(uid==-1)
       {
-        alert("请先登录~")
+        ElMessage({
+          message: '请先登录',
+          type: 'error',
+          duration: 2 * 1000
+        });
       }
       else
       {
@@ -251,11 +268,19 @@ export default {
           "uid": uid,
           "orderItems":[{"pid": pid, "count": this.count}]}).then((data)=>{
           if(data.data.flag){
-            alert("创建订单成功，请到我的订单页面付款~");
+            ElMessage({
+              message: '创建订单成功，请到我的订单页面付款~',
+              type: 'success',
+              duration: 2 * 1000
+            });
           }
           else
           {
-            alert("创建订单失败");
+            ElMessage({
+              message: '创建订单失败！',
+              type: 'error',
+              duration: 2 * 1000
+            });
           }
         });
       }
@@ -264,11 +289,19 @@ export default {
      addToCart(){
         if (uid==-1)
         {
-          alert("请先登录～")
+          ElMessage({
+            message: '请先登录',
+            type: 'warning',
+            duration: 2 * 1000
+          });
         }
         else if(this.buttonType == "info")
         {
-          alert("已经在购物车中了～")
+          ElMessage({
+            message: '已经在购物车中了～',
+            type: 'info',
+            duration: 2 * 1000
+          });
         }
         else if(this.buttonType == "danger")
         {
@@ -279,14 +312,26 @@ export default {
         })).then((data)=>{
             if (data.data.flag)
             {
-              alert("加入成功~");
+              ElMessage({
+                message: '加入购物车成功',
+                type: 'success',
+                duration: 2 * 1000
+              });
               this.buttonType="info";
             }
             else {
-              alert("加入失败~");
+              ElMessage({
+                message: '加入购物车失败',
+                type: 'error',
+                duration: 2 * 1000
+              });
             }
           }).catch(()=>{
-            alert("加入购物车过程发生异常！");
+            ElMessage({
+              message: '加入购物车过程发生异常！',
+              type: 'error',
+              duration: 2 * 1000
+            });
           })
         }
     },

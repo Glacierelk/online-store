@@ -11,7 +11,7 @@ public interface ShoppingCartService {
     List<ShoppingCart> getShoppingCartByUserId(Integer uid);
     boolean addGoods(ShoppingCart shoppingCart);
     boolean deleteGoods(int id);
-    boolean alterGoodNumber(ShoppingCart shoppingCart);
+    boolean alterGoodNumber(int id,int count);
 
     /**
      * 获取购物车商品数量
