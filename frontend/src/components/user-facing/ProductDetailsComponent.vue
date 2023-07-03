@@ -1,9 +1,11 @@
+/* eslint-disable */
+
 <template>
   <div v-if="show" id="mainBody">
     <table class="product-show">
       <tr>
         <td colspan="2">
-          <img :src="getCategoryPath(this.data.cid)" alt="商品图片" class="top-ad-image">
+          <img :src="getCategoryPath(this.data.category)" alt="商品图片" class="top-ad-image">
         </td>
       </tr>
 
@@ -24,9 +26,9 @@
                     v-for="item in showImages"
                     :key="item"
                     :src="getImagePath(item)"
+                    alt="商品缩略图"
                     class="small-show-image"
-                    @mouseover="changeImage(item)"
-                    alt="商品缩略图"/>
+                    @mouseover="changeImage(item)"/>
               </td>
             </tr>
           </table>
@@ -73,8 +75,8 @@
           </div>
 
           <div align="center">
-            <el-button @click="buyProduct" plain type="danger">立即购买</el-button>
-            <el-button @click="addToCart" id="inputToShoppingCart" :type="this.buttonType">
+            <el-button plain type="danger" @click="buyProduct">立即购买</el-button>
+            <el-button id="inputToShoppingCart" :type="this.buttonType" @click="addToCart">
               <i aria-hidden="true" class="fa fa-shopping-cart"></i>
               &nbsp;加入购物车
             </el-button>
@@ -84,7 +86,7 @@
       </tr>
     </table>
 
-    <el-tabs v-model="activeTab" type="card" class="product-show">
+    <el-tabs v-model="activeTab" class="product-show" type="card">
       <el-tab-pane label="商品详情" name="tab1">
         <div class="common-font table-content">
           产品参数: <br/> <br/>
@@ -97,18 +99,18 @@
           </div>
         </div>
 
-        <div class="images table-content" align="center">
+        <div align="center" class="images table-content">
           <img
               v-for="item in detailImages"
               :key="item"
               :src="getDetailImagePath(item)"
-              style="margin-bottom: 5px"
-              alt="商品详情图"/>
+              alt="商品详情图"
+              style="margin-bottom: 5px"/>
         </div>
       </el-tab-pane>
 
       <el-tab-pane :label="getComment(data.comments.length)" name="tab2">
-        <div class="comment-show table-content" v-if="data.comments">
+        <div v-if="data.comments" class="comment-show table-content">
           <div v-for="item in data.comments" :key="item.id" class="comments-show">
             <div class="comment-show-header">
               <span>{{ item.username }}</span>
@@ -135,13 +137,13 @@ export default {
   name: "ProductDetails",
   data() {
     return {
-      buttonType:"danger",
+      buttonType: "danger",
       show: false,
       router: useRouter(),
       route: useRoute(),
       count: 0,
       leftImage: "",
-      pid:pid,
+      pid: pid,
       data: {
         id: 0,
         name: "",
@@ -162,32 +164,27 @@ export default {
   },
   methods: {
     async getDetails(id) {
-      pid=id
-      await axios.get("/user/getUser").then((data)=>{
-        if(!data.data.flag) //如果没查到,即用户未登录
+      pid = id
+      await axios.get("/user/getUser").then((data) => {
+        if (!data.data.flag) //如果没查到,即用户未登录
         {
-          uid=-1;
-          // console.log("flag "+data.data.flag)
-          this.buttonType="info"
+          uid = -1;
+          this.buttonType = "info"
+        } else {
+          uid = data.data.data.id;
         }
-        else {
-          uid=data.data.data.id;
-          // console.log(data.data.data.id)
-        }
-      }).catch(()=>{
-        uid=-1
+      }).catch(() => {
+        uid = -1
       })
-      if(uid!=-1)
-      {
-            await axios.get("/cart/checkCartStatus?uid="+uid+"&pid="+id)
-            .then((data)=>{
+
+      if (uid !== -1) {
+        await axios.get("/cart/checkCartStatus?uid=" + uid + "&pid=" + id)
+            .then((data) => {
               if (data.data.flag)//如果查询成功
               {
-                this.buttonType=data.data.data?"info":"danger";//是否在购物车中
+                this.buttonType = data.data.data ? "info" : "danger";//是否在购物车中
                 // console.log("buttonType "+buttonType)
-              }
-              else
-              {
+              } else {
                 ElMessage({
                   message: '查询是否在购物车中失败',
                   type: 'error',
@@ -207,14 +204,19 @@ export default {
 
               this.data.images.forEach(item => {
                 if (item.type === "type_single") {
-                  this.showImages.push(item.id);
+                  this.showImages.push(item);
                 } else {
-                  this.detailImages.push(item.id)
+                  this.detailImages.push(item);
                 }
               });
               this.showImages.sort((a, b) => b - a)
               this.detailImages.sort((a, b) => b - a)
-              this.leftImage = "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingle/" + this.showImages[0] + ".jpg";
+
+              if (this.showImages[0].urlPath !== null)
+                this.leftImage = this.showImages[0].urlPath;
+              else
+                this.leftImage = "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingle/" + this.showImages[0].id + ".jpg";
+
               this.show = true;
             } else {
               ElMessage({
@@ -234,48 +236,50 @@ export default {
             this.router.back();
           })
     },
-    getCategoryPath(id) {
-      // let id = categoryImagePath;
-      // console.log("../../assets/category/" + String(id) + ".jpg" + "^^^^^" + this.show)
-      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/category/" + String(id) + ".jpg";
+    getCategoryPath(category) {
+      if (category.urlPath !== null) {
+        return category.urlPath;
+      }
+      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/category/" + String(category.id) + ".jpg";
     },
-    getImagePath(id) {
-      // console.log("../../assets/productSingleSmall/" + String(id) + ".jpg")
-      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/" + String(id) + ".jpg";
+    getImagePath(image) {
+      if (image.urlPath !== null)
+        return image.urlPath;
+      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/" + String(image.id) + ".jpg";
     },
-    getDetailImagePath(id) {
-      // console.log("../../assets/productDetail/" + id + ".jpg")
-      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productDetail/" + id + ".jpg";
+    getDetailImagePath(image) {
+      if (image.urlPath !== null)
+        return image.urlPath;
+      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productDetail/" + String(image.id) + ".jpg";
     },
     getComment(count) {
       return "累计评价 " + count;
     },
-    changeImage(id) {
-      this.leftImage = "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingle/" + id + ".jpg";
+    changeImage(image) {
+      if (image.urlPath !== null)
+        this.leftImage = image.urlPath;
+      else
+        this.leftImage = "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingle/" + image.id + ".jpg";
     },
-    buyProduct(){
-      if(uid==-1)
-      {
+    buyProduct() {
+      if (uid === -1) {
         ElMessage({
           message: '请先登录',
           type: 'error',
           duration: 2 * 1000
         });
-      }
-      else
-      {
-        axios.post("/order/createOrder",{
+      } else {
+        axios.post("/order/createOrder", {
           "uid": uid,
-          "orderItems":[{"pid": pid, "count": this.count}]}).then((data)=>{
-          if(data.data.flag){
+          "orderItems": [{"pid": pid, "count": this.count}]
+        }).then((data) => {
+          if (data.data.flag) {
             ElMessage({
               message: '创建订单成功，请到我的订单页面付款~',
               type: 'success',
               duration: 2 * 1000
             });
-          }
-          else
-          {
+          } else {
             ElMessage({
               message: '创建订单失败！',
               type: 'error',
@@ -286,54 +290,48 @@ export default {
       }
 
     },
-     addToCart(){
-        if (uid==-1)
-        {
-          ElMessage({
-            message: '请先登录',
-            type: 'warning',
-            duration: 2 * 1000
-          });
-        }
-        else if(this.buttonType == "info")
-        {
-          ElMessage({
-            message: '已经在购物车中了～',
-            type: 'info',
-            duration: 2 * 1000
-          });
-        }
-        else if(this.buttonType == "danger")
-        {
-          axios.post("/cart/addGoods",qs.stringify({
+    addToCart() {
+      if (uid === -1) {
+        ElMessage({
+          message: '请先登录',
+          type: 'warning',
+          duration: 2 * 1000
+        });
+      } else if (this.buttonType === "info") {
+        ElMessage({
+          message: '已经在购物车中了～',
+          type: 'info',
+          duration: 2 * 1000
+        });
+      } else if (this.buttonType === "danger") {
+        axios.post("/cart/addGoods", qs.stringify({
           "uid": uid,
           "pid": pid,
-          "count" : this.count,
-        })).then((data)=>{
-            if (data.data.flag)
-            {
-              ElMessage({
-                message: '加入购物车成功',
-                type: 'success',
-                duration: 2 * 1000
-              });
-              this.buttonType="info";
-            }
-            else {
-              ElMessage({
-                message: '加入购物车失败',
-                type: 'error',
-                duration: 2 * 1000
-              });
-            }
-          }).catch(()=>{
+          "count": this.count,
+        })).then((data) => {
+          if (data.data.flag) {
             ElMessage({
-              message: '加入购物车过程发生异常！',
+              message: '加入购物车成功',
+              type: 'success',
+              duration: 2 * 1000
+            });
+            this.buttonType = "info";
+            // this.$root.$emit('updateCartCount');
+          } else {
+            ElMessage({
+              message: '加入购物车失败',
               type: 'error',
               duration: 2 * 1000
             });
-          })
-        }
+          }
+        }).catch(() => {
+          ElMessage({
+            message: '加入购物车过程发生异常！',
+            type: 'error',
+            duration: 2 * 1000
+          });
+        })
+      }
     },
   },
   async mounted() {
@@ -343,8 +341,8 @@ export default {
   }
 };
 
-var uid=-1;
-var pid=-1;
+var uid = -1;
+var pid = -1;
 </script>
 
 <style scoped>
@@ -412,8 +410,7 @@ var pid=-1;
 .product-show-right {
   height: 95%;
   width: 100%;
-  //border: #cccccc solid 1px;
-  vertical-align: top;
+//border: #cccccc solid 1px; vertical-align: top;
   margin-top: 20px;
 }
 

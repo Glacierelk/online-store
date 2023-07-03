@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="logo">
-      <a href="/manage"><img src="@/assets/header/simpleLogo.png" alt="logo" class="logo" /></a>
+      <a href="/manage"><img src="https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/header/simpleLogo.png" alt="logo" class="logo" /></a>
     </div>
     <el-tabs v-model="activeTab">
       <el-tab-pane label="分类管理" name="tab1">
@@ -23,8 +23,6 @@
 import {ref} from "vue";
 import Category from "@/components/manage/CategoryComponents.vue";
 import User from "@/components/manage/UserComponents.vue";
-
-//TODO 这个页面有问题, 显示后会崩溃
 import Order from "@/components/manage/OrderComponents.vue";
 
 
@@ -50,4 +48,5 @@ img {
   margin-left: 20px;
   margin-right: 20px;
 }
+
 </style>

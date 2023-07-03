@@ -56,7 +56,7 @@ public class ImageUploadServlet extends BaseServlet {
             InputStream input = part.getInputStream();
             info.setFlag(uploadService.uploadImage(fileName, input,
                     "category", Integer.valueOf(request.getParameter("id"))));
-            System.out.println(fileName);
+//            System.out.println(fileName);
         } catch (NumberFormatException e) {
             info.setFlag(false);
             info.setErrorMsg("请输入正确的商品分类id");

@@ -30,6 +30,8 @@ public class UploadDAOImpl implements UploadDAO {
                 imageName = "productSingle/" + imageName;
             } else if (Objects.equals(type, "type_detail")) {
                 imageName = "productDetail/" + imageName;
+            } else if (Objects.equals(type, "category")) {
+                imageName = "category/" + imageName;
             } else {
                 return null;
             }

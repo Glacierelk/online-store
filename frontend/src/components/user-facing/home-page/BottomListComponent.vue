@@ -63,14 +63,20 @@ for (let i = 0; i < categories.length; i++) {
   titles.push([]);
   for (let j = 0; j < categories[i].products.length; j++) {
     //require中文件的路径必须使用拼接的方式，不要写死
-    let src = 'https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleMiddle/' + categories[i].products[j].images[0].id + '.jpg';
+    let src = 'https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleMiddle/';
+    // console.log(categories[i].products[j].images[0].urlPath)
+    if (categories[i].products[j].images[0].urlPath !== null) {
+      src += categories[i].products[j].images[0].urlPath;
+    } else {
+      src += categories[i].products[j].images[0].id;
+    }
+    src += '.jpg';
     images[i].push(src);//直接取第一张图片
     if (categories[i].products[j].promotePrice == null) //如果没有打折价那么就获取原价
     {
       prices[i].push(categories[i].products[j].originalPrice);
     } else {
       prices[i].push(categories[i].products[j].promotePrice);
-
     }
 
     titles[i].push(categories[i].products[j].name); //商品的名称作为标题

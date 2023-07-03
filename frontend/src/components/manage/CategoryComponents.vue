@@ -1,50 +1,52 @@
-<template >
-  <div id = "categoryC">
-<!--  <el-button-->
-<!--      type="primary"-->
-<!--      @click="addCategory"-->
-<!--      style="position: absolute; top: 5px; right: 5px;width: 8%;font-size: 15px; margin-bottom: 0"-->
-<!--  >添加分类-->
-<!--  </el-button>-->
-
-    <el-dialog title="添加属性" v-model="secondDialogVisible">
+<template>
+  <div id="categoryC">
+    <el-dialog v-model="secondDialogVisible" title="添加属性">
       <el-form :model="form" label-width="150px" @submit="submitForm">
-        <el-form-item v-for="index in rowCount" :label="`属性 ${index}`" :key="index">
+        <el-form-item v-for="index in rowCount" :key="index" :label="`属性 ${index}`">
           <el-input v-model="form[`input${index}`]"></el-input>
         </el-form-item>
-        <el-button type="primary" native-type="submit">提交</el-button>
+        <el-button native-type="submit" type="primary">提交</el-button>
       </el-form>
     </el-dialog>
 
-    <el-dialog title="添加图片" v-model="thirdDialogVisible">
+    <el-dialog v-model="thirdDialogVisible" title="添加图片">
       <div>
-        <input type="file" @change="onFileChange" />
-        <button @click="upload">Upload</button>
+        <input type="file" @change="onFileChange"/>
+        <el-button @click="upload" type="primary" plain>Upload</el-button>
       </div>
     </el-dialog>
   </div>
 
   <div class=table-container>
-    <el-table stripe :data="tableData" style="width: 100%; margin-bottom: 20px">
-      <el-table-column prop="id" sortable label="分类ID" width="450" align="center"></el-table-column>
-      <el-table-column prop="name" label="分类名称" width="450" align="center" ></el-table-column>
-      <el-table-column label="产品管理" width="450" align="center">
+    <el-table
+        :data="tableData"
+        header-row-class-name="header-row"
+        stripe
+        style="width: 100%; margin-bottom: 20px; max-width: 1500px; margin-left: auto; margin-right: auto;"
+        width="100"
+    >
+      <el-table-column align="center" label="分类ID" prop="id" sortable width="100"></el-table-column>
+      <el-table-column header-align="left" align="left" label="分类名称" prop="name" width="1100"></el-table-column>
+      <el-table-column align="center" label="产品管理" width="100" fixed="right">
         <template v-slot="scope">
-          <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleManage(scope.row)">
+          <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small" type="primary"
+                     @click="handleManage(scope.row)">
             <i class="fa fa-edit" style="color: blue;"></i>
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="删除" width="450" align="center" >
+      <el-table-column align="center" label="删除" width="100" fixed="right">
         <template v-slot="scope">
-          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleDelete(scope.row)">
+          <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small" type="danger"
+                     @click="handleDelete(scope.row)">
             <i class="fa fa-trash" style="color: red;"></i>
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="添加属性" align="center" width = "450" fixed="right">
+      <el-table-column align="center" fixed="right" label="添加属性" width="100">
         <template v-slot="scope">
-          <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="addProperty(scope.row)">
+          <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small" type="danger"
+                     @click="addProperty(scope.row)">
             <i class="fa fas fa-plus" style="color: green;"></i>
           </el-button>
         </template>
@@ -54,21 +56,21 @@
     <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
       <div style="flex-grow: 1; display: flex; justify-content: center;">
         <el-pagination
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
             :current-page="currentPage"
-            :page-sizes="[5,10,15]"
             :page-size="pageSize"
+            :page-sizes="[5,10,15]"
             :total="total"
             layout="sizes, prev, pager, next, jumper"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
         ></el-pagination>
       </div>
       <div>
 
         <el-button
+            style="margin-right: 20px;"
             type="primary"
             @click="addCategory"
-            style="margin-right: 20px;"
         >添加
         </el-button>
       </div>
@@ -80,12 +82,13 @@
 <script>
 import axios from "axios";
 import qs from "qs";
-import { ElMessageBox } from 'element-plus';
+import {ElMessage, ElMessageBox} from 'element-plus';
 import {useRouter} from "vue-router";
+
 //import {inject} from "vue";
 
 function range(start, end, step = 1) {
-  return Array.from({ length: Math.ceil((end - start) / step) + 1 }, (_, index) => start + (index * step));
+  return Array.from({length: Math.ceil((end - start) / step) + 1}, (_, index) => start + (index * step));
 }
 
 export default {
@@ -94,19 +97,19 @@ export default {
 //  inject:['ReloadComponent.vue'],                                 //注入App里的reload方法
   data() {
     return {
-      cid:'',
+      cid: '+',
       selectedFile: null,
       form: {},
       rowCount: [],
-      rowCountNum:0,
-      router : useRouter(),
-      rowId:0,
+      rowCountNum: 0,
+      router: useRouter(),
+      rowId: 0,
       secondDialogVisible: false,
       thirdDialogVisible: false,
       categoryName: '',
       inputValue: '',
       tableData: [],
-      total:0,
+      total: 0,
       currentPage: 1, // 当前页码
       pageSize: 10, // 每页显示的条数
     }
@@ -126,10 +129,24 @@ export default {
         }
       }).then(response => {
         console.log("file uploaded", response);
-        window.location.reload();
+        this.getData();
+        ElMessage({
+          message: '图片上传成功!',
+          type: 'success',
+          duration: 2 * 1000
+        });
       }).catch(error => {
+        axios.delete('category/delete?categoryId=' + this.cid);
+
+        ElMessage({
+          message: '图片上传失败，请重试!',
+          type: 'error',
+          duration: 2 * 1000
+        });
         console.error("file upload failed", error);
+        const deleteUrl = 'category/delete?categoryId=' + row.id;
       });
+      this.thirdDialogVisible = false;
     },
     // 分页大小改变时触发
     handleSizeChange(val) {
@@ -148,14 +165,14 @@ export default {
       // 发送网络请求获取后端数据
       axios.get(getUrl)
           .then(response => {
-            this.tableData=response.data.data;
+            this.tableData = response.data.data;
             this.total = this.tableData.length;
             // console.log(this.total);
-             console.log(this.currentPage,this.pageSize, this.total);
+            console.log(this.currentPage, this.pageSize, this.total);
             // 请求成功，将返回的数据赋值给tableData和total
             this.tableData = [];
-            for(let i = (this.currentPage-1)*this.pageSize, j=0; i < Math.min((this.currentPage-1)*this.pageSize + this.pageSize, this.total); i++) {
-              this.tableData[j]=response.data.data[i];
+            for (let i = (this.currentPage - 1) * this.pageSize, j = 0; i < Math.min((this.currentPage - 1) * this.pageSize + this.pageSize, this.total); i++) {
+              this.tableData[j] = response.data.data[i];
               j++;
               console.log(i);
               console.log(response.data.data[i]);
@@ -169,18 +186,23 @@ export default {
           .catch(error => {
             // 请求失败，处理错误
             console.error('请求数据失败:', error);
+            ElMessage({
+              message: '请求数据失败，请重试!',
+              type: 'error',
+              duration: 2 * 1000
+            });
           });
       // 根据当前页码和每页显示的条数从后端获取数据
       // 更新tableData和total
     },
     handleManage(row) {
       this.router.push({
-          path:'/product',
-          query: {
-            cid: row.id ,
-            name:row.name,
-          }
-    });
+        path: '/product',
+        query: {
+          cid: row.id,
+          name: row.name,
+        }
+      });
       console.log("管理", row.cid);
     },
     handleDelete(row) {
@@ -201,7 +223,11 @@ export default {
                 .catch(error => {
                   // 处理删除失败的情况
                   console.error(error);
-                  alert("删除发生错误，请重试！");
+                  ElMessage({
+                    message: '删除发生错误，请重试！',
+                    type: 'error',
+                    duration: 2 * 1000
+                  });
                 });
           })
           .catch(() => {
@@ -230,7 +256,7 @@ export default {
         });
       });
     },
-    addCategory(){
+    addCategory() {
       this.$prompt('请输入新建种类名称', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -241,7 +267,8 @@ export default {
           "categoryName": value,
         })).then((res) => {
           this.cid = res.data.data;
-          console.log("cid是"+this.cid);
+          console.log(res)
+          console.log("cid是" + this.cid);
           if (res.data.flag) {
             this.$message({
               type: 'success',
@@ -251,7 +278,11 @@ export default {
             this.thirdDialogVisible = true
             //window.location.reload();
           } else {
-            alert("添加失败，请重试！");
+            ElMessage({
+              message: res.data.errorMsg,
+              type: 'error',
+              duration: 2 * 1000
+            });
           }
         })
       }).catch(() => {
@@ -301,11 +332,19 @@ export default {
           this.clearForm();
           this.secondDialogVisible = false;
         } else if (showAlert) {
-          alert("添加失败，请重试！");
+          ElMessage({
+            message: '添加失败，请重试！',
+            type: 'error',
+            duration: 2 * 1000
+          });
         }
       } catch (error) {
         console.error(error);
-        alert("请求发生错误，请重试！");
+        ElMessage({
+          message: '请求发生错误，请重试！',
+          type: 'error',
+          duration: 2 * 1000
+        });
       }
 
       this.clearForm();
@@ -329,11 +368,11 @@ export default {
 
 <style>
 #categoryC {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .table-container {
-  margin-top: 0px; /* 设置距离顶部的距离为20像素 */
+  margin-top: 0; /* 设置距离顶部的距离为20像素 */
 }
 
 .el-input__inner {
@@ -351,6 +390,11 @@ export default {
   width: 100%;
   height: 100%;
 
+}
+
+.header-row {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 </style>

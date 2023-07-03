@@ -511,14 +511,14 @@ Content-Type: application/json
 | ---------- | --------- | -------- | --------------------------------------- |
 | `flag`     | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
 | `errorMsg` | `string`  | 非必须   | 如果添加失败，返回一个错误信息          |
-| `data`     | `object`  | 非必需   | 该参数在此请求中无效                    |
+| `data`     | `number`  | 必须     | 返回添加的分类的ID                      |
 
 ##### 响应数据样例
 
 ```json
 {
 	"flag": true,
-	"data": null,
+	"data": 121,
 	"errorMsg": null
 }
 ```

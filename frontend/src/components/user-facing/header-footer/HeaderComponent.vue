@@ -1,7 +1,7 @@
 <script setup>
 import axios from "axios";
-import {ref} from "vue";
-import {useRouter} from "vue-router";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 // import qs from "qs";
 
 const router = useRouter();
@@ -85,8 +85,6 @@ function checkLogin() {
       });
 }
 
-checkLogin();
-
 function toCart() {
   router.push({
     path: "/user/cart",
@@ -95,6 +93,10 @@ function toCart() {
     }
   });
 }
+
+onMounted(() => {
+  checkLogin();
+});
 
 function toOrder() {
   router.push({

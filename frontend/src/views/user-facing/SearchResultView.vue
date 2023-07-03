@@ -6,7 +6,6 @@
 
   <div class="list">
     <div v-for="item in data" class="list-item" :key="item.id">
-      <!--  TODO 添加链接  -->
       <div class="product" @click="showDetails(item)">
         <img :src="getPath(item)" alt="图片" style="width: 100%; height: 85%">
         <div class="price">￥{{ item.originalPrice }}</div>
@@ -55,7 +54,9 @@ function search(params) {
 search(router.currentRoute.value.query.keyword);
 
 function getPath(item) {
-  return require("../../assets/productSingleMiddle/" + item.images[0].id + ".jpg");
+  if (item.images[0].urlPath !== null)
+    return item.images[0].urlPath;
+  return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleMiddle/" + item.images[0].id + ".jpg";
 }
 
 function showDetails(item) {

@@ -3,6 +3,12 @@ import Header from '@/components/user-facing/header-footer/HeaderComponent.vue';
 import Footer from '@/components/user-facing/header-footer/FooterComponent.vue';
 import SimpleSearchComponents from "@/components/user-facing/search/SimpleSearchComponents.vue";
 import ProductDetailsComponent from "@/components/user-facing/ProductDetailsComponent.vue";
+
+window.scroll({
+  top: 0,
+  left: 0,
+  behavior: 'auto'
+});
 </script>
 
 <template>

@@ -1,74 +1,74 @@
 <template>
-  <el-tabs v-model="activeTab" @tab-click="handleClick" style="width: 80%;">
+  <el-tabs v-model="activeTab" style="width: 80%;" @tab-click="handleClick">
     <el-tab-pane label="所有订单"></el-tab-pane>
-    <el-tab-pane label="待付款" ></el-tab-pane>
+    <el-tab-pane label="待付款"></el-tab-pane>
     <el-tab-pane label="待发货"></el-tab-pane>
     <el-tab-pane label="待收货"></el-tab-pane>
-    <el-tab-pane label="待评价" ></el-tab-pane>
+    <el-tab-pane label="待评价"></el-tab-pane>
   </el-tabs>
 
   <div v-for="(order, orderIndex) in currentOrders" :key="orderIndex" style="width: 80%">
 
-    <el-table :data="[order]" style="width: 100%">
-      <el-table-column label="订单创建日期" align="center" width="200">
+    <el-table :data="[order]" stripe style="width: 100%">
+      <el-table-column align="center" label="订单创建日期" width="200">
         <template v-slot="{ row }">
-          <div style="margin-bottom: 70px;margin-top: 70px"  :key="index">
+          <div :key="index" style="margin-bottom: 70px;margin-top: 70px">
             {{ row.createDate.substring(0, 19) }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="订单编码" align="center" width="200">
+      <el-table-column align="center" label="订单编码" width="200">
         <template v-slot="{ row }">
-          <div style="margin-bottom: 70px;margin-top: 70px" :key="index">
+          <div :key="index" style="margin-bottom: 70px;margin-top: 70px">
             {{ row.orderCode }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="宝贝" align="left" width="500" header-align="center">
+      <el-table-column align="left" header-align="center" label="宝贝" width="500">
         <template v-slot="{ row }">
           <!--          <p style="text-align: left">{{ row.createDate }} 订单号：{{ row.orderCode }}</p>-->
 
           <div v-for="(item, index) in row.orderItems" :key="index" class="product-item">
             <div style="margin-top: 35px;margin-bottom: 35px"><img :src="getImagePath(item.imageId)" alt="Product Image"
-                                                                   class="product-image" style="padding: 0px">
+                                                                   class="product-image" style="padding: 0">
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <span class="itemName" @click="showDetails(item.pid)" style="font-size: 3px">
+              <span class="itemName" style="font-size: 3px" @click="showDetails(item.pid)">
                 {{ item.name }}
               </span>
             </div>
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="单价" align="center" width="200">
+      <el-table-column align="center" label="单价" width="200">
         <template v-slot="{ row }">
-          <div style="margin-bottom: 70px;margin-top: 70px;color: red" v-for="(item, index) in row.orderItems"
-               :key="index">
+          <div v-for="(item, index) in row.orderItems" :key="index"
+               style="margin-bottom: 70px;margin-top: 70px;color: red">
             ￥&nbsp;{{ item.promotePrice.toFixed(2) }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="数量" align="center" width="80">
+      <el-table-column align="center" label="数量" width="80">
         <template v-slot="{ row }">
-          <div style=";margin-bottom: 70px;margin-top: 70px" v-for="(item, index) in row.orderItems" :key="index">
+          <div v-for="(item, index) in row.orderItems" :key="index" style=";margin-bottom: 70px;margin-top: 70px">
             <p>{{ item.count }}</p>
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="totalPrice" label="实付款" align="center" width="120">
+      <el-table-column align="center" label="实付款" prop="totalPrice" width="120">
         <template v-slot="scope">
           <div style="color: red;font-size: 15px">
             ￥&nbsp;{{ scope.row.totalPrice.toFixed(2) }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" fixed="right" align="center" width="300">
+      <el-table-column align="center" fixed="right" label="操作" width="300">
         <template v-slot="{ row }">
           <div class="button-container">
-            <el-button v-if="row.status === 0" @click="pay(row)">付款</el-button>
+            <el-button v-if="row.status === 0" @click="pay(row)" type="danger" plain>付款</el-button>
             <el-button v-if="row.status === 1" @click="remind(row)">催发货</el-button>
-            <el-button v-if="row.status === 2" @click="receive(row)">收货</el-button>
-            <el-button v-if="row.status === 3" @click="comment(row)">评价</el-button>
-            <i class="fa fas fa-check-circle" v-if="row.status === 4" style="color: green;font-size: xx-large" ></i>
+            <el-button v-if="row.status === 2" @click="receive(row)" type="success" plain>收货</el-button>
+            <el-button v-if="row.status === 3" @click="comment(row)" type="primary" plain>评价</el-button>
+            <i v-if="row.status === 4" class="fa fas fa-check-circle" style="color: green;font-size: xx-large"></i>
           </div>
         </template>
       </el-table-column>
@@ -108,15 +108,15 @@ export default {
       })
     },
     getImagePath(imageId) {
-      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/"+imageId+".jpg"
+      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/" + imageId + ".jpg"
     },
     handleClick(event) {
       // 按照选中的标签筛选订单
       console.log(event.index);
       if (event.index === '0') {
         this.currentOrders = this.allOrders
-      } else if(this.allOrders){
-        this.currentOrders = this.allOrders.filter(order => order.status === parseInt(event.index-1))
+      } else if (this.allOrders) {
+        this.currentOrders = this.allOrders.filter(order => order.status === parseInt(event.index - 1))
       }
     },
     async fetchOrders() {

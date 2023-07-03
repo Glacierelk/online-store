@@ -112,7 +112,7 @@
 import axios from "axios";
 import qs from "qs";
 import {useRouter} from "vue-router";
-import {ElMessageBox} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 
 export default {
   data() {
@@ -225,7 +225,11 @@ export default {
                 .catch(error => {
                   // 处理删除失败的情况
                   console.error(error);
-                  alert("删除发生错误，请重试！");
+                  ElMessage({
+                    type: 'error',
+                    message: '删除失败，请重试！',
+                    duration: 2 * 1000
+                  });
                 });
           })
           .catch(() => {
@@ -305,11 +309,19 @@ export default {
             message: "添加成功"
           });
         } else if (showAlert) {
-          alert("添加失败，请重试！");
+          ElMessage({
+            type: 'error',
+            message: '添加失败，请重试！',
+            duration: 2 * 1000
+          });
         }
       } catch (error) {
         console.error(error);
-        alert("请求发生错误，请重试！");
+        ElMessage({
+          type: 'error',
+          message: "请求发生错误，请重试！",
+          duration: 2 * 1000
+        });
       }
       window.location.reload();
     },
@@ -348,16 +360,25 @@ export default {
         });
 
         if (successAdded) {
-          this.$message({
+          ElMessage({
             type: 'success',
-            message: "修改成功"
+            message: '修改成功！',
+            duration: 2 * 1000
           });
         } else if (showAlert) {
-          alert("修改失败，请重试！");
+          ElMessage({
+            type: 'error',
+            message: '修改失败，请重试！',
+            duration: 2 * 1000
+          });
         }
       } catch (error) {
         console.error(error);
-        alert("请求发生错误，请重试！");
+        ElMessage({
+          type: 'error',
+          message: "请求发生错误，请重试！",
+          duration: 2 * 1000
+        });
       }
       window.location.reload();
     }
