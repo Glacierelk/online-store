@@ -62,9 +62,9 @@
   <el-dialog title="添加图片" v-model="thirdDialogVisible">
     <div>
       <label for="singleImage">简略图片：</label>
-      <input type="file" id="singleImage" @change="onFileChange1" />
+      <input type="file" id="singleImage"  ref="selectedFile1" @change="onFileChange1" />
       <label for="detailImage">详情图片：</label>
-      <input type="file" id="detailImage" @change="onFileChange2" />
+      <input type="file" id="detailImage"  ref="selectedFile2" @change="onFileChange2" />
       <button @click="upload">Upload</button>
     </div>
   </el-dialog>
@@ -117,6 +117,8 @@ import {ElMessage, ElMessageBox} from "element-plus";
 export default {
   data() {
     return {
+      singleImageContent:'',
+      detailImageContent:'',
       currentCategory: '当前分类',
       cid:'',
       tableData: [
@@ -146,40 +148,47 @@ export default {
     },
     upload() {
       console.log(this.productId);
-      let formData = new FormData();
 
-      formData.append("file", this.selectedFile1);
-      formData.append("filename", this.selectedFile1.name);
-      formData.append("type", "type_single")
-      formData.append("pid", this.productId)
-      axios.post("/upload/product", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      }).then(response => {
-        console.log("file uploaded", response);
-      }).catch(error => {
-        console.error("file upload failed", error);
-      });
+      let formData1 = new FormData();
+      formData1.append("file", this.selectedFile1);
+      formData1.append("filename", this.selectedFile1.name);
+      formData1.append("type", "type_single");
+      formData1.append("pid", this.productId);
+      console.log(formData1.get("filename"));
+      console.log(formData1.get("pid"));
 
+      let formData2 = new FormData();
+      formData2.append("file", this.selectedFile2);
+      formData2.append("filename", this.selectedFile2.name);
+      formData2.append("type", "type_details");
+      formData2.append("pid", this.productId);
+      console.log(formData2.get("pid"));
 
-      formData.append("file", this.selectedFile2);
-      formData.append("filename", this.selectedFile2.name);
-      formData.append("type", "type_details")
-      formData.append("pid", this.productId)
-      axios.post("/upload/product", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      }).then(response => {
-        console.log("file uploaded", response);
-      }).catch(error => {
-        console.error("file upload failed", error);
+      // 发送两个 POST 请求
+      Promise.all([
+        axios.post("/upload/product", formData1, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        }),
+        axios.post("/upload/product", formData2, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+      ]).then(responses => {
+        this.thirdDialogVisible = false;
+        this.$refs.selectedFile1.value = '';
+        this.$refs.selectedFile2.value = '';
+        console.log("Both files uploaded", responses);
+      }).catch(errors => {
+        console.error("File upload failed", errors);
       });
     },
 
     addPicture(row) {
       this.productId = row.id;
+      console.log(this.productId);
       this.thirdDialogVisible = true;
     },
 
