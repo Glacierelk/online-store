@@ -2,7 +2,7 @@
 import axios from "axios";
 import {useRouter} from "vue-router";
 import qs from "qs";
-import {ElMessageBox,ElMessage} from "element-plus";
+import {ElMessageBox, ElMessage} from "element-plus";
 
 export default {
   props: {
@@ -42,8 +42,11 @@ export default {
       console.log(this.selectedItems);
       console.log(this.ids);
     },
-    getImagePath(imageId) {
-      return 'https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/'+imageId+'.jpg';
+    getImagePath(image) {
+      if (image.urlPath !== null)
+        return image.urlPath;
+      else
+        return 'https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/' + image.id + '.jpg';
     },
     async changeCount(cartId, count) {
       await axios.post('/cart/alterGoodsNumber', qs.stringify({
@@ -66,26 +69,33 @@ export default {
           })
     },
     deleteCart(cartId) {
-      axios.post('/cart/deleteGoods', qs.stringify(
-          {
-            "id": cartId
-          }
-      ))
-          .then(res => {
-            if (res.status === 200 && res.data.flag) {
-              console.log("删除成功");
-              this.tableData = this.tableData.filter(item => item.id !== cartId);
-            } else {
-              ElMessage({
-                message: '删除失败!',
-                type: 'error',
-                duration: 2 * 1000
-              });
+      ElMessageBox.confirm('确定要删除吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        axios.post('/cart/deleteGoods', qs.stringify(
+            {
+              "id": cartId
             }
-          })
-          .catch(err => {
-            console.log(err);
-          })
+        ))
+            .then(res => {
+              if (res.status === 200 && res.data.flag) {
+                console.log("删除成功");
+                this.tableData = this.tableData.filter(item => item.id !== cartId);
+              } else {
+                ElMessage({
+                  message: '删除失败!',
+                  type: 'error',
+                  duration: 2 * 1000
+                });
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            })
+      }).catch(() => {
+      })
     },
 
     settlement() {
@@ -150,28 +160,35 @@ export default {
         });
         return;
       }
-      axios.post('/cart/deleteGoodsByList', {
-        id: this.ids
+      ElMessageBox.confirm('确定要删除吗？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        axios.post('/cart/deleteGoodsByList', {
+          id: this.ids
+        })
+            .then(res => {
+              if (res.status === 200 && res.data.flag) {
+                ElMessage({
+                  message: '删除成功',
+                  type: 'success',
+                  duration: 2 * 1000
+                });
+                this.tableData = this.tableData.filter(item => !this.ids.includes(item.id));
+              } else {
+                ElMessage({
+                  message: '删除失败',
+                  type: 'error',
+                  duration: 2 * 1000
+                });
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            })
+      }).catch(() => {
       })
-          .then(res => {
-            if (res.status === 200 && res.data.flag) {
-              ElMessage({
-                message: '删除成功',
-                type: 'success',
-                duration: 2 * 1000
-              });
-              this.tableData = this.tableData.filter(item => !this.ids.includes(item.id));
-            } else {
-              ElMessage({
-                message: '删除失败',
-                type: 'error',
-                duration: 2 * 1000
-              });
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          })
     }
   },
   async mounted() {
@@ -205,57 +222,57 @@ export default {
     <el-table
         v-if="show"
         :data="tableData"
+        :header-cell-style="{'text-align':'center'}"
         class="cart-show"
         stripe
-        :header-cell-style="{'text-align':'center'}"
-        @selection-change="handleSelectionChange"
         width="100%"
+        @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" width="80" align="center" fixed="left"/>
+      <el-table-column align="center" fixed="left" type="selection" width="80"/>
 
-      <el-table-column label="商品图片" prop="imageId" align="center" width="100">
+      <el-table-column align="center" label="商品图片" prop="imageId" width="100">
         <template v-slot="scope">
-          <el-image :src="getImagePath(scope.row.imageId)"></el-image>
+          <el-image :src="getImagePath(scope.row.image)"></el-image>
         </template>
       </el-table-column>
 
-      <el-table-column label="商品信息" prop="product.name" align="left" width="800"/>
+      <el-table-column align="left" label="商品信息" prop="product.name" width="800"/>
 
-      <el-table-column label="单价" prop="product.promotePrice" align="center" width="200">
+      <el-table-column align="center" label="单价" prop="product.promotePrice" width="200">
         <template v-slot="scope">
           <span class="price-show">￥&nbsp;{{ scope.row.product.promotePrice }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="数量" prop="count" align="center" width="250">
+      <el-table-column align="center" label="数量" prop="count" width="250">
         <template v-slot="scope">
           <el-input-number v-model="scope.row.count" :max="scope.row.product.stock" :min="1"
                            @change="changeCount(scope.row.id, scope.row.count)"></el-input-number>
         </template>
       </el-table-column>
 
-      <el-table-column label="总价" align="center" width="150" fixed="right">
+      <el-table-column align="center" fixed="right" label="总价" width="150">
         <template v-slot="scope">
           <span class="price-show">￥&nbsp;{{ scope.row.product.promotePrice * scope.row.count }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" fixed="right" align="center" width="150">
+      <el-table-column align="center" fixed="right" label="操作" width="150">
         <template #header>
-          <el-button type="danger" @click="deleteCarts" plain>批量删除</el-button>
+          <el-button plain type="danger" @click="deleteCarts">批量删除</el-button>
         </template>
         <template v-slot="scope">
-          <el-button type="danger" @click="deleteCart(scope.row.id)" plain>删除</el-button>
+          <el-button plain type="danger" @click="deleteCart(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <div id="summary-row" v-if="show">
+    <div v-if="show" id="summary-row">
       <span style="vertical-align: center">已选商品&nbsp;</span>
       <span class="price-show">{{ this.total }}</span>
       <span style="vertical-align: center">&nbsp;件，总价&nbsp;</span>
       <span class="price-show" style="font-size: 23px; font-weight: bold">￥&nbsp;{{ this.summary }}</span>
-      <el-button type="danger" @click="settlement" id="settlement-button">结算</el-button>
+      <el-button id="settlement-button" type="danger" @click="settlement">结算</el-button>
     </div>
   </div>
 

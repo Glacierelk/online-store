@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="logo">
-      <a href="/manage"><img src="@/assets/header/simpleLogo.png" alt="logo" class="logo" /></a>
+      <a href="/manage"><img src="https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/header/simpleLogo.png" alt="logo" class="logo" /></a>
     </div>
     <el-tabs v-model="activeTab">
       <el-tab-pane label="分类管理" name="tab1">

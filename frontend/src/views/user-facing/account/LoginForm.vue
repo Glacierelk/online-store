@@ -116,7 +116,7 @@ function submitForm() {
 #login {
   height: 100vh;
   width: 90%;
-  background-image: url("@/assets/login/6702.png");
+  background-image: url("https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/login/6702.png");
   background-size: cover;
   background-repeat: no-repeat;
   margin-left: auto;
