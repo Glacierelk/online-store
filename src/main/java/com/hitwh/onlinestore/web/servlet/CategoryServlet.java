@@ -80,7 +80,8 @@ public class CategoryServlet extends BaseServlet{
             info.setFlag(false);
             info.setErrorMsg("添加商品分类失败");
         } else {
-            if (categoryService.addCategory(categoryName)) {
+            info.setData(categoryService.addCategory(categoryName));
+            if (info.getData()!= null) {
                 info.setFlag(true);
             } else {
                 info.setFlag(false);
