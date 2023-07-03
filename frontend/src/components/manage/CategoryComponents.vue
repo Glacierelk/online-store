@@ -156,7 +156,7 @@ export default {
           duration: 2 * 1000
         });
         console.error("file upload failed", error);
-        //const deleteUrl = 'category/delete?categoryId=' + row.id;
+        const deleteUrl = 'category/delete?categoryId=' + row.id;
       });
       this.thirdDialogVisible = false;
       this.selectedFile = null;
