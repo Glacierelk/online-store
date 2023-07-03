@@ -7,21 +7,35 @@ public class ProductDetails extends Product {
     private List<ProductImage> images;
     private List<ProductProperties> properties;
     private List<Comment> comments;
+    private Category category;
 
     public ProductDetails() {
     }
 
-    public ProductDetails(List<ProductImage> images, List<ProductProperties> properties, List<Comment> comments) {
-        this.images = images;
-        this.properties = properties;
-        this.comments = comments;
+    public ProductDetails(Product product) {
+        this.setId(product.getId());
+        this.setName(product.getName());
+        this.setOriginalPrice(product.getOriginalPrice());
+        this.setPromotePrice(product.getPromotePrice());
+        this.setStock(product.getStock());
+        this.setSubTitle(product.getSubTitle());
+        this.setCid(product.getCid());
+        this.setCreateDate(product.getCreateDate());
     }
 
-    public ProductDetails(int id, String name, String subTitle, Double originalPrice, Double promotePrice, int stock, int cid, Timestamp createDate, List<ProductImage> images, List<ProductProperties> properties, List<Comment> comments) {
-        super(id, name, subTitle, originalPrice, promotePrice, stock, cid, createDate);
+    public ProductDetails(Product product, List<ProductImage> images, List<ProductProperties> properties, List<Comment> comments, Category category) {
+        this.setId(product.getId());
+        this.setName(product.getName());
+        this.setOriginalPrice(product.getOriginalPrice());
+        this.setPromotePrice(product.getPromotePrice());
+        this.setStock(product.getStock());
+        this.setSubTitle(product.getSubTitle());
+        this.setCid(product.getCid());
+        this.setCreateDate(product.getCreateDate());
         this.images = images;
         this.properties = properties;
         this.comments = comments;
+        this.category = category;
     }
 
     public List<ProductImage> getImages() {
@@ -48,12 +62,21 @@ public class ProductDetails extends Product {
         this.comments = comments;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "ProductDetails{" +
                 "images=" + images +
                 ", properties=" + properties +
                 ", comments=" + comments +
+                ", category=" + category +
                 ", id=" + id +
                 ", name='" + name + '\'' +
                 ", subTitle='" + subTitle + '\'' +

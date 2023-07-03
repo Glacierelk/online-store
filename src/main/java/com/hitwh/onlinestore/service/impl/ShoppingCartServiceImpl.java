@@ -18,7 +18,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         List<ShoppingCart> shoppingCarts = shoppingCartDAO.queryByUserId(uid);
         shoppingCarts.forEach(cart -> {
             cart.setProduct(productDAO.queryById(cart.getPid()));
-            cart.setImageId(productDAO.getImageByProductId(cart.getPid()).getId());
+            cart.setImage(productDAO.getImageByProductId(cart.getPid()));
         });
         return shoppingCarts;
     }

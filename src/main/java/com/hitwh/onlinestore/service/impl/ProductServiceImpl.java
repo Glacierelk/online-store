@@ -2,9 +2,11 @@ package com.hitwh.onlinestore.service.impl;
 
 import com.hitwh.onlinestore.bean.Product;
 import com.hitwh.onlinestore.bean.ProductDetails;
+import com.hitwh.onlinestore.dao.CategoryDAO;
 import com.hitwh.onlinestore.dao.CommentDAO;
 import com.hitwh.onlinestore.dao.ProductDAO;
 import com.hitwh.onlinestore.dao.PropertyDAO;
+import com.hitwh.onlinestore.dao.impl.CategoryDAOImpl;
 import com.hitwh.onlinestore.dao.impl.CommentDAOImpl;
 import com.hitwh.onlinestore.dao.impl.ProductDAOImpl;
 import com.hitwh.onlinestore.dao.impl.PropertyDAOImpl;
@@ -17,6 +19,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductDAO productDAO = new ProductDAOImpl();
     private final PropertyDAO propertyDAO = new PropertyDAOImpl();
     private final CommentDAO commentDAO = new CommentDAOImpl();
+    private final CategoryDAO categoryDAO = new CategoryDAOImpl();
 
     @Override
     public boolean addProduct(Product product) {
@@ -40,6 +43,7 @@ public class ProductServiceImpl implements ProductService {
         product.setImages(productDAO.getImagesByProductId(id));
         product.setProperties(propertyDAO.getPropertiesByProductId(id));
         product.setComments(commentDAO.getCommentsByProductId(id));
+        product.setCategory(categoryDAO.getCategoryById(product.getCid()));
         return product;
     }
 
