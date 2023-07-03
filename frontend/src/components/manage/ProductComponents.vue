@@ -67,21 +67,21 @@
       <el-table-column prop="originalPrice" label="原价格" width="100" align="center"></el-table-column>
       <el-table-column prop="promotePrice" label="优惠价格" width="100" align="center"></el-table-column>
       <el-table-column prop="stock" label="库存数量" width="100" align="center"></el-table-column>
-      <el-table-column label="编辑" width="100" align="center">
+      <el-table-column label="编辑" width="100" align="center" fixed="right">
         <template v-slot="scope">
           <el-button type="primary" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" @click="handleEdit(scope.row)">
             <i class="fa fa-edit" style="color: blue;"></i>
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="删除" width="100" align="center">
+      <el-table-column label="删除" width="100" align="center" fixed="right">
         <template v-slot="scope">
           <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleDelete(scope.row)">
             <i class="fa fa-trash" style="color: red;"></i>
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="设置属性" width="100" align="center">
+      <el-table-column label="设置属性" width="100" align="center" fixed="right">
         <template v-slot="scope">
           <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="setProperty(scope.row)">
             <i class="fa fas fa-plus" style="color: green;"></i>
@@ -169,9 +169,15 @@ export default {
     },
     handleEdit(row){
       this.productId = row.id;
-      this.dialogVisible2 = true; // 打开对话框
-      console.log(row.id);
 
+      console.log(row.id);
+      this.formData.productName = row.name;
+      this.formData.productSubtitle = row.subTitle;
+      this.formData.originalPrice = row.originalPrice;
+      this.formData.discountedPrice = row.promotePrice;
+      this.formData.inventory = row.stock;
+
+      this.dialogVisible2 = true; // 打开对话框
     },
     setProperty(row){
       console.log(row.id);

@@ -28,7 +28,7 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="删除" width="450" align="center">
+      <el-table-column label="删除" width="450" align="center" >
         <template v-slot="scope">
           <el-button type="danger" size="small" :style="{backgroundColor: 'transparent', borderColor: 'transparent'}"  @click="handleDelete(scope.row)">
             <i class="fa fa-trash" style="color: red;"></i>
