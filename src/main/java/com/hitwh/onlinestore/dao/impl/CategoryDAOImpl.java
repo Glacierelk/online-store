@@ -63,4 +63,11 @@ public class CategoryDAOImpl implements CategoryDAO {
             return null;
         }
     }
+
+    @Override
+    public boolean addImageByCategoryId(Integer id, String url) {
+        String sql = "update category set url_path = ? where id = ?";
+        int count = jdbcTemplate.update(sql, url, id);
+        return count != 0;
+    }
 }
