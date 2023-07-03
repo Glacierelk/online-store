@@ -61,7 +61,7 @@
 
   <el-dialog title="添加图片" v-model="thirdDialogVisible">
     <div>
-      <label for="singleImage">单个图片：</label>
+      <label for="singleImage">简略图片：</label>
       <input type="file" id="singleImage" @change="onFileChange1" />
       <label for="detailImage">详情图片：</label>
       <input type="file" id="detailImage" @change="onFileChange2" />
