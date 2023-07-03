@@ -41,10 +41,10 @@ export default {
     return{
       modules:[Pagination],
       picSrc:[
-        require("../../../assets/lunbo/1.jpg"),
-        require("../../../assets/lunbo/2.jpg"),
-        require("../../../assets/lunbo/3.jpg"),
-        require("../../../assets/lunbo/4.jpg")],
+        "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/lunbo/1.jpg",
+        "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/lunbo/2.jpg",
+        "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/lunbo/3.jpg",
+        "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/lunbo/4.jpg"],
     }
   },
   methods:{

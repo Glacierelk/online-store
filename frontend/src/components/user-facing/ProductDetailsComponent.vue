@@ -209,7 +209,7 @@ export default {
               });
               this.showImages.sort((a, b) => b - a)
               this.detailImages.sort((a, b) => b - a)
-              this.leftImage = require("../../assets/productSingle/" + this.showImages[0] + ".jpg");
+              this.leftImage = "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingle/" + this.showImages[0] + ".jpg";
               this.show = true;
             } else {
               alert("获取商品详情失败!");
@@ -224,21 +224,21 @@ export default {
     getCategoryPath(id) {
       // let id = categoryImagePath;
       // console.log("../../assets/category/" + String(id) + ".jpg" + "^^^^^" + this.show)
-      return require("../../assets/category/" + String(id) + ".jpg");
+      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/category/" + String(id) + ".jpg";
     },
     getImagePath(id) {
       // console.log("../../assets/productSingleSmall/" + String(id) + ".jpg")
-      return require("../../assets/productSingleSmall/" + String(id) + ".jpg");
+      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/" + String(id) + ".jpg";
     },
     getDetailImagePath(id) {
       // console.log("../../assets/productDetail/" + id + ".jpg")
-      return require("../../assets/productDetail/" + id + ".jpg");
+      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productDetail/" + id + ".jpg";
     },
     getComment(count) {
       return "累计评价 " + count;
     },
     changeImage(id) {
-      this.leftImage = require("../../assets/productSingle/" + id + ".jpg");
+      this.leftImage = "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingle/" + id + ".jpg";
     },
     buyProduct(){
       if(uid==-1)
@@ -440,7 +440,7 @@ var pid=-1;
 }
 
 #price-show {
-  background-image: url("../../assets/site/priceBackground.png");
+  background-image: url("https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/site/priceBackground.png");
   margin-top: 0;
 }
 
