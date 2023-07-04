@@ -33,7 +33,7 @@
                                                                    alt="Product Image"
                                                                    class="product-image" style="padding: 0">
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <span class="itemName" style="font-size: 3px" @click="showDetails(item.pid)">
+              <span class="itemName" style="font-size: 10px" @click="showDetails(item.pid)">
                 {{ item.name }}
               </span>
             </div>

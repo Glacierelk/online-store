@@ -1,6 +1,6 @@
 # 天猫商城 API 文档
 
-`BaseURL: http://localhost:8729/store` 
+`BaseURL: http://localhost:8080/store` 
 
 ## 用户
 
@@ -30,7 +30,7 @@
 ##### 请求样例
 
 ```http
-POST http://localhost:8729/store/user/register HTTP/1.1
+POST http://localhost:8080/store/user/register HTTP/1.1
 Content-Type: application/json
 
 {
@@ -87,7 +87,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ~~~http
-POST http://localhost:8729/store/user/login HTTP/1.1
+POST http://localhost:8080/store/user/login HTTP/1.1
 Content-Type: application/json
 
 {
@@ -141,7 +141,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ~~~http
-GET http://localhost:8729/store/user/getUser HTTP/1.1
+GET http://localhost:8080/store/user/getUser HTTP/1.1
 ~~~
 
 #### 响应数据
@@ -189,7 +189,7 @@ GET http://localhost:8729/store/user/getUser HTTP/1.1
 ##### 请求样例
 
 ~~~http
-GET http://localhost:8729/store/user/logout HTTP/1.1
+GET http://localhost:8080/store/user/logout HTTP/1.1
 ~~~
 
 #### 响应数据
@@ -239,7 +239,7 @@ GET http://localhost:8729/store/user/logout HTTP/1.1
 ##### 请求样例
 
 ```http
-GET http://localhost:8729/store/category/homePageCategory HTTP/1.1
+GET http://localhost:8080/store/category/homePageCategory HTTP/1.1
 ```
 
 #### 响应数据
@@ -250,28 +250,23 @@ GET http://localhost:8729/store/category/homePageCategory HTTP/1.1
 
 ##### 参数说明
 
-| 名称                       | 类型      | 是否必须 | 备注                                        |
-| -------------------------- | --------- | -------- | :------------------------------------------ |
-| `flag`                     | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败     |
-| `errorMsg`                 | `string`  | 非必须   | 如果获取失败，返回一个错误信息              |
-| `data`                     | `list`    | 必须     | 分类数据列表                                |
-| \|- `category_name`        | `string`  | 必须     | 分类名称                                    |
-| \|- `cid`                  | `number`  | 必须     | 分类ID                                      |
-| \|- `category_image`       | `string`  | 非必需   | 分类图片 OSS 访问地址                       |
-| \|- `products`             | `list`    | 必须     | 当前分类的商品                              |
-| \|- \|- `id`               | `number`  | 必须     | 商品ID                                      |
-| \|- \|- `name`             | `string`  | 必须     | 商品名称                                    |
-| \|- \|- `subTitle`         | `string`  | 非必需   | 商品小标题                                  |
-| \|-\|- `originalPrice`     | `number`  | 必须     | 原价                                        |
-| \|-\|- `promotePrice`      | `number`  | 非必需   | 促销价                                      |
-| \|-\|- `stock`             | `number`  | 必须     | 库存                                        |
-| \|- \|- `images`           | `list`    | 必须     | 商品图片                                    |
-| \|- \|- \|- `id`           | `number`  | 必须     | 图片 ID                                     |
-| \|- \|- \|- `type`         | `string`  | 必须     | 图片分类                                    |
-| \|- \|- \|- `urlPath`      | `string`  | 非必需   | OSS 访问地址                                |
-| \|- \|- \|- `pid`          | `number`  | 必须     | 商品 ID                                     |
-| \|- \|- \|- `singleMiddle` | `string`  | 非必需   | `type_single` 类型图片中等大小 OSS 访问地址 |
-| \|- \|- \|- `singleSmall`  | `string`  | 非必需   | `type_single` 类型图片小图 OSS 访问地址     |
+| 名称                   | 类型      | 是否必须 | 备注                                    |
+| ---------------------- | --------- | -------- | --------------------------------------- |
+| `flag`                 | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
+| `errorMsg`             | `string`  | 非必须   | 如果获取失败，返回一个错误信息          |
+| `data`                 | `list`    | 必须     | 分类数据列表                            |
+| \|- `category_name`    | `string`  | 必须     | 分类名称                                |
+| \|- `cid`              | `number`  | 必须     | 分类ID                                  |
+| \|- `products`         | `list`    | 必须     | 当前分类的商品                          |
+| \|- \|- `id`           | `number`  | 必须     | 商品ID                                  |
+| \|- \|- `name`         | `string`  | 必须     | 商品名称                                |
+| \|- \|- `subTitle`     | `string`  | 非必需   | 商品小标题                              |
+| \|-\|- `originalPrice` | `number`  | 必须     | 原价                                    |
+| \|-\|- `promotePrice`  | `number`  | 非必需   | 促销价                                  |
+| \|-\|- `stock`         | `number`  | 必须     | 库存                                    |
+| \|- \|- `images`       | `list`    | 必须     | 商品图片                                |
+| \|- \|- \|- `id`       | `number`  | 必须     | 图片 ID                                 |
+| \|- \|- \|- `type`     | `string`  | 必须     | 图片分类                                |
 
 ##### 响应数据样例
 
@@ -280,7 +275,6 @@ GET http://localhost:8729/store/category/homePageCategory HTTP/1.1
 	"flag": true,
 	"data": [
 		{
-			"category_image": "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/category/60.jpg",
 			"category_name": "安全座椅",
 			"cid": 60,
 			"products": [
@@ -296,16 +290,12 @@ GET http://localhost:8729/store/category/homePageCategory HTTP/1.1
 					"images": [
 						{
 							"id": 10144,
-							"pid": 958,
-							"type": "type_single",
-							"urlPath": null,
-							"singleMiddle": null,
-							"singleSmall": null
+							"pid": 0,
+							"type": "type_single"
 						}
 					],
 					"properties": null,
-					"comments": null,
-					"category": null
+					"comments": null
 				}
 			]
 		}
@@ -336,7 +326,7 @@ GET http://localhost:8729/store/category/homePageCategory HTTP/1.1
 ##### 请求样例
 
 ~~~HTTP
-POST http://localhost:8729/store/property/add HTTP/1.1
+POST http://localhost:8080/store/property/add HTTP/1.1
 Content-Type: application/json
 
 {
@@ -390,7 +380,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ```http
-GET http://localhost:8729/store/category/listAllCategories HTTP/1.1
+GET http://localhost:8080/store/category/listAllCategories HTTP/1.1
 ```
 
 #### 响应数据
@@ -447,7 +437,7 @@ GET http://localhost:8729/store/category/listAllCategories HTTP/1.1
 ##### 请求样例 
 
 ```http
-DELETE http://localhost:8729/store/category/delete?categoryId=84
+DELETE http://localhost:8080/store/category/delete?categoryId=84
 ```
 
 #### 响应数据
@@ -497,7 +487,7 @@ DELETE http://localhost:8729/store/category/delete?categoryId=84
 ##### 请求样例
 
 ```http
-POST http://localhost:8729/store/category/add HTTP/1.1
+POST http://localhost:8080/store/category/add HTTP/1.1
 Content-Type: application/json
 
 {
@@ -517,73 +507,19 @@ Content-Type: application/json
 | ---------- | --------- | -------- | --------------------------------------- |
 | `flag`     | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
 | `errorMsg` | `string`  | 非必须   | 如果添加失败，返回一个错误信息          |
-| `data`     | `number`  | 必须     | 返回添加的分类的ID                      |
+| `data`     | `object`  | 非必需   | 该参数在此请求中无效                    |
 
 ##### 响应数据样例
 
 ```json
 {
 	"flag": true,
-	"data": 121,
+	"data": null,
 	"errorMsg": null
 }
 ```
 
-### 后台添加商品分类
-
-#### 基本信息
-
-> 请求路径：`/category/add`
->
-> 请求方式：POST
->
-> 接口描述：该接口用于后台新增一个商品分类
-
-
-
-#### 请求参数
-
-##### 参数说明
-
-| 参数名         | 类型     | 是否必须 | 备注                 |
-| -------------- | -------- | -------- | -------------------- |
-| `categoryName` | `string` | 必须     | 要新增的商品分类名称 |
-
-##### 请求样例
-
-```http
-POST http://localhost:8729/store/category/add HTTP/1.1
-Content-Type: application/json
-
-{
-	"categoryName": "test"
-}
-```
-
-#### 响应数据
-
-##### 参数格式
-
-`application\json`
-
-##### 参数说明
-
-| 名称       | 类型      | 是否必须 | 备注                                    |
-| ---------- | --------- | -------- | --------------------------------------- |
-| `flag`     | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
-| `errorMsg` | `string`  | 非必须   | 如果添加失败，返回一个错误信息          |
-| `data`     | `number`  | 必须     | 返回添加的分类的ID                      |
-
-##### 响应数据样例
-
-```json
-{
-	"flag": true,
-	"data": 121,
-	"errorMsg": null
-}
-```
-
+## 商品分类属性
 
 ### 后台添加商品分类属性
 
@@ -607,7 +543,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ~~~HTTP
-POST http://localhost:8729/store/property/add HTTP/1.1
+POST http://localhost:8080/store/property/add HTTP/1.1
 Content-Type: application/json
 
 {
@@ -616,7 +552,7 @@ Content-Type: application/json
 }
 ~~~
 
-### 后台修改商品分类属性
+### 后台添加商品分类属性
 
 #### 基本信息
 
@@ -624,26 +560,26 @@ Content-Type: application/json
 >
 > 请求方式：POST
 >
-> 接口描述：该接口用于后台修改某个商品分类的属性
+> 接口描述：该接口用于后台新增某个商品分类的属性
 
 #### 请求参数
 
 ##### 参数说明
 
-| 参数名     | 类型     | 是否必须 | 备注     |
-|---------| -------- | -------- |--------|
-| `id`    | `number` | 必须     | 要修改的属性 |
-| `value` | `string` | 必须     | 属性的值   |
+| 参数名 | 类型     | 是否必须 | 备注     |
+| ----- | -------- | -------- |--------|
+| `id`  | `number` | 必须     | 要修改的属性 |
+| `name` | `string` | 必须     | 属性的值   |
 
 ##### 请求样例
 
 ~~~HTTP
-POST http://localhost:8729/store/property/change HTTP/1.1
+POST http://localhost:8080/store/property/change HTTP/1.1
 Content-Type: application/json
 
 {
 	"id": 60,
-	"value": "好好好"
+	"name": "好好好"
 }
 ~~~
 
@@ -671,117 +607,7 @@ Content-Type: application/json
 }
 ~~~
 
-### 后台添加商品分类属性
 
-#### 基本信息
-
-> 请求路径：`/property/addProductProperty`
->
-> 请求方式：POST
->
-> 接口描述：该接口用于后台新增某个商品分类的属性值
-
-#### 请求参数
-
-##### 参数说明
-
-| 参数名     | 类型     | 是否必须 | 备注     |
-|---------| -------- | -------- |--------|
-| `id`    | `number` | 必须     | 要修改的商品 |
-| `ptid`  | `number` | 必须     | 要修改的属性 |
-| `value` | `string` | 必须     | 属性的值   |
-
-##### 请求样例
-
-~~~HTTP
-POST http://localhost:8729/store/property/change HTTP/1.1
-Content-Type: application/json
-
-{
-	"id": 1011
-    "ptid": 298
-    "value": 1
-}
-~~~
-
-#### 响应数据
-
-##### 参数格式
-
-`application\json`
-
-##### 参数说明
-
-| 参数名     | 类型      | 是否必须 | 备注                                |
-| ---------- | --------- | -------- | ----------------------------------- |
-| `flag`     | `boolean` | 必须     | 添加成功返回`true`，否则返回`false` |
-| `data`     | `object`  | 非必须   | 该参数在此请求中无效                |
-| `errorMsg` | `string`  | 非必须   | 若出错返回错误信息                  |
-
-##### 响应数据样例
-
-~~~json
-{
-    "flag": true,
-    "data": null,
-    "errorMsg": null
-}
-~~~
-
-### 后台添加商品分类图片
-
-#### 基本信息
-
-> 请求路径：`/upload/category`
->
-> 请求方式：POST
->
-> 接口描述：该接口用于后台添加某个商品的图片
-
-##### 参数说明
-
-| 参数名     | 类型     | 是否必须 | 备注           |
-| ---------- | -------- | -------- | -------------- |
-| `filename` | `string` | 必须     | 上传图片的名称 |
-| `id`       | `number` | 必须     | 商品分类 ID    |
-| `file`     | `object` | 必须     | 待上传的图片   |
-
-##### 请求样例
-
-```http
-POST http://localhost:8729/store/upload/category HTTP/1.1
-Content-Type: application/json
-
-{
-	"file": file,
-	"filename": "test.jpg",
-	"id": 87
-}
-```
-
-#### 响应数据
-
-##### 参数格式
-
-`application\json`
-
-##### 参数说明
-
-| 名称       | 类型      | 是否必须 | 备注                                    |
-| ---------- | --------- | -------- | --------------------------------------- |
-| `flag`     | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
-| `errorMsg` | `string`  | 非必须   | 如果上传失败，返回一个错误信息          |
-| `data`     | `object`  | 非必需   | 此字段在此接口中未使用                  |
-
-##### 响应数据样例
-
-```json
-{
-  "flag": true,
-  "data": null,
-  "errorMsg": null
-}
-```
 
 ## 商品
 
@@ -813,7 +639,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ```http
-POST http://localhost:8729/store/product/add HTTP/1.1
+POST http://localhost:8080/store/product/add HTTP/1.1
 Content-Type: application/json
 
 {
@@ -854,7 +680,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ```http
-POST http://localhost:8729/store/product/editProduct HTTP/1.1
+POST http://localhost:8080/store/product/editProduct HTTP/1.1
 Content-Type: application/json
 
 {
@@ -915,7 +741,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ```http
-DELETE http://localhost:8729/store/product/delete?id=999
+DELETE http://localhost:8080/store/product/delete?id=999
 ```
 
 #### 响应数据
@@ -965,7 +791,7 @@ DELETE http://localhost:8729/store/product/delete?id=999
 ##### 请求样例
 
 ```http
-POST http://localhost:8729/store/product/details HTTP/1.1
+POST http://localhost:8080/store/product/details HTTP/1.1
 Content-Type: application/json
 
 {
@@ -981,42 +807,34 @@ Content-Type: application/json
 
 ##### 参数说明
 
-| 名称                 | 类型        | 是否必须 | 备注                                        |
-| -------------------- | ----------- | -------- | ------------------------------------------- |
-| `flag`               | `boolean`   | 必须     | 请求是否成功，`true` 成功，`false` 失败     |
-| `errorMsg`           | `string`    | 非必须   | 如果删除失败，返回一个错误信息              |
-| `data`               | `object`    | 必需     | 包含了商品的详细信息                        |
-| \|- `id`             | `number`    | 必须     | 商品ID                                      |
-| \|- `name`           | `string`    | 必须     | 商品名称                                    |
-| \|- `subTitle`       | `string`    | 非必需   | 商品小标题                                  |
-| \|- `originalPrice`  | `number`    | 必须     | 商品价格                                    |
-| \|- `promotePrice`   | `number`    | 非必需   | 商品折扣价格                                |
-| \|- `stock`          | `number`    | 必须     | 库存                                        |
-| \|- `cid`            | `number`    | 必须     | 商品类型                                    |
-| \|- `createDate`     | `number`    | 必须     | 商品创建日期                                |
-| \|- `images`         | `list`      | 必须     | 商品图片列表                                |
-| \|\|- `id`           | `number`    | 必须     | 图片 ID                                     |
-| \|\|- `type`         | `string`    | 必须     | 图片类型                                    |
-| \|\|- `urlPath`      | `string`    | 非必需   | 图片 OSS 访问地址                           |
-| \|\|- `pid`          | `string`    | 必须     | 商品 ID                                     |
-| \|\|- `singleMiddle` | `string`    | 非必需   | `type_single` 类型图片中等大小 OSS 访问地址 |
-| \|\|- `singleSmall`  | `string`    | 非必需   | `type_single` 类型图片小图 OSS 访问地址     |
-| \|- `properties`     | `list`      | 必须     | 属性列表                                    |
-| \|\|- `id`           | `number`    | 必须     | 属性 ID                                     |
-| \|\|- `pid`          | `number`    | 必须     | 商品 ID                                     |
-| \|\|- `name`         | `string`    | 必须     | 属性名称                                    |
-| \|\|- `value`        | `string`    | 必须     | 属性值                                      |
-| \|- `comments`       | `list`      | 必须     | 评价列表                                    |
-| \|\|- `id`           | `number`    | 必须     | 评价 ID                                     |
-| \|\|- `content`      | `string`    | 必须     | 评价内容                                    |
-| \|\|- `uid`          | `number`    | 必须     | 做评价用户 ID                               |
-| \|\|- `pid`          | `number`    | 必须     | 被评价商品 ID                               |
-| \|\|- `create_date`  | `timestamp` | 必须     | 评价日期                                    |
-| \|\|- `username`     | `string`    | 必须     | 评价用户名                                  |
-| \|- `category`       | `object`    | 必须     | 分类信息                                    |
-| \|\|- `id`           | `number`    | 必须     | 分类 ID                                     |
-| \|\|- `name`         | `string`    | 必须     | 分类名称                                    |
-| \|\|- `urlPath`      | `string`    | 非必需   | 分类图片 OSS 访问地址                       |
+| 名称                  | 类型        | 是否必须 | 备注                                    |
+| --------------------- | ----------- | -------- | --------------------------------------- |
+| `flag`                | `boolean`   | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
+| `errorMsg`            | `string`    | 非必须   | 如果删除失败，返回一个错误信息          |
+| `data`                | `object`    | 必需     | 包含了商品的详细信息                    |
+| \|- `id`              | `number`    | 必须     | 商品ID                                  |
+| \|- `name`            | `string`    | 必须     | 商品名称                                |
+| \|- `subTitle`        | `string`    | 非必需   | 商品小标题                              |
+| \|- `originalPrice`   | `number`    | 必须     | 商品价格                                |
+| \|- `promotePrice`    | `number`    | 非必需   | 商品折扣价格                            |
+| \|- `stock`           | `number`    | 必须     | 库存                                    |
+| \|- `cid`             | `number`    | 必须     | 商品类型                                |
+| \|- `createDate`      | `number`    | 必须     | 商品创建日期                            |
+| \|- `images`          | `list`      | 必须     | 商品图片列表                            |
+| \|\|- `id`            | `number`    | 必须     | 图片 ID                                 |
+| \|\|- `type`          | `string`    | 必须     | 图片类型                                |
+| \|- `properties`      | `list`      | 必须     | 属性列表                                |
+| \|\|- `id`            | `number`    | 必须     | 属性 ID                                 |
+| \|\|- `pid`           | `number`    | 必须     | 商品 ID                                 |
+| \|\|- `propertyName`  | `string`    | 必须     | 属性名称                                |
+| \|\|- `propertyValue` | `string`    | 必须     | 属性值                                  |
+| \|- `comments`        | `list`      | 必须     | 评价列表                                |
+| \|\|- `id`            | `number`    | 必须     | 评价 ID                                 |
+| \|\|- `content`       | `string`    | 必须     | 评价内容                                |
+| \|\|- `uid`           | `number`    | 必须     | 做评价用户 ID                           |
+| \|\|- `pid`           | `number`    | 必须     | 被评价商品 ID                           |
+| \|\|- `create_date`   | `timestamp` | 必须     | 评价日期                                |
+| \|\|- `username`      | `string`    | 必须     | 评价用户名                              |
 
 ##### 响应数据样例
 
@@ -1025,29 +843,26 @@ Content-Type: application/json
 	"flag": true,
 	"data": {
 		"id": 87,
-		"name": "2",
-		"subTitle": "2",
-		"originalPrice": 2,
-		"promotePrice": 2,
-		"stock": 0,
+		"name": "Konka/康佳 LED32S1卧室32吋安卓智能无线WIFI网络液晶平板电视机",
+		"subTitle": "32吋电视机 8核智能 网络 全国联保 送货上门",
+		"originalPrice": 1699,
+		"promotePrice": 1104.35,
+		"stock": 98,
 		"cid": 83,
-		"createDate": 1688345852000,
+		"createDate": 1471077812000,
 		"images": [
 			{
 				"id": 629,
-				"pid": 87,
-				"type": "type_single",
-				"urlPath": null,
-				"singleMiddle": null,
-				"singleSmall": null
+				"pid": 0,
+				"type": "type_single"
 			}
 		],
 		"properties": [
 			{
-				"id": 728,
+				"id": 716,
 				"pid": 87,
-				"name": "品牌",
-				"value": "Hisense/海信"
+				"name": "操作系统",
+				"value": "VIDAA"
 			}
 		],
 		"comments": [
@@ -1055,16 +870,11 @@ Content-Type: application/json
 				"id": 1,
 				"content": "哈哈哈",
 				"uid": 30,
+				"username": "张三",
 				"pid": 87,
-				"create_date": "2023-06-29 22:15:46.0",
-				"username": "test001"
+				"create_date": "2023-06-29 22:15:46.0"
 			}
-		],
-		"category": {
-			"id": 83,
-			"name": "平板电视",
-			"urlPath": null
-		}
+		]
 	},
 	"errorMsg": null
 }
@@ -1091,7 +901,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ```http
-POST http://localhost:8729/store/product/search HTTP/1.1
+POST http://localhost:8080/store/product/search HTTP/1.1
 Content-Type: application/json
 
 {
@@ -1107,25 +917,22 @@ Content-Type: application/json
 
 ##### 参数说明
 
-| 名称                 | 类型      | 是否必须 | 备注                                    |
-| -------------------- | --------- | -------- | --------------------------------------- |
-| `flag`               | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
-| `errorMsg`           | `string`  | 非必须   | 如果查询失败，返回一个错误信息          |
-| `data`               | `list`    | 必需     | 搜索得到的商品列表                      |
-| \|- `id`             | `number`  | 必须     | 商品 ID                                 |
-| \|- `name`           | `string`  | 必须     | 商品名称                                |
-| \|- `subTitle`       | `string`  | 非必需   | 商品小标题                              |
-| \|- `originalPrice`  | `number`  | 必须     | 商品价格                                |
-| \|- `promotePrice`   | `number`  | 非必需   | 商品折扣价格                            |
-| \|- `stock`          | `number`  | 必须     | 库存                                    |
-| \|- `cid`            | `number`  | 必须     | 商品类型                                |
-| \|- `createDate`     | `number`  | 必须     | 商品创建日期                            |
-| \|- `images`         | `list`    | 必须     | 商品图片列表                            |
-| \|\|- `id`           | `number`  | 必须     | 图片 ID                                 |
-| \|\|- `type`         | `string`  | 必须     | 图片类型                                |
-| \|\|- `urlPath`      | `string`  | 非必需   | 图片 OSS 访问地址                       |
-| \|\|- `singleMiddle` | `string`  | 非必需   | `type_single` 图片中等大小 OSS 访问地址 |
-| \|\|- `singleSmall`  | `string`  | 非必需   | `type_single` 图片小图 OSS 访问地址     |
+| 名称                | 类型      | 是否必须 | 备注                                    |
+| ------------------- | --------- | -------- | --------------------------------------- |
+| `flag`              | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
+| `errorMsg`          | `string`  | 非必须   | 如果删除失败，返回一个错误信息          |
+| `data`              | `list`    | 必需     | 搜索得到的商品列表                      |
+| \|- `id`            | `number`  | 必须     | 商品 ID                                 |
+| \|- `name`          | `string`  | 必须     | 商品名称                                |
+| \|- `subTitle`      | `string`  | 非必需   | 商品小标题                              |
+| \|- `originalPrice` | `number`  | 必须     | 商品价格                                |
+| \|- `promotePrice`  | `number`  | 非必需   | 商品折扣价格                            |
+| \|- `stock`         | `number`  | 必须     | 库存                                    |
+| \|- `cid`           | `number`  | 必须     | 商品类型                                |
+| \|- `createDate`    | `number`  | 必须     | 商品创建日期                            |
+| \|- `images`        | `list`    | 必须     | 商品图片列表                            |
+| \|\|- `id`          | `number`  | 必须     | 图片 ID                                 |
+| \|\|- `type`        | `string`  | 必须     | 图片类型                                |
 
 ##### 响应数据样例
 
@@ -1139,22 +946,18 @@ Content-Type: application/json
 			"subTitle": "全国联保 清洗烘干 气泡按摩 座圈加热 断电冲水",
 			"originalPrice": 8960,
 			"promotePrice": 8512,
-			"stock": 42,
+			"stock": 62,
 			"cid": 82,
-			"createDate": 1688299760000,
+			"createDate": 1471192641000,
 			"images": [
 				{
 					"id": 1276,
-					"pid": 147,
-					"type": "type_single",
-					"urlPath": null,
-					"singleMiddle": null,
-					"singleSmall": null
+					"pid": 0,
+					"type": "type_single"
 				}
 			],
 			"properties": null,
-			"comments": null,
-			"category": null
+			"comments": null
 		}
 	],
 	"errorMsg": null
@@ -1169,24 +972,22 @@ Content-Type: application/json
 >
 > 请求方式：GET
 >
-> 接口描述：该接口根据分类 `cid` 获取商品内容
+> 接口描述：该接口根据分类cid获取商品内容
 
 
 
 #### 请求参数
 
-| 参数名 | 类型     | 是否必须 | 备注   |
-| ------ | -------- | -------- | ------ |
-| `cid`  | `number` | 必须     | 分类ID |
+cid
 
 ##### 参数说明
 
-分类 ID
+分类ID
 
 ##### 请求样例
 
 ```http
-GET http://localhost:8729/store/category/searchCategoryProperty?cid=1 HTTP/1.1
+GET http://localhost:8080/store/category/searchCategoryProperty HTTP/1.1
 ```
 
 #### 响应数据
@@ -1243,17 +1044,17 @@ GET http://localhost:8729/store/category/searchCategoryProperty?cid=1 HTTP/1.1
 
 ##### 参数说明
 
-| 参数名     | 类型     | 是否必须 | 备注                                                         |
-| ---------- | -------- | -------- | ------------------------------------------------------------ |
-| `filename` | `string` | 必须     | 上传图片的名称                                               |
-| `type`     | `string` | 必须     | 图片类型，`type_single` 、`type_detail`、`type_single_middle`、`type_single_small` |
-| `pid`      | `number` | 必须     | 商品 ID                                                      |
-| `file`     | `object` | 必须     | 待上传的图片                                                 |
+| 参数名     | 类型     | 是否必须 | 备注                                        |
+| ---------- | -------- | -------- | ------------------------------------------- |
+| `filename` | `string` | 必须     | 上传图片的名称                              |
+| `type`     | `string` | 必须     | 图片类型，`type_single` 或者 `type_details` |
+| `pid`      | `number` | 必须     | 商品 ID                                     |
+| `file`     | `object` | 必须     | 待上传的图片                                |
 
 ##### 请求样例
 
 ```http
-POST http://localhost:8729/store/upload/product HTTP/1.1
+POST http://localhost:8080/store/user/register HTTP/1.1
 Content-Type: application/json
 
 {
@@ -1317,7 +1118,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ~~~HTTP
-POST http://localhost:8729/store/product/search HTTP/1.1
+POST http://localhost:8080/store/product/search HTTP/1.1
 Content-Type: application/json
 
 {
@@ -1357,6 +1158,8 @@ Content-Type: application/json
 }
 ~~~
 
+
+
 ### 获取所有订单
 
 #### 基本信息
@@ -1376,7 +1179,7 @@ Content-Type: application/json
 ##### 请求样例
 
 ~~~HTTP
-GET http://localhost:8729/order/getAllOrders HTTP/1.1
+GET http://localhost:8080/order/getAllOrders HTTP/1.1
 ~~~
 
 #### 响应数据
@@ -1482,31 +1285,38 @@ GET http://localhost:8729/store/order/getOrdersByUserId?uid=1 HTTP/1.1
 
 ##### 参数说明
 
-| 名称                 | 类型        | 是否必须 | 备注                                   |
-| -------------------- | ----------- | -------- | -------------------------------------- |
-| `flag`               | `boolean`   | 必须     | 请求是否成功，`true`成功，`false`失败` |
-| `errorMsg`           | `string`    | 非必须   | 如果请求失败，返回一个错误信息         |
-| `data`               | `object`    | 必须     | 包含了用户订单的详细信息               |
-| \|-`id`              | `number`    | 必须     | 订单ID                                 |
-| \|-`orderCode`       | `string`    | 必须     | 订单的唯一编码                         |
-| \|-`receiverTel`     | `number`    | 必须     | 收货人手机号                           |
-| \|-`userDessage`     | `string`    | 非必须   | 用户备注                               |
-| \|-`createDate`      | `timestamp` | 必须     | 创建订单时间                           |
-| \|-`payDate`         | `timestamp` | 非必须   | 订单支付时间                           |
-| \|-`deliveryDate`    | `timestamp` | 非必须   | 订单发货时间                           |
-| \|-`confirmDate`     | `timestamp` | 非必须   | 订单确认收货时间                       |
-| \|-`uid`             | `number`    | 必须     | 创建订单的用户ID                       |
-| \|-`status`          | `number`    | 必须     | 订单状态                               |
-| \|-`productCount`    | `number`    | 必须     | 订单包含的商品数量                     |
-| \|-`totalPrice`      | `number`    | 必须     | 订单的总金额                           |
-| \|-`order_item`      | `object`    | 必须     | 订单中包含的商品信息                   |
-| \|\|-`id`            | `number`    | 必须     | 订单商品条目的id                       |
-| \|\|-`pid`           | `number`    | 必须     | 订单商品的id                           |
-| \|\|-`oid`           | `number`    | 必须     | 订单的id                               |
-| \|\|-`name`          | `string`    | 必须     | 商品的名称                             |
-| \|\|-`originalPrice` | `number`    | 必须     | 商品的原始价格                         |
-| \|\|-`promotePrice`  | `number`    | 非必须   | 商品的促销价格                         |
-| \|\|-`count`         | `number`    | 必须     | 购买商品的数量                         |
+| 名称                  | 类型        | 是否必须 | 备注                                   |
+| --------------------- | ----------- | -------- | -------------------------------------- |
+| `flag`                | `boolean`   | 必须     | 请求是否成功，`true`成功，`false`失败` |
+| `errorMsg`            | `string`    | 非必须   | 如果请求失败，返回一个错误信息         |
+| `data`                | `object`    | 必须     | 包含了用户订单的详细信息               |
+| \|-`id`               | `number`    | 必须     | 订单ID                                 |
+| \|-`orderCode`        | `string`    | 必须     | 订单的唯一编码                         |
+| \|-`receiverTel`      | `number`    | 必须     | 收货人手机号                           |
+| \|-`userDessage`      | `string`    | 非必须   | 用户备注                               |
+| \|-`createDate`       | `timestamp` | 必须     | 创建订单时间                           |
+| \|-`payDate`          | `timestamp` | 非必须   | 订单支付时间                           |
+| \|-`deliveryDate`     | `timestamp` | 非必须   | 订单发货时间                           |
+| \|-`confirmDate`      | `timestamp` | 非必须   | 订单确认收货时间                       |
+| \|-`uid`              | `number`    | 必须     | 创建订单的用户ID                       |
+| \|-`status`           | `number`    | 必须     | 订单状态                               |
+| \|-`productCount`     | `number`    | 必须     | 订单包含的商品数量                     |
+| \|-`totalPrice`       | `number`    | 必须     | 订单的总金额                           |
+| \|-`order_item`       | `object`    | 必须     | 订单中包含的商品信息                   |
+| \|\|-`id`             | `number`    | 必须     | 订单商品条目的id                       |
+| \|\|-`pid`            | `number`    | 必须     | 订单商品的id                           |
+| \|\|-`oid`            | `number`    | 必须     | 订单的ID                               |
+| \|\|-`name`           | `string`    | 必须     | 商品的名称                             |
+| \|\|-`originalPrice`  | `number`    | 必须     | 商品的原始价格                         |
+| \|\|-`promotePrice`   | `number`    | 非必须   | 商品的促销价格                         |
+| \|\|-`count`          | `number`    | 必须     | 购买商品的数量                         |
+| \|\|-`productImage`   | `object`    | 必须     | 商品的图片                             |
+| \|\|\|-`id`           | `number`    | 必须     | 图片的ID                               |
+| \|\|\|-`pid`          | `number`    | 必须     | 商品的ID                               |
+| \|\|\|-`type`         | `string`    | 必须     | 图片的类型                             |
+| \|\|\|-`urlPath`      | `string`    | 非必须   | `single`图片的OSS路径                  |
+| \|\|\|-`singleMiddle` | `string`    | 非必须   | `singleMiddle`图片的OSS路径            |
+| \|\|\|-`singleSmall`  | `string`    | 非必须   | `singleSmall`图片的OSS路径             |
 
 ##### 响应数据样例
 
@@ -1803,6 +1613,8 @@ GET http://localhost:8729/store/cart/getCount?id=1 HTTP/1.1
 }
 ~~~
 
+
+
 ### 获取用户购物车
 
 #### 基本信息
@@ -1854,13 +1666,7 @@ GET http://localhost:8729/store/cart/show?id=1 HTTP/1.1
 | \|\|- `stock`         | `number`    | 必须     | 商品库存                                     |
 | \|\|- `cid`           | `number`    | 必须     | 商品类型                                     |
 | \|\|- `createDate`    | `timestamp` | 必须     | 商品添加时间                                 |
-| \|- `image`           | `object`    | 必须     | 商品图片信息                                 |
-| \|\|- `id`            | `number`    | 必须     | 图片 ID                                      |
-| \|\|- `pid`           | `number`    | 必须     | 商品 ID                                      |
-| \|\|- `type`          | `string`    | 必须     | 图片类型，这里类型仅会是 `type_single`       |
-| \|\|- `urlPath`       | `string`    | 非必需   | 图片 OSS 访问地址                            |
-| \|\|- `singleMiddle`  | `string`    | 非必需   | `type_single` 图片中等大小 OSS 访问地址      |
-| \|\|- `singleSmall`   | `string`    | 非必需   | `type_single` 图片小图 OSS 访问地址          |
+| \|- `imageId`         | `number`    | 必须     | 商品图片 ID                                  |
 
 ##### 响应数据样例
 
@@ -1869,34 +1675,29 @@ GET http://localhost:8729/store/cart/show?id=1 HTTP/1.1
 	"flag": true,
 	"data": [
 		{
-			"id": 68,
-			"pid": 960,
+			"id": 1,
+			"pid": 87,
 			"uid": 1,
-			"count": 1,
+			"count": 10,
 			"status": 1,
 			"product": {
-				"id": 960,
-				"name": "REEBABY儿童安全座椅9个月-12岁宝宝婴儿汽车用坐椅车载 3C认证",
-				"subTitle": "睿睿熊定制款 合金钢骨架 全国包邮",
-				"originalPrice": 1280,
-				"promotePrice": 1216,
-				"stock": 70,
-				"cid": 60,
-				"createDate": 1688347493000
+				"id": 87,
+				"name": "Konka/康佳 LED32S1卧室32吋安卓智能无线WIFI网络液晶平板电视机",
+				"subTitle": "32吋电视机 8核智能 网络 全国联保 送货上门",
+				"originalPrice": 1699,
+				"promotePrice": 1104.35,
+				"stock": 98,
+				"cid": 83,
+				"createDate": 1471077812000
 			},
-			"image": {
-				"id": 10166,
-				"pid": 960,
-				"type": "type_single",
-				"urlPath": null,
-				"singleMiddle": null,
-				"singleSmall": null
-			}
+			"imageId": 629
 		}
 	],
 	"errorMsg": null
 }
 ~~~
+
+
 
 ### 加入商品到购物车中
 
@@ -1912,18 +1713,17 @@ GET http://localhost:8729/store/cart/show?id=1 HTTP/1.1
 
 ##### 参数说明
 
-| 参数名  | 类型      | 是否必须 | 备注       |
-| ------- | --------- | -------- | ---------- |
-| `uid`   | `Integer` | 是       | 用户的id   |
-| `pid`   | `Integer` | 是       | 商品的id   |
-| `count` | `Integer` | 是       | 商品的数量 |
+| 参数名 | 类型    | 是否必须 | 备注       |
+| ------ | ------- | -------- | ---------- |
+| uid    | Integer | 是       | 用户的id   |
+| pid    | Integer | 是       | 商品的id   |
+| count  | Integer | 是       | 商品的数量 |
 
 ##### 请求样例	
 
 ```http
 POST http://localhost:8729/store/shoppingCart/addGoods HTTP/1.1
 Content-Type: application/json 
-
 {
 	"pid": "87",
 	"uid":"1"
@@ -1953,6 +1753,8 @@ Content-Type: application/json
 }
 ~~~
 
+
+
 ### 从购物车删除商品
 
 #### 基本信息
@@ -1967,15 +1769,14 @@ Content-Type: application/json
 
 ##### 参数说明
 
-| 参数名 | 类型    | 是否必须 | 备注     |
-| ------ | ------- | -------- | -------- |
-| uid    | Integer | 是       | 用户的id |
-| pid    | Integer | 是       | 商品的id |
+| 参数名 | 类型     | 是否必须 | 备注         |
+| ------ | -------- | -------- | ------------ |
+| `id`   | `number` | 是       | 购物车条目ID |
 
 ##### 请求样例	
 
 ```http
-DELETE http://localhost:8729/store/shoppingCart/deleteGoods?uid=1&pid=87 HTTP/1.1
+DELETE http://localhost:8729/store/shoppingCart/deleteGoods?id=1 HTTP/1.1
 ```
 
 #### 响应数据
@@ -1999,6 +1800,8 @@ DELETE http://localhost:8729/store/shoppingCart/deleteGoods?uid=1&pid=87 HTTP/1.
 	"errorMsg": null
 }
 ~~~
+
+
 
 ### 从购物车批量删除商品
 
@@ -2014,9 +1817,9 @@ DELETE http://localhost:8729/store/shoppingCart/deleteGoods?uid=1&pid=87 HTTP/1.
 
 ##### 参数说明
 
-| 参数名   | 类型 | 是否必须 | 备注           |
-| -------- | ---- | -------- | -------------- |
-| cartList | list | 是       | 删除商品的列表 |
+| 参数名 | 类型   | 是否必须 | 备注                     |
+| ------ | ------ | -------- | ------------------------ |
+| `id`   | `list` | 是       | 删除的购物车条目ID的列表 |
 
 ##### 请求样例	
 
@@ -2025,7 +1828,7 @@ POST http://localhost:8729/store/shoppingCart/deleteGoodsByList HTTP/1.1
 Content-Type: application/json
 
 {
-	"cartList":[{"uid":"1","pid":"87"},{"uid":"1","pid":"147"},{"uid":"1","pid":"77"}]
+	"id":[1,2,3]
 }
 ```
 
@@ -2051,6 +1854,8 @@ Content-Type: application/json
 }
 ~~~
 
+
+
 ### 更新购物车中商品的数量
 
 #### 基本信息
@@ -2065,11 +1870,10 @@ Content-Type: application/json
 
 ##### 参数说明
 
-| 参数名 | 类型    | 是否必须 | 备注     |
-| ------ | ------- | -------- | -------- |
-| pid    | Integer | 是       | 商品id   |
-| uid    | Integer | 是       | 用户id   |
-| count  | Integer | 是       | 商品数量 |
+| 参数名  | 类型     | 是否必须 | 备注         |
+| ------- | -------- | -------- | ------------ |
+| `id`    | `number` | 是       | 购物车记录ID |
+| `count` | `number` | 是       | 商品数量     |
 
 ##### 请求样例	
 
@@ -2078,8 +1882,7 @@ POST http://localhost:8729/store/shoppingCart/deleteGoodsByList HTTP/1.1
 Content-Type: application/json
 
 {
-	"pid":87,
-	"uid":1,
+	"id":87,
 	"count":111
 }
 ```
@@ -2106,56 +1909,7 @@ Content-Type: application/json
 }
 ~~~
 
-### 查看商品是否在购物车中
 
-#### 基本信息
-
-> 请求路径：`/shoppingCart/checkCartStatus`
->
-> 请求方式：GET
->
-> 接口描述：该接口用于查看商品是否在购物车中
-
-#### 请求参数
-
-##### 参数说明
-
-| 参数名 | 类型    | 是否必须 | 备注   |      |
-| ------ | ------- | -------- | ------ | ---- |
-| uid    | Integer | 是       | 用户id |      |
-| pid    | Integer | 是       | 商品id |      |
-
-##### 请求样例	
-
-```http
-GET http://localhost:8729/store/shoppingCart/checkCartStatus?uid=1&pid=87 HTTP/1.1
-```
-
-#### 响应数据
-
-##### 参数格式
-
-`application/json`
-
-##### 参数说明
-
-| `errorMsg`     | `string`  | 非必须 | 如果请求失败，返回一个错误信息 |
-| -------------- | --------- | ------ | ------------------------------ |
-| `flag`         | `boolean` | 必须   | 请求是否成功                   |
-| `data`         | `boolean` | 必须   | 请求到的状态信息               |
-| \|- `errorMsg` | `String`  | 必须   | 请求失败的提示信息             |
-
-##### 响应数据样例
-
-~~~json
-{
-	"flag": true,
-	"errorMsg": null,
-    "data":"true"
-}
-~~~
-
-## 评价
 
 ### 添加商品评价
 
@@ -2213,4 +1967,61 @@ Content-Type: application/json
     "data":null
 }
 ~~~
+
+
+
+
+
+### 查看商品是否在购物车中
+
+#### 基本信息
+
+> 请求路径：`/shoppingCart/checkCartStatus`
+>
+> 请求方式：GET
+>
+> 接口描述：该接口用于查看商品是否在购物车中
+
+#### 请求参数
+
+##### 参数说明
+
+| pid  | Integer | 是   | 商品id |
+| ---- | ------- | ---- | ------ |
+| uid  | Integer | 是   | 用户id |
+| pid  | Integer | 是   | 商品id |
+
+##### 请求样例	
+
+```http
+GET http://localhost:8729/store/shoppingCart/checkCartStatus?uid=1&pid=87 HTTP/1.1
+```
+
+#### 响应数据
+
+##### 参数格式
+
+`application/json`
+
+##### 参数说明
+
+| `errorMsg`     | `string`  | 非必须 | 如果请求失败，返回一个错误信息 |
+| -------------- | --------- | ------ | ------------------------------ |
+| `flag`         | `boolean` | 必须   | 请求是否成功                   |
+| `data`         | `boolean` | 必须   | 请求到的状态信息               |
+| \|- `errorMsg` | `String`  | 必须   | 请求失败的提示信息             |
+
+##### 响应数据样例
+
+~~~json
+{
+	"flag": true,
+	"errorMsg": null,
+    "data":"true"
+}
+~~~
+
+
+
+
 
