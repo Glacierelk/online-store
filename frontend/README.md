@@ -1,24 +1,34 @@
-# frontend
+# online-store
 
-## Project setup
-```
-npm install
-```
+这是一个使用 Java 和 Vue 实现的简单在线购物商城的前后端分离项目，后端使用基本的 Servlet 实现，前端使用 Vue 框架实现。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 运行项目
 
-### Compiles and minifies for production
-```
-npm run build
-```
+请使用 `mvn tomcat7:run` 命令来运行后端服务器，使用 `npm run serve` 命令来运行前端服务器。
 
-### Lints and fixes files
-```
-npm run lint
-```
+注意：你需要先运行后端服务器，然后再运行前端服务器。在运行前端服务器之前，你需要运行 `npm install` 命令来安装依赖项。
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 功能列表
+
+### 前台
+
+| 功能         | 功能描述                           |
+| ------------ | ---------------------------------- |
+| 注册         | 用户注册                           |
+| 登录         | 用户登录                           |
+| 分类查找     | 根据分类查找商品                   |
+| 模糊查询     | 根据关键字查询商品                 |
+| 商品详情     | 查看某个商品的详细信息             |
+| 加入购物车   | 登录后，可以选择商品加入购物车     |
+| 下单（结算） | 在商品详情和购物车页面可以生成订单 |
+| 订单模拟     | 下单后可以付款、催发货、收货、评论 |
+
+### 后台
+
+| 功能     | 功能描述                             |
+| -------- | ------------------------------------ |
+| 分类管理 | 管理分类，包括创建、删除、修改、查询 |
+| 商品管理 | 商品的增删改查，包括上传商品图片     |
+| 用户管理 | 查询用户                             |
+| 订单管理 | 查看系统所有订单，可以进行发货操作   |
+

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <el-table :data="userData.slice((currentPage-1)*pageSize, currentPage*pageSize)" stripe style="width: 100%">
+    <el-table :data="userData.slice((currentPage-1)*pageSize, currentPage*pageSize)" stripe
+              style="width: 100%;margin-left: 0;margin-right: 0">
       <el-table-column align="center" label="用户ID" prop="id" sortable width="450"></el-table-column>
       <el-table-column align="center" label="用户名称" prop="username" width="450"></el-table-column>
       <el-table-column align="center" label="用户邮箱" prop="email" width="450"></el-table-column>

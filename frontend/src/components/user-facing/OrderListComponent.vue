@@ -24,16 +24,17 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column align="left" header-align="center" label="宝贝" width="500">
+      <el-table-column align="left" header-align="center" label="宝贝" width="600">
         <template v-slot="{ row }">
           <!--          <p style="text-align: left">{{ row.createDate }} 订单号：{{ row.orderCode }}</p>-->
 
           <div v-for="(item, index) in row.orderItems" :key="index" class="product-item">
-            <div style="margin-top: 35px;margin-bottom: 35px"><img :src="getImagePath(item.productImage)"
+            <div style="margin-top: 35px;margin-bottom: 35px">
+              <img :src="getImagePath(item.productImage)"
                                                                    alt="Product Image"
                                                                    class="product-image" style="padding: 0">
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <span class="itemName" style="font-size: 10px" @click="showDetails(item.pid)">
+              <span class="itemName" style="font-size: 15px" @click="showDetails(item.pid)">
                 {{ item.name }}
               </span>
             </div>
@@ -316,6 +317,7 @@ export default {
 
 .itemName {
   cursor: pointer;
+
 }
 
 .itemName:hover {

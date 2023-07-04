@@ -32,7 +32,7 @@
 <script setup>
 import axios from "axios";
 
-axios.defaults.withCredentials = false;
+axios.defaults.withCredentials = true;
 import Header from "@/components/user-facing/header-footer/LoginAndRegisterHeader.vue";
 import Footer from "@/components/user-facing/header-footer/FooterComponent.vue";
 import {ref} from "vue";
@@ -47,7 +47,7 @@ import {ElMessage} from "element-plus";
 
 function submitForm() {
 
-  if (username.value === "admin" || password.value === "admin") {
+  if (username.value === "admin" && password.value === "admin") {
     router.push('/manage')
     return false;
   }

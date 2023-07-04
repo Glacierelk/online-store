@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table stripe :data="orderData.slice((currentPage-1)*pageSize, currentPage*pageSize)" style="width: 100%">
+    <el-table stripe :data="orderData.slice((currentPage-1)*pageSize, currentPage*pageSize)" style="width: 100%;margin-left: 0;margin-right: 0">
       <el-table-column sortable prop="id" label="订单ID" align="center" width="150"></el-table-column>
       <el-table-column sortable prop="uid" label="买家ID" align="center" width="150"></el-table-column>
       <el-table-column prop="orderCode" label="订单编号" align="center" width="200"></el-table-column>
