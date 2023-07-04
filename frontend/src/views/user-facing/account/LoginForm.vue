@@ -32,7 +32,7 @@
 <script setup>
 import axios from "axios";
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
 import Header from "@/components/user-facing/header-footer/LoginAndRegisterHeader.vue";
 import Footer from "@/components/user-facing/header-footer/FooterComponent.vue";
 import {ref} from "vue";

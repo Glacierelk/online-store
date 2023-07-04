@@ -109,10 +109,12 @@ export default {
       })
     },
     getImagePath(image) {
-      if(image.urlPath !== null) {
-        return image.urlPath;
-      }
-      return "http://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingle/"+String(image.id)+".jpg";
+      if (image === null)
+        return "";
+      if (image.singleSmall !== null)
+        return image.singleSmall;
+      else
+        return 'https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/' + image.id + '.jpg';
     },
     handleClick(event) {
       // 按照选中的标签筛选订单
