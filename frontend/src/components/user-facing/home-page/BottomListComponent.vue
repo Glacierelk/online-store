@@ -65,6 +65,7 @@ for (let i = 0; i < categories.length; i++) {
     //require中文件的路径必须使用拼接的方式，不要写死
     let src = 'https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleMiddle/';
     // console.log(categories[i].products[j].images[0].urlPath)
+    console.log(categories[i].products[j].images[0])
     if (categories[i].products[j].images[0].urlPath !== null) {
       src += categories[i].products[j].images[0].urlPath;
     } else {

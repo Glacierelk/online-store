@@ -9,25 +9,29 @@
       </el-form>
     </el-dialog>
 
-    <el-dialog v-model="thirdDialogVisible" title="添加图片">
+    <el-dialog
+        v-model="thirdDialogVisible"
+        title="添加图片"
+        :before-close="addPictureDialogCloseHandler"
+    >
       <div>
-        <input type="file" @change="onFileChange"/>
-        <el-button @click="upload" type="primary" plain>Upload</el-button>
+        <input ref="selectedFile" type="file" @change="onFileChange"/>
+        <el-button plain type="primary" @click="upload">上传</el-button>
       </div>
     </el-dialog>
   </div>
 
   <div class=table-container>
     <el-table
-        :data="tableData"
+        :data="tableData.slice((currentPage-1)*pageSize, currentPage*pageSize)"
         header-row-class-name="header-row"
         stripe
         style="width: 100%; margin-bottom: 20px; max-width: 1500px; margin-left: auto; margin-right: auto;"
         width="100"
     >
       <el-table-column align="center" label="分类ID" prop="id" sortable width="100"></el-table-column>
-      <el-table-column header-align="left" align="left" label="分类名称" prop="name" width="1100"></el-table-column>
-      <el-table-column align="center" label="产品管理" width="100" fixed="right">
+      <el-table-column align="left" header-align="left" label="分类名称" prop="name" width="1100"></el-table-column>
+      <el-table-column align="center" fixed="right" label="产品管理" width="100">
         <template v-slot="scope">
           <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small" type="primary"
                      @click="handleManage(scope.row)">
@@ -35,7 +39,7 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="删除" width="100" fixed="right">
+      <el-table-column align="center" fixed="right" label="删除" width="100">
         <template v-slot="scope">
           <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small" type="danger"
                      @click="handleDelete(scope.row)">
@@ -58,9 +62,9 @@
         <el-pagination
             :current-page="currentPage"
             :page-size="pageSize"
-            :page-sizes="[5,10,15]"
-            :total="total"
-            layout="sizes, prev, pager, next, jumper"
+            :page-sizes="[5, 10, 20, 50]"
+            :total="tableData.length"
+            layout="total, sizes, prev, pager, next, jumper"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
         ></el-pagination>
@@ -94,10 +98,10 @@ function range(start, end, step = 1) {
 export default {
 
   name: "CategoryComponents",
-//  inject:['ReloadComponent.vue'],                                 //注入App里的reload方法
+//  inject:['ReloadComponent.vue'],  //注入App里的reload方法
   data() {
     return {
-      cid: '+',
+      cid: 0,
       selectedFile: null,
       form: {},
       rowCount: [],
@@ -109,7 +113,6 @@ export default {
       categoryName: '',
       inputValue: '',
       tableData: [],
-      total: 0,
       currentPage: 1, // 当前页码
       pageSize: 10, // 每页显示的条数
     }
@@ -117,6 +120,15 @@ export default {
   methods: {
     onFileChange(e) {
       this.selectedFile = e.target.files[0];
+    },
+    addPictureDialogCloseHandler(event) {
+      if (event.name === "hide") {
+        this.selectedFile = null;
+        this.$refs.selectedFile.value = '';
+        axios.delete('category/delete?categoryId=' + this.cid);
+        this.tableData = this.tableData.filter(item => item.id !== this.cid);
+        event();
+      }
     },
     upload() {
       let formData = new FormData();
@@ -144,9 +156,14 @@ export default {
           duration: 2 * 1000
         });
         console.error("file upload failed", error);
-        // const deleteUrl = 'category/delete?categoryId=' + row.id;
+        const deleteUrl = 'category/delete?categoryId=' + row.id;
       });
       this.thirdDialogVisible = false;
+      this.selectedFile = null;
+      this.$refs.selectedFile.value = '';
+    },
+    handleClose() {
+      axios.delete('category/delete?categoryId=' + this.cid);
     },
     // 分页大小改变时触发
     handleSizeChange(val) {
@@ -166,22 +183,6 @@ export default {
       axios.get(getUrl)
           .then(response => {
             this.tableData = response.data.data;
-            this.total = this.tableData.length;
-            // console.log(this.total);
-            console.log(this.currentPage, this.pageSize, this.total);
-            // 请求成功，将返回的数据赋值给tableData和total
-            this.tableData = [];
-            for (let i = (this.currentPage - 1) * this.pageSize, j = 0; i < Math.min((this.currentPage - 1) * this.pageSize + this.pageSize, this.total); i++) {
-              this.tableData[j] = response.data.data[i];
-              j++;
-              console.log(i);
-              console.log(response.data.data[i]);
-              console.log(this.tableData[j]);
-            }
-            //this.tableData = response.data.data; // 假设返回的数据是一个数组
-            //console.log(this.tableData)
-            //this.total = this.tableData.length;
-            console.log(this.total);
           })
           .catch(error => {
             // 请求失败，处理错误
@@ -217,8 +218,16 @@ export default {
 
             axios.delete(deleteUrl)
                 .then(() => {
-                  // 删除成功，刷新页面
-                  window.location.reload();
+                  const index = this.tableData.indexOf(row);
+                  if (index > -1) {
+                    this.tableData = this.tableData.filter((item, i) => i !== index);
+                  }
+
+                  ElMessage({
+                    message: '删除成功！',
+                    type: 'success',
+                    duration: 2 * 1000
+                  });
                 })
                 .catch(error => {
                   // 处理删除失败的情况
@@ -277,6 +286,7 @@ export default {
             //console.log(value);
             this.thirdDialogVisible = true
             //window.location.reload();
+            this.getData();
           } else {
             ElMessage({
               message: res.data.errorMsg,
@@ -395,6 +405,30 @@ export default {
 .header-row {
   margin-left: auto;
   margin-right: auto;
+}
+
+
+.el-dialog .upload-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #409eff;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.el-dialog .upload-btn:hover {
+  background-color: #66b1ff;
+}
+
+.el-dialog .upload-btn:active {
+  background-color: #3a8eea;
+}
+
+.el-dialog .upload-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.2);
 }
 
 </style>
