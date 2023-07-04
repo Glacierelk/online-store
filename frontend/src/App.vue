@@ -6,6 +6,7 @@
 import axios from "axios";
 
 axios.defaults.baseURL = 'http://localhost:8729/store';
+// axios.defaults.baseURL = 'http://8.130.126.145/store';
 </script>
 
 <style>
