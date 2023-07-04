@@ -24,6 +24,11 @@ public interface ProductDAO {
      * @param productId 商品id
      * @return 图片列表
      */
+
+
+    ProductImage getOneImageByProductId(int productId);
+
+
     List<ProductImage> getImagesByProductId(int productId);
 
     /*
