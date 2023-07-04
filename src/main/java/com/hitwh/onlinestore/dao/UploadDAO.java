@@ -7,4 +7,6 @@ public interface UploadDAO {
      * 上传图片
      */
     public String uploadImage(String imageName, InputStream input, String type);
+
+    public void destroy();
 }

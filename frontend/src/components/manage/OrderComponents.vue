@@ -1,4 +1,4 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<template>
   <div>
     <el-table stripe :data="orderData.slice((currentPage-1)*pageSize, currentPage*pageSize)" style="width: 100%">
       <el-table-column sortable prop="id" label="订单ID" align="center" width="150"></el-table-column>
@@ -49,7 +49,7 @@
 <script>
 import axios from 'axios';
 import qs from "qs";
-import {ElMessageBox} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 
 export default {
   name: 'OrderComponents',
@@ -83,11 +83,10 @@ export default {
     fetchData() {
       axios.get('/order/getAllOrders')
           .then(response => {
-            console.log(response.data);
             this.orderData = response.data.data; // 将获取到的数据赋值给orderData
           })
-          .catch(error => {
-            console.error(error);
+          .catch(() => {
+            ElMessage.error('获取数据失败');
           });
     },
     handleSizeChange(val) {
@@ -114,7 +113,6 @@ export default {
       }))
           .then(res => {
             if(res.data.flag){
-              console.log(res.data);
               this.$message({
                 message: '发货成功',
                 type: 'success'
@@ -127,8 +125,8 @@ export default {
               });
             }
           })
-          .catch(error => {
-            console.error(error);
+          .catch(() => {
+            ElMessage.error('发货失败');
           });
     }
 

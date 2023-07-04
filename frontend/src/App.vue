@@ -5,7 +5,8 @@
 <script setup>
 import axios from "axios";
 
-axios.defaults.baseURL = '/store';
+axios.defaults.baseURL = "http://localhost:8729/store";
+// axios.defaults.baseURL = '/store';
 </script>
 
 <style>

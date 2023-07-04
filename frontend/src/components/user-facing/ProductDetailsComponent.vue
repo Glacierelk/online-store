@@ -181,7 +181,6 @@ export default {
               if (data.data.flag)//如果查询成功
               {
                 this.buttonType = data.data.data ? "info" : "danger";//是否在购物车中
-                // console.log("buttonType "+buttonType)
               } else {
                 ElMessage({
                   message: '查询是否在购物车中失败',
@@ -196,7 +195,6 @@ export default {
         id: id
       }))
           .then(res => {
-            console.log(res.data);
             if (res.status === 200 && res.data.flag) {
               this.data = res.data.data;
 
@@ -218,6 +216,8 @@ export default {
                       + this.showImages[0].id + ".jpg";
               } else
                 this.leftImage = "";
+
+              this.data.properties = this.data.properties.filter(item => item.value !== null && item.value !== "");
 
               this.show = true;
             } else {

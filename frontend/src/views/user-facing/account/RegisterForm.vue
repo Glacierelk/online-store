@@ -40,7 +40,6 @@ function submitForm() {
     "password": password.value
   }))
       .then(response => {
-        console.log(response)
         if (response.data.flag) {
           message.value = '注册成功,将自动跳转...';
           router.push('/user/login');
@@ -52,8 +51,7 @@ function submitForm() {
           email.value = "";
         }
       })
-      .catch(error => {
-        console.error(error);
+      .catch(() => {
         message.value = '注册失败,请重试!';
       });
   return false;

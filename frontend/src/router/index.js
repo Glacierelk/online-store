@@ -6,7 +6,10 @@ const router = createRouter({
         {
             path: '/',
             name: 'Index',
-            component: () => import('@/views/user-facing/HomePageView.vue')
+            component: () => import('@/views/user-facing/HomePageView.vue'),
+            meta: {
+                title: '天猫商城首页'
+            }
         },
         {
             path: '/user',
@@ -59,11 +62,6 @@ const router = createRouter({
             path: '/details',
             name: 'Details',
             component: () => import('../views/user-facing/ProductDetailsView.vue'),
-        },
-        {
-            path: '/upload',
-            name: 'Upload',
-            component: () => import('../views/UploadImageTest.vue'),
         }
     ]
 })

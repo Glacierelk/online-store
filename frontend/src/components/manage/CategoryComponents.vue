@@ -140,14 +140,23 @@ export default {
           "Content-Type": "multipart/form-data"
         }
       }).then(response => {
-        console.log("file uploaded", response);
-        this.getData();
-        ElMessage({
-          message: '图片上传成功!',
-          type: 'success',
-          duration: 2 * 1000
-        });
-      }).catch(error => {
+        if (response.data.flag) {
+          this.getData();
+          ElMessage({
+            message: '图片上传成功!',
+            type: 'success',
+            duration: 2 * 1000
+          });
+        } else {
+          axios.delete('category/delete?categoryId=' + this.cid);
+
+          ElMessage({
+            message: '图片上传失败，请重试!',
+            type: 'error',
+            duration: 2 * 1000
+          });
+        }
+      }).catch(() => {
         axios.delete('category/delete?categoryId=' + this.cid);
 
         ElMessage({
@@ -155,8 +164,6 @@ export default {
           type: 'error',
           duration: 2 * 1000
         });
-        console.error("file upload failed", error);
-        // const deleteUrl = 'category/delete?categoryId=' + row.id;
       });
       this.thirdDialogVisible = false;
       this.selectedFile = null;
@@ -184,9 +191,8 @@ export default {
           .then(response => {
             this.tableData = response.data.data;
           })
-          .catch(error => {
+          .catch(() => {
             // 请求失败，处理错误
-            console.error('请求数据失败:', error);
             ElMessage({
               message: '请求数据失败，请重试!',
               type: 'error',
@@ -204,7 +210,6 @@ export default {
           name: row.name,
         }
       });
-      console.log("管理", row.cid);
     },
     handleDelete(row) {
       ElMessageBox.confirm('确定要删除吗？', '提示', {
@@ -229,9 +234,8 @@ export default {
                     duration: 2 * 1000
                   });
                 })
-                .catch(error => {
+                .catch(() => {
                   // 处理删除失败的情况
-                  console.error(error);
                   ElMessage({
                     message: '删除发生错误，请重试！',
                     type: 'error',
@@ -254,9 +258,7 @@ export default {
         this.rowCount = range(1, value, 1);
         // eslint-disable-next-linerow.id;
         this.rowId = row.id;
-        console.log(row.id);
         //this.rowCount=Array.from({ length: this.rowCount }, (v, i) => i + 1);
-        //console.log(this.rowCount);
         this.secondDialogVisible = true; // 打开第二个对话框);
       }).catch(() => {
         this.$message({
@@ -276,16 +278,12 @@ export default {
           "categoryName": value,
         })).then((res) => {
           this.cid = res.data.data;
-          console.log(res)
-          console.log("cid是" + this.cid);
           if (res.data.flag) {
             this.$message({
               type: 'success',
               message: '你新建的种类是: ' + value,
             });
-            //console.log(value);
             this.thirdDialogVisible = true
-            //window.location.reload();
             this.getData();
           } else {
             ElMessage({
@@ -306,7 +304,6 @@ export default {
     async submitForm(event) {
       event.preventDefault(); // 阻止表单默认提交行为
       // 在这里执行表单提交逻辑
-      console.log("行数是" + this.rowCount);
       let requests = []; // 存储所有请求
 
       for (let i = 1; i <= this.rowCountNum; i++) {
@@ -349,7 +346,6 @@ export default {
           });
         }
       } catch (error) {
-        console.error(error);
         ElMessage({
           message: '请求发生错误，请重试！',
           type: 'error',
@@ -371,7 +367,6 @@ export default {
   },
   mounted() {
     this.getData(); // 页面加载时初始化数据
-    //console.log("111"); // 或者将表单数据发送至后端
   },
 }
 </script>

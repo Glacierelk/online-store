@@ -51,12 +51,9 @@ export default {
     fetchData() {
       axios.get('/user/getAllUser')
           .then(response => {
-            console.log(response.data)
             this.userData = response.data.data;
           })
-          .catch(error => {
-            console.error(error);
-          });
+          .catch();
     },
     deleteUser(userId) {
       axios.post('/user/deleteUser', qs.stringify({
@@ -65,9 +62,7 @@ export default {
           .then(() => {
             this.userData = this.userData.filter(user => user.id !== userId);
           })
-          .catch(error => {
-            console.error(error);
-          });
+          .catch();
     },
 
     confirmDelete(userId) {

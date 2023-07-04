@@ -2,6 +2,7 @@
 import axios from "axios";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import {ElMessage} from "element-plus";
 // import qs from "qs";
 
 const router = useRouter();
@@ -35,38 +36,21 @@ function logout() {
       });
 }
 
-// function getUserGoods() {
-//   axios.post("/order/getOrdersByUserId",qs.stringify({
-//     "uid": userId.value
-//   }))
-//       .then((res) => {
-//         console.log(res.data);
-//         if (res.data.flag) {
-//           userGoods.value = res.data.data.length;
-//         }
-//       })
-//       .catch(() => {
-//         console.log("获取购物车商品数量失败");
-//       });
-// }
-
 function getUserCartCount() {
   axios.get("/cart/getCount?id=" + userId.value)
       .then((res) => {
-        console.log(res.data);
         if (res.data.flag) {
           userCartCount.value = res.data.data;
         }
       })
       .catch(() => {
-        console.log("获取购物车商品数量失败");
+        ElMessage.error("获取购物车数量失败");
       });
 }
 
 function checkLogin() {
   axios.get("user/getUser")
       .then((res) => {
-        console.log(res.data);
         if (res.data.flag) {
           isLogin.value = true;
           userName.value = res.data.data.username;
@@ -76,12 +60,9 @@ function checkLogin() {
         } else {
           isLogin.value = false;
         }
-        console.log(isLogin.value)
-        console.log(userName.value)
-        console.log(userId.value)
       })
       .catch(() => {
-        console.log("检查登录状态失败");
+        ElMessage.error("检查登录状态失败");
       });
 }
 
