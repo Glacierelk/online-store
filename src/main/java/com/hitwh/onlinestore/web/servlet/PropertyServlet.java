@@ -68,4 +68,28 @@ public class PropertyServlet extends BaseServlet {
         }
         writeJsonValue(response, info);
     }
+
+    public void addProductProperty(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ResultInfo info = new ResultInfo();
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            int ptid = Integer.parseInt(request.getParameter("ptid"));
+            String value = request.getParameter("value");
+            if (propertyService.addProductProperty(id, ptid,value)) {
+                info.setFlag(true);
+            } else {
+                info.setFlag(false);
+                info.setErrorMsg("添加失败");
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            info.setFlag(false);
+            info.setErrorMsg("添加失败, 请检查输入的数据类型");
+        } catch (Exception e) {
+            e.printStackTrace();
+            info.setFlag(false);
+            info.setErrorMsg("添加失败");
+        }
+        writeJsonValue(response, info);
+    }
 }

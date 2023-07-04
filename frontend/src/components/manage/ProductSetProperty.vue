@@ -51,7 +51,7 @@ export default {
       })).then(response => {
         this.formData = response.data.data.properties;
         this.rowCount.value = this.formData.length;
-        console.log("formData:" + this.formData[12].value);
+        //console.log("formData:" + this.formData[12].value);
         console.log(this.rowCount.value);
 
         for (let i = 1; i <= this.rowCount.value; i++) {
@@ -78,15 +78,28 @@ export default {
         if (valid) {
           console.log('表单验证成功');
           // 在这里执行表单提交逻辑
+
           let requests = []; // 存储所有请求
-          for (let i = 1; i <= this.rowCount.value; i++) {
-            console.log(this.formData[i-1].id+"____"+this.formData[`input${i}`]);
-            requests.push(
-                axios.post('/property/change', qs.stringify({
-                  "id": this.formData[i-1].id,
-                  "value": this.formData[`input${i}`],
-                }))); // 或其他需要的值
-          }
+            for (let i = 1; i <= this.rowCount.value; i++) {
+              console.log(this.formData[i - 1].id + "____" + "____" + this.formData[i - 1].ptid + "____" + this.formData[`input${i}`]);
+              if (this.formData[i - 1].id !== 0) {
+                console.log("修改");
+                requests.push(
+                    axios.post('/property/change', qs.stringify({
+                      "id": this.formData[i - 1].id,
+                      "value": this.formData[`input${i}`],
+                    }))); // 或其他需要的值
+              }
+              else if(this.formData[i - 1].id === 0){
+                console.log("添加");
+                  requests.push(
+                      axios.post('/property/addProductProperty', qs.stringify({
+                        "id": this.formData[i - 1].pid,
+                        "ptid": this.formData[i - 1].ptid,
+                        "value": this.formData[`input${i}`],
+                      }))); // 或其他需要的值
+              }
+            }
 
           try {
             const responses = await Promise.all(requests);

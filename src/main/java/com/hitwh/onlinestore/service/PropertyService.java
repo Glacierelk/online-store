@@ -7,4 +7,6 @@ public interface PropertyService {
     boolean addProperty(int cid,String name);
 
     boolean changeProperty(int id, String value);
+
+    boolean addProductProperty(int id,int ptid, String value);
 }

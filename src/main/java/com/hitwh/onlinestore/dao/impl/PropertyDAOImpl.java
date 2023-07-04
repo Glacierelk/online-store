@@ -62,5 +62,18 @@ public class PropertyDAOImpl implements PropertyDAO {
         return count == 1;
     }
 
+    @Override
+    public boolean addProductProperty(int id, int ptid,String value) {
+        String sql = "insert into property_value(pid,ptid,value) values(?,?,?)";
+        System.out.println(id+"___"+ptid+"___"+value);
+        try {
+            template.update(sql, id, ptid,value);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }
