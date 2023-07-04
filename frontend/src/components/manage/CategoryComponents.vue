@@ -11,7 +11,7 @@
 
     <el-dialog
         v-model="thirdDialogVisible"
-        title="添加图片"
+        title="添加图片（建议 990px * 150px）"
         :before-close="addPictureDialogCloseHandler"
     >
       <div>
@@ -120,6 +120,26 @@ export default {
   methods: {
     onFileChange(e) {
       this.selectedFile = e.target.files[0];
+      if (this.selectedFile.type !== "image/jpeg" && this.selectedFile.type !== "image/png") {
+        ElMessage.error("图片格式不正确，请重新选择");
+        this.$refs.selectedFile.value = '';
+        this.selectedFile = null;
+        return;
+      }
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        let image = new Image();
+        image.onload = () => {
+          // alert(image.width)
+          if (image.width > 1000 || image.height > 200) {
+            ElMessage.error("图片尺寸应小于 1000px * 200px，请重新选择");
+            this.$refs.selectedFile.value = '';
+            this.selectedFile = null;
+          }
+        };
+        image.src = e.target.result;
+      };
+      reader.readAsDataURL(this.selectedFile);
     },
     addPictureDialogCloseHandler(event) {
       if (event.name === "hide") {
