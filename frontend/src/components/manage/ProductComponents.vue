@@ -165,7 +165,6 @@ export default {
         this.selectedFile1 = null;
         return;
       }
-      // alert(this.selectedFile1)
       let reader = new FileReader();
       reader.onload = (e) => {
         let image = new Image();
@@ -176,43 +175,6 @@ export default {
             this.$refs.selectedFile1.value = '';
             this.selectedFile1 = null;
           }
-          // else {
-          //   let canvas = document.createElement('canvas');
-          //   let context = canvas.getContext('2d');
-          //
-          //   // 设置新的宽度和高度
-          //   let newWidth = 800;
-          //   let newHeight = newWidth * image.height / image.width;
-          //
-          //   // 将图片绘制到 canvas 上并调整大小
-          //   canvas.width = newWidth;
-          //   canvas.height = newHeight;
-          //   context.drawImage(image, 0, 0, newWidth, newHeight);
-          //
-          //   // 将 canvas 转换为新的图片文件
-          //   canvas.toBlob((blob) => {
-          //     // 将新的图片文件传递给后端
-          //     this.selectedFile1 = new File([blob], name + "-origin.jpg", {type: "image/jpeg"});
-          //   }, "image/jpeg");
-          //
-          //   newWidth = 217;
-          //   newHeight = newWidth * image.height / image.width;
-          //   canvas.width = newWidth;
-          //   canvas.height = newHeight;
-          //   context.drawImage(image, 0, 0, newWidth, newHeight);
-          //   canvas.toBlob((blob) => {
-          //     this.selectedFile1Middle = new File([blob], name + "-middle.jpg", {type: "image/jpeg"});
-          //   }, "image/jpeg");
-          //
-          //   newWidth = 56;
-          //   newHeight = newWidth * image.height / image.width;
-          //   canvas.width = newWidth;
-          //   canvas.height = newHeight;
-          //   context.drawImage(image, 0, 0, newWidth, newHeight);
-          //   canvas.toBlob((blob) => {
-          //     this.selectedFile1Small = new File([blob], name + "-small.jpg", {type: "image/jpeg"});
-          //   }, "image/jpeg");
-          // }
         };
         image.src = e.target.result;
       };
