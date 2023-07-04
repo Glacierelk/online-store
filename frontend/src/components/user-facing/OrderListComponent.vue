@@ -29,7 +29,8 @@
           <!--          <p style="text-align: left">{{ row.createDate }} 订单号：{{ row.orderCode }}</p>-->
 
           <div v-for="(item, index) in row.orderItems" :key="index" class="product-item">
-            <div style="margin-top: 35px;margin-bottom: 35px"><img :src="getImagePath(item.imageId)" alt="Product Image"
+            <div style="margin-top: 35px;margin-bottom: 35px"><img :src="getImagePath(item.productImage)"
+                                                                   alt="Product Image"
                                                                    class="product-image" style="padding: 0">
               &nbsp;&nbsp;&nbsp;&nbsp;
               <span class="itemName" style="font-size: 3px" @click="showDetails(item.pid)">
@@ -107,8 +108,11 @@ export default {
         }
       })
     },
-    getImagePath(imageId) {
-      return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/" + imageId + ".jpg"
+    getImagePath(image) {
+      if(image.urlPath !== null) {
+        return image.urlPath;
+      }
+      return "http://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingle/"+String(image.id)+".jpg";
     },
     handleClick(event) {
       // 按照选中的标签筛选订单

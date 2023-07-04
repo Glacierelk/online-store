@@ -8,33 +8,24 @@ public class OrderItem {
     private Double originalPrice;
     private Double promotePrice;
     private int count;
-    private int imageId;
+    private ProductImage productImage;
 
 
-    @Override
-    public String
-    toString() {
-        return "OrderItem{" +
-                "id=" + id +
-                ", pid=" + pid +
-                ", oid=" + oid +
-                ", name='" + name + '\'' +
-                ", originalPrice=" + originalPrice +
-                ", promotePrice=" + promotePrice +
-                ", count=" + count +
-                ", imageId=" + imageId +
-                '}';
-    }
 
-    public int getImageId() {
-        return imageId;
-    }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
-    }
 
     public OrderItem() {
+    }
+
+    public OrderItem(int id, int pid, int oid, String name, Double originalPrice, Double promotePrice, int count, ProductImage productImage) {
+        this.id = id;
+        this.pid = pid;
+        this.oid = oid;
+        this.name = name;
+        this.originalPrice = originalPrice;
+        this.promotePrice = promotePrice;
+        this.count = count;
+        this.productImage = productImage;
     }
 
     public int getId() {
@@ -92,5 +83,34 @@ public class OrderItem {
     public void setCount(int count) {
         this.count = count;
     }
+
+    public ProductImage getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(ProductImage productImage) {
+        this.productImage = productImage;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", pid=" + pid +
+                ", oid=" + oid +
+                ", name='" + name + '\'' +
+                ", originalPrice=" + originalPrice +
+                ", promotePrice=" + promotePrice +
+                ", count=" + count +
+                ", productImage=" + productImage +
+                '}';
+    }
+
+
+
+
+
+
+
 
 }
