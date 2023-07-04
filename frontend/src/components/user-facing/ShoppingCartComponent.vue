@@ -241,6 +241,7 @@ export default {
         stripe
         width="100%"
         @selection-change="handleSelectionChange"
+        style="margin-left: 0;margin-right: 0"
     >
       <el-table-column align="center" fixed="left" type="selection" width="80"/>
 
