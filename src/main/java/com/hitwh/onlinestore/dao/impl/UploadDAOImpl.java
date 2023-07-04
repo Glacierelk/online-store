@@ -58,11 +58,14 @@ public class UploadDAOImpl implements UploadDAO {
                     + "a serious internal problem while trying to communicate with OSS, "
                     + "such as not being able to access the network.");
             System.out.println("Error Message:" + ce.getMessage());
-        } finally {
-            if (ossClient != null) {
-                ossClient.shutdown();
-            }
         }
         return null;
+    }
+
+    @Override
+    public void destroy() {
+        if (ossClient != null) {
+            ossClient.shutdown();
+        }
     }
 }

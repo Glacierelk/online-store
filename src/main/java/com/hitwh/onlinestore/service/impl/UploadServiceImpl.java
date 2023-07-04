@@ -7,6 +7,7 @@ import com.hitwh.onlinestore.dao.impl.CategoryDAOImpl;
 import com.hitwh.onlinestore.dao.impl.ProductDAOImpl;
 import com.hitwh.onlinestore.dao.impl.UploadDAOImpl;
 import com.hitwh.onlinestore.service.UploadService;
+import org.apache.commons.io.IOUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -23,25 +24,34 @@ public class UploadServiceImpl implements UploadService {
 
     @Override
     public boolean uploadImage(String imageName, InputStream inputStream, String type, Integer id) {
-        imageName = generateUniqueFileName(imageName);
         try {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            IOUtils.copy(inputStream, outputStream);
+            imageName = generateUniqueFileName(imageName);
             UploadDAO uploadDAO = new UploadDAOImpl();
-//            System.out.println(url + "   uploadImage");
             if (type.equals("category")) {
-                String url = uploadDAO.uploadImage(imageName, inputStream, type);
+                String url = uploadDAO.uploadImage(imageName, new ByteArrayInputStream(outputStream.toByteArray()), type);
+                if (url == null)
+                    return false;
+                uploadDAO.destroy();
                 return categoryDAO.addImageByCategoryId(id, url);
             } else {
-                String url = uploadDAO.uploadImage(imageName, inputStream, type);
+                String url = uploadDAO.uploadImage(imageName, new ByteArrayInputStream(outputStream.toByteArray()), type);
                 String middle = "";
                 String small = "";
                 if (type.equals("type_single")) {
                     middle = uploadDAO.uploadImage(imageName,
-                            resizeImage(inputStream, 217), "type_single_middle");
+                            resizeImage(new ByteArrayInputStream(outputStream.toByteArray()),
+                                    217), "type_single_middle");
                     small = uploadDAO.uploadImage(imageName,
-                            resizeImage(inputStream, 56), "type_single_small");
+                            resizeImage(new ByteArrayInputStream(outputStream.toByteArray()),
+                                    56), "type_single_small");
                     System.out.println(middle);
                     System.out.println(small);
+                    if (middle == null || small == null)
+                        return false;
                 }
+                uploadDAO.destroy();
                 return productDAO.addImageByProductId(id, type, url, middle, small);
             }
         } catch (Exception e) {
@@ -51,9 +61,9 @@ public class UploadServiceImpl implements UploadService {
     }
 
     private InputStream resizeImage(InputStream inputStream, int newWidth) throws IOException {
-        System.out.println("resizeImage" + inputStream);
+//        System.out.println("resizeImage" + inputStream);
         BufferedImage inputImage = ImageIO.read(inputStream);
-        System.out.println(inputImage);
+//        System.out.println(inputImage);
 
         int currentWidth = inputImage.getWidth();
         int currentHeight = inputImage.getHeight();

@@ -196,7 +196,7 @@ export default {
         id: id
       }))
           .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             if (res.status === 200 && res.data.flag) {
               this.data = res.data.data;
 
@@ -218,6 +218,9 @@ export default {
                       + this.showImages[0].id + ".jpg";
               } else
                 this.leftImage = "";
+
+              // console.log(this.data.properties);
+              this.data.properties = this.data.properties.filter(item => item.value !== null && item.value !== "");
 
               this.show = true;
             } else {

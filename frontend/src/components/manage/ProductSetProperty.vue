@@ -1,6 +1,6 @@
 <template>
   <div style="width: 97%; margin-left: auto; margin-right: auto;">
-    <el-breadcrumb separator="/" class="custom-breadcrumb breadcrumb-center">
+    <el-breadcrumb class="custom-breadcrumb breadcrumb-center" separator="/">
       <el-breadcrumb-item>
         <a class="category-link">所有分类</a>
       </el-breadcrumb-item>
@@ -14,8 +14,8 @@
     </el-breadcrumb>
 
     <div class="form-container">
-      <el-form :model="formData" label-width="150px" ref="myForm">
-        <el-form-item v-for="index in rowCount.value" :label="formData[index-1].name" :key="index">
+      <el-form ref="myForm" :model="formData" label-width="150px">
+        <el-form-item v-for="index in rowCount.value" :key="index" :label="formData[index-1].name">
           <el-input v-model="formData[`input${index}`] " class="short-input"></el-input>
         </el-form-item>
       </el-form>
@@ -67,14 +67,14 @@ export default {
     },
     handleClick() {
       this.router.push({
-        path:'/product',
+        path: '/product',
         query: {
-          cid: this.cid ,
-          name:this.currentCategory,
+          cid: this.cid,
+          name: this.currentCategory,
         }
       });
     },
-     submitForm(event) {
+    submitForm(event) {
       event.preventDefault(); // 阻止表单默认提交行为
       this.$refs.myForm.validate(async (valid) => {
         if (valid) {
@@ -82,26 +82,25 @@ export default {
           // 在这里执行表单提交逻辑
 
           let requests = []; // 存储所有请求
-            for (let i = 1; i <= this.rowCount.value; i++) {
-              console.log(this.formData[i - 1].id + "____" + "____" + this.formData[i - 1].ptid + "____" + this.formData[`input${i}`]);
-              if (this.formData[i - 1].id !== 0) {
-                console.log("修改");
-                requests.push(
-                    axios.post('/property/change', qs.stringify({
-                      "id": this.formData[i - 1].id,
-                      "value": this.formData[`input${i}`],
-                    }))); // 或其他需要的值
-              }
-              else if(this.formData[i - 1].id === 0){
-                console.log("添加");
-                  requests.push(
-                      axios.post('/property/addProductProperty', qs.stringify({
-                        "id": this.formData[i - 1].pid,
-                        "ptid": this.formData[i - 1].ptid,
-                        "value": this.formData[`input${i}`],
-                      }))); // 或其他需要的值
-              }
+          for (let i = 1; i <= this.rowCount.value; i++) {
+            console.log(this.formData[i - 1].id + "____" + "____" + this.formData[i - 1].ptid + "____" + this.formData[`input${i}`]);
+            if (this.formData[i - 1].id !== 0) {
+              console.log("修改");
+              requests.push(
+                  axios.post('/property/change', qs.stringify({
+                    "id": this.formData[i - 1].id,
+                    "value": this.formData[`input${i}`],
+                  }))); // 或其他需要的值
+            } else if (this.formData[i - 1].id === 0) {
+              console.log("添加");
+              requests.push(
+                  axios.post('/property/addProductProperty', qs.stringify({
+                    "id": this.formData[i - 1].pid,
+                    "ptid": this.formData[i - 1].ptid,
+                    "value": this.formData[`input${i}`],
+                  }))); // 或其他需要的值
             }
+          }
 
           try {
             const responses = await Promise.all(requests);
@@ -129,7 +128,8 @@ export default {
             console.error(error);
             alert("请求发生错误，请重试！");
           }
-          window.location.reload();
+          // window.location.reload();
+          this.getData();
         } else {
           // 表单验证失败，执行相应处理
           console.log('表单验证失败');
@@ -138,18 +138,18 @@ export default {
     },
   },
 
-    created() {
-      this.id = this.$route.query.id;
-      this.currentCategory = this.$route.query.name;
-      this.cid = this.$route.query.cid;
-      // 使用获取到的 cid 值进行后续操作
-      console.log(this.id);
-    },
+  created() {
+    this.id = this.$route.query.id;
+    this.currentCategory = this.$route.query.name;
+    this.cid = this.$route.query.cid;
+    // 使用获取到的 cid 值进行后续操作
+    console.log(this.id);
+  },
 
-    mounted() {
-      this.getData(); // 页面加载时初始化数据
-      //console.log("111"); // 或者将表单数据发送至后端
-    },
+  mounted() {
+    this.getData(); // 页面加载时初始化数据
+    //console.log("111"); // 或者将表单数据发送至后端
+  },
 }
 </script>
 
@@ -189,6 +189,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .form-container {
   margin-top: 20px;
   display: flex;
@@ -196,6 +197,7 @@ export default {
   /*align-items: center;*/
   /*height: 100vh; !* 可根据需要调整高度 *!*/
 }
+
 .short-input {
   width: 300px;
 }
