@@ -11,7 +11,7 @@
 
     <el-dialog
         v-model="thirdDialogVisible"
-        title="添加图片"
+        title="添加图片（建议 990px * 150px）"
         :before-close="addPictureDialogCloseHandler"
     >
       <div>
