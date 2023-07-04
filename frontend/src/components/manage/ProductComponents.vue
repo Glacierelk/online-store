@@ -10,7 +10,7 @@
       </el-breadcrumb-item>
     </el-breadcrumb>
 
-    <el-dialog v-model="dialogVisible" title="新建产品" width="50%">
+    <el-dialog v-model="dialogVisible" title="添加商品" width="50%">
       <el-form ref="form" :model="formData" label-width="100px">
         <el-form-item label="产品名称">
           <el-input v-model="formData.productName"></el-input>
@@ -27,12 +27,11 @@
         <el-form-item label="库存">
           <el-input-number v-model="formData.inventory"></el-input-number>
         </el-form-item>
-        <el-form-item>
-          <div class="centered-container">
-            <el-button class="centered-button" type="primary" @click="submitAddForm">提交</el-button>
-          </div>
-        </el-form-item>
       </el-form>
+
+      <div class="centered-container">
+        <el-button class="centered-button" type="primary" @click="submitAddForm" plain>提交</el-button>
+      </div>
     </el-dialog>
 
     <el-dialog v-model="dialogVisible2" title="修改产品" width="50%">
@@ -77,12 +76,12 @@
     <div class=table-container>
       <el-table :data="tableData" stripe style="width: 100%; margin-bottom: 20px">
         <el-table-column align="center" label="ID" prop="id" width="80"></el-table-column>
-        <el-table-column align="center" label="产品名称" prop="name" width="480"></el-table-column>
-        <el-table-column align="center" label="产品小标题" prop="subTitle" width="480"></el-table-column>
+        <el-table-column align="left" label="产品名称" prop="name" width="480"></el-table-column>
+        <el-table-column align="left" label="产品小标题" prop="subTitle" width="480"></el-table-column>
         <el-table-column align="center" label="原价格" prop="originalPrice" width="100"></el-table-column>
         <el-table-column align="center" label="优惠价格" prop="promotePrice" width="100"></el-table-column>
         <el-table-column align="center" label="库存数量" prop="stock" width="100"></el-table-column>
-        <el-table-column align="center" fixed="right" label="编辑" width="100">
+        <el-table-column align="center" fixed="right" label="编辑" width="80">
           <template v-slot="scope">
             <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small" type="primary"
                        @click="handleEdit(scope.row)">
@@ -90,7 +89,7 @@
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column align="center" fixed="right" label="删除" width="100">
+        <el-table-column align="center" fixed="right" label="删除" width="80">
           <template v-slot="scope">
             <el-button :style="{backgroundColor: 'transparent', borderColor: 'transparent'}" size="small"
                        @click="handleDelete(scope.row)">
@@ -147,8 +146,6 @@ export default {
       router: useRouter(),
       productId: '',
       selectedFile1: null,
-      selectedFile1Middle: null,
-      selectedFile1Small: null,
       selectedFile2: null,
       formData: {
         productName: '',
@@ -178,43 +175,44 @@ export default {
             ElMessage.error("图片尺寸应小于 1200px * 1200px，请重新选择");
             this.$refs.selectedFile1.value = '';
             this.selectedFile1 = null;
-          } else {
-            let canvas = document.createElement('canvas');
-            let context = canvas.getContext('2d');
-
-            // 设置新的宽度和高度
-            let newWidth = 800;
-            let newHeight = newWidth * image.height / image.width;
-
-            // 将图片绘制到 canvas 上并调整大小
-            canvas.width = newWidth;
-            canvas.height = newHeight;
-            context.drawImage(image, 0, 0, newWidth, newHeight);
-
-            // 将 canvas 转换为新的图片文件
-            canvas.toBlob((blob) => {
-              // 将新的图片文件传递给后端
-              this.selectedFile1 = new File([blob], name + "-origin.jpg", {type: "image/jpeg"});
-            }, "image/jpeg");
-
-            newWidth = 217;
-            newHeight = newWidth * image.height / image.width;
-            canvas.width = newWidth;
-            canvas.height = newHeight;
-            context.drawImage(image, 0, 0, newWidth, newHeight);
-            canvas.toBlob((blob) => {
-              this.selectedFile1Middle = new File([blob], name + "-middle.jpg", {type: "image/jpeg"});
-            }, "image/jpeg");
-
-            newWidth = 56;
-            newHeight = newWidth * image.height / image.width;
-            canvas.width = newWidth;
-            canvas.height = newHeight;
-            context.drawImage(image, 0, 0, newWidth, newHeight);
-            canvas.toBlob((blob) => {
-              this.selectedFile1Small = new File([blob], name + "-small.jpg", {type: "image/jpeg"});
-            }, "image/jpeg");
           }
+          // else {
+          //   let canvas = document.createElement('canvas');
+          //   let context = canvas.getContext('2d');
+          //
+          //   // 设置新的宽度和高度
+          //   let newWidth = 800;
+          //   let newHeight = newWidth * image.height / image.width;
+          //
+          //   // 将图片绘制到 canvas 上并调整大小
+          //   canvas.width = newWidth;
+          //   canvas.height = newHeight;
+          //   context.drawImage(image, 0, 0, newWidth, newHeight);
+          //
+          //   // 将 canvas 转换为新的图片文件
+          //   canvas.toBlob((blob) => {
+          //     // 将新的图片文件传递给后端
+          //     this.selectedFile1 = new File([blob], name + "-origin.jpg", {type: "image/jpeg"});
+          //   }, "image/jpeg");
+          //
+          //   newWidth = 217;
+          //   newHeight = newWidth * image.height / image.width;
+          //   canvas.width = newWidth;
+          //   canvas.height = newHeight;
+          //   context.drawImage(image, 0, 0, newWidth, newHeight);
+          //   canvas.toBlob((blob) => {
+          //     this.selectedFile1Middle = new File([blob], name + "-middle.jpg", {type: "image/jpeg"});
+          //   }, "image/jpeg");
+          //
+          //   newWidth = 56;
+          //   newHeight = newWidth * image.height / image.width;
+          //   canvas.width = newWidth;
+          //   canvas.height = newHeight;
+          //   context.drawImage(image, 0, 0, newWidth, newHeight);
+          //   canvas.toBlob((blob) => {
+          //     this.selectedFile1Small = new File([blob], name + "-small.jpg", {type: "image/jpeg"});
+          //   }, "image/jpeg");
+          // }
         };
         image.src = e.target.result;
       };
@@ -236,47 +234,104 @@ export default {
       };
       reader.readAsDataURL(this.selectedFile2);
     },
+    // uploadSingle() {
+    //   // console.log(this.productId);
+    //
+    //   let name = String(Date.now()) + ".jpg";
+    //
+    //   let formData = new FormData();
+    //   formData.append("file", this.selectedFile1);
+    //   formData.append("filename", "origin_" + name);
+    //   formData.append("type", "type_single");
+    //   formData.append("pid", this.productId);
+    //   // console.log(formData.get("filename"));
+    //   // console.log(formData.get("pid"));
+    //
+    //   let formData2 = new FormData();
+    //   formData2.append("file", this.selectedFile1Middle);
+    //   formData2.append("filename", "middle_" + name);
+    //   formData2.append("type", "type_single_middle");
+    //   formData2.append("pid", this.productId);
+    //   // console.log(formData2.get("filename"));
+    //
+    //   let formData3 = new FormData();
+    //   formData3.append("file", this.selectedFile1Small);
+    //   formData3.append("filename", "small_" + name);
+    //   formData3.append("type", "type_single_small");
+    //   formData3.append("pid", this.productId);
+    //   // console.log(formData3.get("filename"));
+    //
+    //   let config = {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data"
+    //     }
+    //   };
+    //   axios.all([
+    //     axios.post("/upload/product", formData, config),
+    //     axios.post("/upload/product", formData2, config),
+    //     axios.post("/upload/product", formData3, config),
+    //   ])
+    //       .then(axios.spread((res1, res2, res3) => {
+    //         this.singleDialogVisible = false;
+    //         // console.log("File uploaded", res1, res2, res3);
+    //         if (res1.data.flag === true && res2.data.flag === true && res3.data.flag === true) {
+    //           ElMessage({
+    //             message: '上传成功',
+    //             type: 'success',
+    //             duration: 2 * 1000
+    //           });
+    //         } else {
+    //           ElMessage({
+    //             message: '上传失败',
+    //             type: 'error',
+    //             duration: 2 * 1000
+    //           });
+    //         }
+    //       }))
+    //       .catch(() => {
+    //         // console.error("File upload failed", err);
+    //         ElMessage({
+    //           message: '上传失败',
+    //           type: 'error',
+    //           duration: 2 * 1000
+    //         });
+    //       });
+    //
+    //
+    //   this.$refs.selectedFile1.value = '';
+    //   this.selectedFile1 = null;
+    //   this.selectedFile1Middle = null;
+    //   this.selectedFile1Small = null;
+    // },
+
     uploadSingle() {
-      // console.log(this.productId);
-
-      let name = String(Date.now()) + ".jpg";
-
+      // let name = String(Date.now()) + this.selectedFile1.name;
       let formData = new FormData();
+
       formData.append("file", this.selectedFile1);
-      formData.append("filename", "origin_" + name);
+      // formData.append("filename", "origin_" + name);
+      formData.append("filename", this.selectedFile1.name)
       formData.append("type", "type_single");
       formData.append("pid", this.productId);
-      // console.log(formData.get("filename"));
-      // console.log(formData.get("pid"));
+      //
+      // formData.append("file", this.selectedFile1Middle);
+      // formData.append("filename", "middle_" + name);
+      // formData.append("type", "type_single_middle");
+      // formData.append("pid", this.productId);
+      //
+      // formData.append("file", this.selectedFile1Small);
+      // formData.append("filename", "small_" + name);
+      // formData.append("type", "type_single_small");
+      // formData.append("pid", this.productId);
 
-      let formData2 = new FormData();
-      formData2.append("file", this.selectedFile1Middle);
-      formData2.append("filename", "middle_" + name);
-      formData2.append("type", "type_single_middle");
-      formData2.append("pid", this.productId);
-      // console.log(formData2.get("filename"));
-
-      let formData3 = new FormData();
-      formData3.append("file", this.selectedFile1Small);
-      formData3.append("filename", "small_" + name);
-      formData3.append("type", "type_single_small");
-      formData3.append("pid", this.productId);
-      // console.log(formData3.get("filename"));
-
-      let config = {
+      axios.post("/upload/product", formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
-      };
-      axios.all([
-        axios.post("/upload/product", formData, config),
-        axios.post("/upload/product", formData2, config),
-        axios.post("/upload/product", formData3, config),
-      ])
-          .then(axios.spread((res1, res2, res3) => {
+      })
+          .then((res) => {
             this.singleDialogVisible = false;
-            // console.log("File uploaded", res1, res2, res3);
-            if (res1.data.flag === true && res2.data.flag === true && res3.data.flag === true) {
+            if (res.data.flag === true) {
               ElMessage({
                 message: '上传成功',
                 type: 'success',
@@ -289,16 +344,14 @@ export default {
                 duration: 2 * 1000
               });
             }
-          }))
+          })
           .catch(() => {
-            // console.error("File upload failed", err);
             ElMessage({
               message: '上传失败',
               type: 'error',
               duration: 2 * 1000
             });
           });
-
 
       this.$refs.selectedFile1.value = '';
       this.selectedFile1 = null;
@@ -485,6 +538,7 @@ export default {
         });
 
         if (successAdded) {
+          this.dialogVisible = false;
           this.$message({
             type: 'success',
             message: "添加成功"
@@ -506,6 +560,13 @@ export default {
       }
       // window.location.reload();
       this.getData();
+      this.formData = {
+        productName: '',
+        productSubtitle: '',
+        originalPrice: '',
+        discountedPrice: '',
+        inventory: '',
+      };
     },
 
     async submitEditForm() {
@@ -547,6 +608,7 @@ export default {
             message: '修改成功！',
             duration: 2 * 1000
           });
+          this.dialogVisible2 = false;
         } else if (showAlert) {
           ElMessage({
             type: 'error',
@@ -614,6 +676,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 
