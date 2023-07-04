@@ -1,24 +1,26 @@
 <template>
-  <el-breadcrumb separator="/" class="custom-breadcrumb breadcrumb-center">
-    <el-breadcrumb-item>
-      <a class="category-link">所有分类</a>
-    </el-breadcrumb-item>
-    <el-breadcrumb-item v-if="currentCategory">
-      <a class="category-link" @click="handleClick">{{ currentCategory }}</a>
-    </el-breadcrumb-item>
-    <el-breadcrumb-item v>修改商品属性</el-breadcrumb-item>
-    <el-breadcrumb-item class="breadcrumb-button-right">
-      <el-button type="primary" @click="submitForm">确认修改</el-button>
-    </el-breadcrumb-item>
-  </el-breadcrumb>
+  <div style="width: 97%; margin-left: auto; margin-right: auto;">
+    <el-breadcrumb separator="/" class="custom-breadcrumb breadcrumb-center">
+      <el-breadcrumb-item>
+        <a class="category-link">所有分类</a>
+      </el-breadcrumb-item>
+      <el-breadcrumb-item v-if="currentCategory">
+        <a class="category-link" @click="handleClick">{{ currentCategory }}</a>
+      </el-breadcrumb-item>
+      <el-breadcrumb-item v>修改商品属性</el-breadcrumb-item>
+      <el-breadcrumb-item class="breadcrumb-button-right">
+        <el-button type="primary" @click="submitForm">确认修改</el-button>
+      </el-breadcrumb-item>
+    </el-breadcrumb>
 
-  <div class="form-container">
-  <el-form :model="formData" label-width="150px" ref="myForm">
-    <el-form-item v-for="index in rowCount.value" :label="formData[index-1].name" :key="index">
-      <el-input v-model="formData[`input${index}`] " class="short-input"></el-input>
-    </el-form-item>
-  </el-form>
+    <div class="form-container">
+      <el-form :model="formData" label-width="150px" ref="myForm">
+        <el-form-item v-for="index in rowCount.value" :label="formData[index-1].name" :key="index">
+          <el-input v-model="formData[`input${index}`] " class="short-input"></el-input>
+        </el-form-item>
+      </el-form>
     </div>
+  </div>
 </template>
 
 <script>

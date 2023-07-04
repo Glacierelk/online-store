@@ -210,10 +210,14 @@ export default {
               this.showImages.sort((a, b) => b - a)
               this.detailImages.sort((a, b) => b - a)
 
-              if (this.showImages[0].urlPath !== null)
-                this.leftImage = this.showImages[0].urlPath;
-              else
-                this.leftImage = "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingle/" + this.showImages[0].id + ".jpg";
+              if (this.showImages.length > 0) {
+                if (this.showImages[0].urlPath !== null)
+                  this.leftImage = this.showImages[0].urlPath;
+                else
+                  this.leftImage = "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingle/"
+                      + this.showImages[0].id + ".jpg";
+              } else
+                this.leftImage = "";
 
               this.show = true;
             } else {

@@ -43,6 +43,8 @@ export default {
       console.log(this.ids);
     },
     getImagePath(image) {
+      if (image === null)
+        return "";
       if (image.singleSmall !== null)
         return image.singleSmall;
       else

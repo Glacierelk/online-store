@@ -69,5 +69,5 @@ public interface ProductDAO {
      * @param type 图片类型
      * @param url 图片url
      */
-    boolean addImageByProductId(int productId, String type, String url);
+    boolean addImageByProductId(int productId, String type, String url, String middle, String small);
 }

@@ -112,12 +112,11 @@ public class ProductDAOImpl implements ProductDAO {
 
 
     @Override
-    public boolean addImageByProductId(int productId, String type, String url) {
-        if (!Objects.equals(type, "type_single") && !Objects.equals(type, "type_detail")
-                && !Objects.equals(type, "type_single_small") && !Objects.equals(type, "type_single_middle"))
+    public boolean addImageByProductId(int productId, String type, String url, String middle, String small) {
+        if (!Objects.equals(type, "type_single") && !Objects.equals(type, "type_detail"))
             return false;
-        String sql = "insert into product_image(pid, type, url_path) values(?, ?, ?)";
-        int count = template.update(sql, productId, type, url);
+        String sql = "insert into product_image(pid, type, url_path, single_middle, single_small) values(?, ?, ?, ?, ?)";
+        int count = template.update(sql, productId, type, url, middle, small);
         return count == 1;
     }
 }
