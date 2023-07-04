@@ -236,47 +236,105 @@ export default {
       };
       reader.readAsDataURL(this.selectedFile2);
     },
+    // uploadSingle() {
+    //   // console.log(this.productId);
+    //
+    //   let name = String(Date.now()) + ".jpg";
+    //
+    //   let formData = new FormData();
+    //   formData.append("file", this.selectedFile1);
+    //   formData.append("filename", "origin_" + name);
+    //   formData.append("type", "type_single");
+    //   formData.append("pid", this.productId);
+    //   // console.log(formData.get("filename"));
+    //   // console.log(formData.get("pid"));
+    //
+    //   let formData2 = new FormData();
+    //   formData2.append("file", this.selectedFile1Middle);
+    //   formData2.append("filename", "middle_" + name);
+    //   formData2.append("type", "type_single_middle");
+    //   formData2.append("pid", this.productId);
+    //   // console.log(formData2.get("filename"));
+    //
+    //   let formData3 = new FormData();
+    //   formData3.append("file", this.selectedFile1Small);
+    //   formData3.append("filename", "small_" + name);
+    //   formData3.append("type", "type_single_small");
+    //   formData3.append("pid", this.productId);
+    //   // console.log(formData3.get("filename"));
+    //
+    //   let config = {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data"
+    //     }
+    //   };
+    //   axios.all([
+    //     axios.post("/upload/product", formData, config),
+    //     axios.post("/upload/product", formData2, config),
+    //     axios.post("/upload/product", formData3, config),
+    //   ])
+    //       .then(axios.spread((res1, res2, res3) => {
+    //         this.singleDialogVisible = false;
+    //         // console.log("File uploaded", res1, res2, res3);
+    //         if (res1.data.flag === true && res2.data.flag === true && res3.data.flag === true) {
+    //           ElMessage({
+    //             message: '上传成功',
+    //             type: 'success',
+    //             duration: 2 * 1000
+    //           });
+    //         } else {
+    //           ElMessage({
+    //             message: '上传失败',
+    //             type: 'error',
+    //             duration: 2 * 1000
+    //           });
+    //         }
+    //       }))
+    //       .catch(() => {
+    //         // console.error("File upload failed", err);
+    //         ElMessage({
+    //           message: '上传失败',
+    //           type: 'error',
+    //           duration: 2 * 1000
+    //         });
+    //       });
+    //
+    //
+    //   this.$refs.selectedFile1.value = '';
+    //   this.selectedFile1 = null;
+    //   this.selectedFile1Middle = null;
+    //   this.selectedFile1Small = null;
+    // },
+
     uploadSingle() {
-      // console.log(this.productId);
-
-      let name = String(Date.now()) + ".jpg";
-
+      let name = String(Date.now()) + this.selectedFile1.name;
       let formData = new FormData();
+
       formData.append("file", this.selectedFile1);
       formData.append("filename", "origin_" + name);
       formData.append("type", "type_single");
       formData.append("pid", this.productId);
-      // console.log(formData.get("filename"));
-      // console.log(formData.get("pid"));
 
-      let formData2 = new FormData();
-      formData2.append("file", this.selectedFile1Middle);
-      formData2.append("filename", "middle_" + name);
-      formData2.append("type", "type_single_middle");
-      formData2.append("pid", this.productId);
-      // console.log(formData2.get("filename"));
+      formData.append("file", this.selectedFile1Middle);
+      formData.append("filename", "middle_" + name);
+      formData.append("type", "type_single_middle");
+      formData.append("pid", this.productId);
 
-      let formData3 = new FormData();
-      formData3.append("file", this.selectedFile1Small);
-      formData3.append("filename", "small_" + name);
-      formData3.append("type", "type_single_small");
-      formData3.append("pid", this.productId);
-      // console.log(formData3.get("filename"));
+      formData.append("file", this.selectedFile1Small);
+      formData.append("filename", "small_" + name);
+      formData.append("type", "type_single_small");
+      formData.append("pid", this.productId);
 
       let config = {
         headers: {
           "Content-Type": "multipart/form-data"
         }
       };
-      axios.all([
-        axios.post("/upload/product", formData, config),
-        axios.post("/upload/product", formData2, config),
-        axios.post("/upload/product", formData3, config),
-      ])
-          .then(axios.spread((res1, res2, res3) => {
+
+      axios.post("/upload/product", formData, config)
+          .then((res) => {
             this.singleDialogVisible = false;
-            // console.log("File uploaded", res1, res2, res3);
-            if (res1.data.flag === true && res2.data.flag === true && res3.data.flag === true) {
+            if (res.data.flag === true) {
               ElMessage({
                 message: '上传成功',
                 type: 'success',
@@ -289,16 +347,14 @@ export default {
                 duration: 2 * 1000
               });
             }
-          }))
+          })
           .catch(() => {
-            // console.error("File upload failed", err);
             ElMessage({
               message: '上传失败',
               type: 'error',
               duration: 2 * 1000
             });
           });
-
 
       this.$refs.selectedFile1.value = '';
       this.selectedFile1 = null;
