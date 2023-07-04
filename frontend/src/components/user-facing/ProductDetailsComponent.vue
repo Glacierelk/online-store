@@ -241,8 +241,8 @@ export default {
       return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/category/" + String(category.id) + ".jpg";
     },
     getImagePath(image) {
-      if (image.urlPath !== null)
-        return image.urlPath;
+      if (image.singleSmall !== null)
+        return image.singleSmall;
       return "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/" + String(image.id) + ".jpg";
     },
     getDetailImagePath(image) {

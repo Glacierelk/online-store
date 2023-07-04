@@ -43,8 +43,8 @@ export default {
       console.log(this.ids);
     },
     getImagePath(image) {
-      if (image.urlPath !== null)
-        return image.urlPath;
+      if (image.singleSmall !== null)
+        return image.singleSmall;
       else
         return 'https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleSmall/' + image.id + '.jpg';
     },

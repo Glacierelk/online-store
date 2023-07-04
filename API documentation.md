@@ -250,25 +250,28 @@ GET http://localhost:8729/store/category/homePageCategory HTTP/1.1
 
 ##### 参数说明
 
-| 名称                   | 类型      | 是否必须 | 备注                                    |
-| ---------------------- | --------- | -------- | :-------------------------------------- |
-| `flag`                 | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
-| `errorMsg`             | `string`  | 非必须   | 如果获取失败，返回一个错误信息          |
-| `data`                 | `list`    | 必须     | 分类数据列表                            |
-| \|- `category_name`    | `string`  | 必须     | 分类名称                                |
-| \|- `cid`              | `number`  | 必须     | 分类ID                                  |
-| \|- `category_image`   | `string`  | 非必需   | 分类图片 OSS 访问地址                   |
-| \|- `products`         | `list`    | 必须     | 当前分类的商品                          |
-| \|- \|- `id`           | `number`  | 必须     | 商品ID                                  |
-| \|- \|- `name`         | `string`  | 必须     | 商品名称                                |
-| \|- \|- `subTitle`     | `string`  | 非必需   | 商品小标题                              |
-| \|-\|- `originalPrice` | `number`  | 必须     | 原价                                    |
-| \|-\|- `promotePrice`  | `number`  | 非必需   | 促销价                                  |
-| \|-\|- `stock`         | `number`  | 必须     | 库存                                    |
-| \|- \|- `images`       | `list`    | 必须     | 商品图片                                |
-| \|- \|- \|- `id`       | `number`  | 必须     | 图片 ID                                 |
-| \|- \|- \|- `type`     | `string`  | 必须     | 图片分类                                |
-| \|- \|- \|- `urlPath`  | `string`  | 非必需   | OSS 访问地址                            |
+| 名称                       | 类型      | 是否必须 | 备注                                        |
+| -------------------------- | --------- | -------- | :------------------------------------------ |
+| `flag`                     | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败     |
+| `errorMsg`                 | `string`  | 非必须   | 如果获取失败，返回一个错误信息              |
+| `data`                     | `list`    | 必须     | 分类数据列表                                |
+| \|- `category_name`        | `string`  | 必须     | 分类名称                                    |
+| \|- `cid`                  | `number`  | 必须     | 分类ID                                      |
+| \|- `category_image`       | `string`  | 非必需   | 分类图片 OSS 访问地址                       |
+| \|- `products`             | `list`    | 必须     | 当前分类的商品                              |
+| \|- \|- `id`               | `number`  | 必须     | 商品ID                                      |
+| \|- \|- `name`             | `string`  | 必须     | 商品名称                                    |
+| \|- \|- `subTitle`         | `string`  | 非必需   | 商品小标题                                  |
+| \|-\|- `originalPrice`     | `number`  | 必须     | 原价                                        |
+| \|-\|- `promotePrice`      | `number`  | 非必需   | 促销价                                      |
+| \|-\|- `stock`             | `number`  | 必须     | 库存                                        |
+| \|- \|- `images`           | `list`    | 必须     | 商品图片                                    |
+| \|- \|- \|- `id`           | `number`  | 必须     | 图片 ID                                     |
+| \|- \|- \|- `type`         | `string`  | 必须     | 图片分类                                    |
+| \|- \|- \|- `urlPath`      | `string`  | 非必需   | OSS 访问地址                                |
+| \|- \|- \|- `pid`          | `number`  | 必须     | 商品 ID                                     |
+| \|- \|- \|- `singleMiddle` | `string`  | 非必需   | `type_single` 类型图片中等大小 OSS 访问地址 |
+| \|- \|- \|- `singleSmall`  | `string`  | 非必需   | `type_single` 类型图片小图 OSS 访问地址     |
 
 ##### 响应数据样例
 
@@ -277,7 +280,7 @@ GET http://localhost:8729/store/category/homePageCategory HTTP/1.1
 	"flag": true,
 	"data": [
 		{
-			"category_image": null,
+			"category_image": "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/category/60.jpg",
 			"category_name": "安全座椅",
 			"cid": 60,
 			"products": [
@@ -293,13 +296,16 @@ GET http://localhost:8729/store/category/homePageCategory HTTP/1.1
 					"images": [
 						{
 							"id": 10144,
-							"pid": 0,
+							"pid": 958,
 							"type": "type_single",
-							"urlPath": null
+							"urlPath": null,
+							"singleMiddle": null,
+							"singleSmall": null
 						}
 					],
 					"properties": null,
-					"comments": null
+					"comments": null,
+					"category": null
 				}
 			]
 		}
@@ -862,39 +868,42 @@ Content-Type: application/json
 
 ##### 参数说明
 
-| 名称                | 类型        | 是否必须 | 备注                                    |
-| ------------------- | ----------- | -------- | --------------------------------------- |
-| `flag`              | `boolean`   | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
-| `errorMsg`          | `string`    | 非必须   | 如果删除失败，返回一个错误信息          |
-| `data`              | `object`    | 必需     | 包含了商品的详细信息                    |
-| \|- `id`            | `number`    | 必须     | 商品ID                                  |
-| \|- `name`          | `string`    | 必须     | 商品名称                                |
-| \|- `subTitle`      | `string`    | 非必需   | 商品小标题                              |
-| \|- `originalPrice` | `number`    | 必须     | 商品价格                                |
-| \|- `promotePrice`  | `number`    | 非必需   | 商品折扣价格                            |
-| \|- `stock`         | `number`    | 必须     | 库存                                    |
-| \|- `cid`           | `number`    | 必须     | 商品类型                                |
-| \|- `createDate`    | `number`    | 必须     | 商品创建日期                            |
-| \|- `images`        | `list`      | 必须     | 商品图片列表                            |
-| \|\|- `id`          | `number`    | 必须     | 图片 ID                                 |
-| \|\|- `type`        | `string`    | 必须     | 图片类型                                |
-| \|\|- `urlPath`     | `string`    | 非必需   | 图片 OSS 访问地址                       |
-| \|- `properties`    | `list`      | 必须     | 属性列表                                |
-| \|\|- `id`          | `number`    | 必须     | 属性 ID                                 |
-| \|\|- `pid`         | `number`    | 必须     | 商品 ID                                 |
-| \|\|- `name`        | `string`    | 必须     | 属性名称                                |
-| \|\|- `value`       | `string`    | 必须     | 属性值                                  |
-| \|- `comments`      | `list`      | 必须     | 评价列表                                |
-| \|\|- `id`          | `number`    | 必须     | 评价 ID                                 |
-| \|\|- `content`     | `string`    | 必须     | 评价内容                                |
-| \|\|- `uid`         | `number`    | 必须     | 做评价用户 ID                           |
-| \|\|- `pid`         | `number`    | 必须     | 被评价商品 ID                           |
-| \|\|- `create_date` | `timestamp` | 必须     | 评价日期                                |
-| \|\|- `username`    | `string`    | 必须     | 评价用户名                              |
-| \|- `category`      | `object`    | 必须     | 分类信息                                |
-| \|\|- `id`          | `number`    | 必须     | 分类 ID                                 |
-| \|\|- `name`        | `string`    | 必须     | 分类名称                                |
-| \|\|- `urlPath`     | `string`    | 非必需   | 分类图片 OSS 访问地址                   |
+| 名称                 | 类型        | 是否必须 | 备注                                        |
+| -------------------- | ----------- | -------- | ------------------------------------------- |
+| `flag`               | `boolean`   | 必须     | 请求是否成功，`true` 成功，`false` 失败     |
+| `errorMsg`           | `string`    | 非必须   | 如果删除失败，返回一个错误信息              |
+| `data`               | `object`    | 必需     | 包含了商品的详细信息                        |
+| \|- `id`             | `number`    | 必须     | 商品ID                                      |
+| \|- `name`           | `string`    | 必须     | 商品名称                                    |
+| \|- `subTitle`       | `string`    | 非必需   | 商品小标题                                  |
+| \|- `originalPrice`  | `number`    | 必须     | 商品价格                                    |
+| \|- `promotePrice`   | `number`    | 非必需   | 商品折扣价格                                |
+| \|- `stock`          | `number`    | 必须     | 库存                                        |
+| \|- `cid`            | `number`    | 必须     | 商品类型                                    |
+| \|- `createDate`     | `number`    | 必须     | 商品创建日期                                |
+| \|- `images`         | `list`      | 必须     | 商品图片列表                                |
+| \|\|- `id`           | `number`    | 必须     | 图片 ID                                     |
+| \|\|- `type`         | `string`    | 必须     | 图片类型                                    |
+| \|\|- `urlPath`      | `string`    | 非必需   | 图片 OSS 访问地址                           |
+| \|\|- `pid`          | `string`    | 必须     | 商品 ID                                     |
+| \|\|- `singleMiddle` | `string`    | 非必需   | `type_single` 类型图片中等大小 OSS 访问地址 |
+| \|\|- `singleSmall`  | `string`    | 非必需   | `type_single` 类型图片小图 OSS 访问地址     |
+| \|- `properties`     | `list`      | 必须     | 属性列表                                    |
+| \|\|- `id`           | `number`    | 必须     | 属性 ID                                     |
+| \|\|- `pid`          | `number`    | 必须     | 商品 ID                                     |
+| \|\|- `name`         | `string`    | 必须     | 属性名称                                    |
+| \|\|- `value`        | `string`    | 必须     | 属性值                                      |
+| \|- `comments`       | `list`      | 必须     | 评价列表                                    |
+| \|\|- `id`           | `number`    | 必须     | 评价 ID                                     |
+| \|\|- `content`      | `string`    | 必须     | 评价内容                                    |
+| \|\|- `uid`          | `number`    | 必须     | 做评价用户 ID                               |
+| \|\|- `pid`          | `number`    | 必须     | 被评价商品 ID                               |
+| \|\|- `create_date`  | `timestamp` | 必须     | 评价日期                                    |
+| \|\|- `username`     | `string`    | 必须     | 评价用户名                                  |
+| \|- `category`       | `object`    | 必须     | 分类信息                                    |
+| \|\|- `id`           | `number`    | 必须     | 分类 ID                                     |
+| \|\|- `name`         | `string`    | 必须     | 分类名称                                    |
+| \|\|- `urlPath`      | `string`    | 非必需   | 分类图片 OSS 访问地址                       |
 
 ##### 响应数据样例
 
@@ -902,28 +911,46 @@ Content-Type: application/json
 {
 	"flag": true,
 	"data": {
-		"id": 1008,
-		"name": "aaa",
-		"subTitle": "qqq",
-		"originalPrice": 1,
-		"promotePrice": 1,
-		"stock": 1,
-		"cid": 140,
-		"createDate": 1688388684000,
-		"images": [],
-		"properties": [
+		"id": 87,
+		"name": "2",
+		"subTitle": "2",
+		"originalPrice": 2,
+		"promotePrice": 2,
+		"stock": 0,
+		"cid": 83,
+		"createDate": 1688345852000,
+		"images": [
 			{
-				"id": 0,
-				"pid": 1008,
-				"name": "sss",
-				"value": ""
+				"id": 629,
+				"pid": 87,
+				"type": "type_single",
+				"urlPath": null,
+				"singleMiddle": null,
+				"singleSmall": null
 			}
 		],
-		"comments": [],
+		"properties": [
+			{
+				"id": 728,
+				"pid": 87,
+				"name": "品牌",
+				"value": "Hisense/海信"
+			}
+		],
+		"comments": [
+			{
+				"id": 1,
+				"content": "哈哈哈",
+				"uid": 30,
+				"pid": 87,
+				"create_date": "2023-06-29 22:15:46.0",
+				"username": "test001"
+			}
+		],
 		"category": {
-			"id": 140,
-			"name": "test001",
-			"urlPath": "https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/category/d2a9f626-df13-44ed-a206-ca4a61682256.jpg"
+			"id": 83,
+			"name": "平板电视",
+			"urlPath": null
 		}
 	},
 	"errorMsg": null
@@ -967,23 +994,25 @@ Content-Type: application/json
 
 ##### 参数说明
 
-| 名称                | 类型      | 是否必须 | 备注                                    |
-| ------------------- | --------- | -------- | --------------------------------------- |
-| `flag`              | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
-| `errorMsg`          | `string`  | 非必须   | 如果删除失败，返回一个错误信息          |
-| `data`              | `list`    | 必需     | 搜索得到的商品列表                      |
-| \|- `id`            | `number`  | 必须     | 商品 ID                                 |
-| \|- `name`          | `string`  | 必须     | 商品名称                                |
-| \|- `subTitle`      | `string`  | 非必需   | 商品小标题                              |
-| \|- `originalPrice` | `number`  | 必须     | 商品价格                                |
-| \|- `promotePrice`  | `number`  | 非必需   | 商品折扣价格                            |
-| \|- `stock`         | `number`  | 必须     | 库存                                    |
-| \|- `cid`           | `number`  | 必须     | 商品类型                                |
-| \|- `createDate`    | `number`  | 必须     | 商品创建日期                            |
-| \|- `images`        | `list`    | 必须     | 商品图片列表                            |
-| \|\|- `id`          | `number`  | 必须     | 图片 ID                                 |
-| \|\|- `type`        | `string`  | 必须     | 图片类型                                |
-| \|\|- `urlPath`     | `string`  | 非必需   | 图片 OSS 访问地址                       |
+| 名称                 | 类型      | 是否必须 | 备注                                    |
+| -------------------- | --------- | -------- | --------------------------------------- |
+| `flag`               | `boolean` | 必须     | 请求是否成功，`true` 成功，`false` 失败 |
+| `errorMsg`           | `string`  | 非必须   | 如果查询失败，返回一个错误信息          |
+| `data`               | `list`    | 必需     | 搜索得到的商品列表                      |
+| \|- `id`             | `number`  | 必须     | 商品 ID                                 |
+| \|- `name`           | `string`  | 必须     | 商品名称                                |
+| \|- `subTitle`       | `string`  | 非必需   | 商品小标题                              |
+| \|- `originalPrice`  | `number`  | 必须     | 商品价格                                |
+| \|- `promotePrice`   | `number`  | 非必需   | 商品折扣价格                            |
+| \|- `stock`          | `number`  | 必须     | 库存                                    |
+| \|- `cid`            | `number`  | 必须     | 商品类型                                |
+| \|- `createDate`     | `number`  | 必须     | 商品创建日期                            |
+| \|- `images`         | `list`    | 必须     | 商品图片列表                            |
+| \|\|- `id`           | `number`  | 必须     | 图片 ID                                 |
+| \|\|- `type`         | `string`  | 必须     | 图片类型                                |
+| \|\|- `urlPath`      | `string`  | 非必需   | 图片 OSS 访问地址                       |
+| \|\|- `singleMiddle` | `string`  | 非必需   | `type_single` 图片中等大小 OSS 访问地址 |
+| \|\|- `singleSmall`  | `string`  | 非必需   | `type_single` 图片小图 OSS 访问地址     |
 
 ##### 响应数据样例
 
@@ -1003,9 +1032,11 @@ Content-Type: application/json
 			"images": [
 				{
 					"id": 1276,
-					"pid": 0,
+					"pid": 147,
 					"type": "type_single",
-					"urlPath": null
+					"urlPath": null,
+					"singleMiddle": null,
+					"singleSmall": null
 				}
 			],
 			"properties": null,
@@ -1715,6 +1746,8 @@ GET http://localhost:8729/store/cart/show?id=1 HTTP/1.1
 | \|\|- `pid`           | `number`    | 必须     | 商品 ID                                      |
 | \|\|- `type`          | `string`    | 必须     | 图片类型，这里类型仅会是 `type_single`       |
 | \|\|- `urlPath`       | `string`    | 非必需   | 图片 OSS 访问地址                            |
+| \|\|- `singleMiddle`  | `string`    | 非必需   | `type_single` 图片中等大小 OSS 访问地址      |
+| \|\|- `singleSmall`   | `string`    | 非必需   | `type_single` 图片小图 OSS 访问地址          |
 
 ##### 响应数据样例
 
@@ -1723,7 +1756,7 @@ GET http://localhost:8729/store/cart/show?id=1 HTTP/1.1
 	"flag": true,
 	"data": [
 		{
-			"id": 37,
+			"id": 68,
 			"pid": 960,
 			"uid": 1,
 			"count": 1,
@@ -1742,7 +1775,9 @@ GET http://localhost:8729/store/cart/show?id=1 HTTP/1.1
 				"id": 10166,
 				"pid": 960,
 				"type": "type_single",
-				"urlPath": null
+				"urlPath": null,
+				"singleMiddle": null,
+				"singleSmall": null
 			}
 		}
 	],
@@ -1972,10 +2007,10 @@ Content-Type: application/json
 
 ##### 参数说明
 
-| pid  | Integer | 是   | 商品id |
-| ---- | ------- | ---- | ------ |
-| uid  | Integer | 是   | 用户id |
-| pid  | Integer | 是   | 商品id |
+| 参数名 | 类型    | 是否必须 | 备注   |      |
+| ------ | ------- | -------- | ------ | ---- |
+| uid    | Integer | 是       | 用户id |      |
+| pid    | Integer | 是       | 商品id |      |
 
 ##### 请求样例	
 
