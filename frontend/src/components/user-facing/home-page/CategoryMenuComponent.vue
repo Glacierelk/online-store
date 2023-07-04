@@ -27,11 +27,9 @@
 
   function fastSearch(item) {
     keyword.value = item;
-    // alert(keyword.value)
     search();
   }
   const search = () => {
-    // alert(keyword.value)
     emit('search', keyword.value);
     if (!window.location.href.includes("search")) {
       router.push({path: "/search", query: {keyword: keyword.value}});
@@ -39,7 +37,6 @@
   }
   var categories=ProductsAsideCategoriesComponent.data().categories
   function showMenu(index,e){
-    //alert(index);
     e.target.style.backgroundColor="white"
     ProductsAsideCategoriesComponent.methods.showMenu(index);
   }

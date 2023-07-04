@@ -62,11 +62,6 @@ const router = createRouter({
             path: '/details',
             name: 'Details',
             component: () => import('../views/user-facing/ProductDetailsView.vue'),
-        },
-        {
-            path: '/upload',
-            name: 'Upload',
-            component: () => import('../views/UploadImageTest.vue'),
         }
     ]
 })

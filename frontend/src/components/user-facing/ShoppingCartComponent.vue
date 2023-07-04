@@ -23,7 +23,6 @@ export default {
   },
   methods: {
     handleSelectionChange(selection) {
-      // console.log(selection);
       let sum = 0;
       let cnt = 0;
       this.ids = [];
@@ -31,16 +30,11 @@ export default {
       selection.forEach(item => {
         sum += item.count * item.product.promotePrice;
         cnt += item.count;
-        // console.log(item);
-        // console.log(item.id);
         this.ids.push(item.id);
         this.selectedItems.push({pid: item.pid, count: item.count});
       })
       this.summary = sum.toFixed(2);
       this.total = cnt;
-      // this.ids = this.selectedItems.map(item => item.id);
-      console.log(this.selectedItems);
-      console.log(this.ids);
     },
     getImagePath(image) {
       if (image === null)
@@ -57,7 +51,11 @@ export default {
       }))
           .then(res => {
             if (res.status === 200 && res.data.flag) {
-              console.log("修改成功");
+              ElMessage({
+                message: '修改成功!',
+                type: 'success',
+                duration: 2 * 1000
+              });
             } else {
               ElMessage({
                 message: '修改失败!',
@@ -66,8 +64,12 @@ export default {
               });
             }
           })
-          .catch(err => {
-            console.log(err);
+          .catch(() => {
+            ElMessage({
+              message: '修改失败!',
+              type: 'error',
+              duration: 2 * 1000
+            });
           })
     },
     deleteCart(cartId) {
@@ -83,7 +85,11 @@ export default {
         ))
             .then(res => {
               if (res.status === 200 && res.data.flag) {
-                console.log("删除成功");
+                ElMessage({
+                  message: '删除成功!',
+                  type: 'success',
+                  duration: 2 * 1000
+                });
                 this.tableData = this.tableData.filter(item => item.id !== cartId);
               } else {
                 ElMessage({
@@ -93,8 +99,12 @@ export default {
                 });
               }
             })
-            .catch(err => {
-              console.log(err);
+            .catch(() => {
+              ElMessage({
+                message: '删除失败!',
+                type: 'error',
+                duration: 2 * 1000
+              });
             })
       }).catch(() => {
       })
@@ -111,7 +121,6 @@ export default {
           uid: this.userId,
           orderItems: this.selectedItems
         }
-        // console.log(orderData);
         axios.post('/order/createOrder', orderData)
             .then(res => {
               if (res.status === 200 && res.data.flag) {
@@ -121,23 +130,15 @@ export default {
                   duration: 2 * 1000
                 });
                 //删除购物车中已经结算的商品
-                // this.tableData = this.tableData.filter(item => !this.ids.includes(item.id));
-                console.log("删除结算商品");
-                console.log(this.ids);
                 axios.post('/cart/deleteGoodsByList', {
                   id: this.ids
                 })
                     .then(res => {
                       if (res.status === 200 && res.data.flag) {
-                        console.log("删除结算商品成功");
                         this.tableData = this.tableData.filter(item => !this.ids.includes(item.id));
-                      } else {
-                        console.log("删除失败!");
                       }
                     })
-                    .catch(err => {
-                      console.log(err);
-                    })
+                    .catch()
               } else {
                 ElMessage({
                   message: '结算失败',
@@ -146,8 +147,12 @@ export default {
                 });
               }
             })
-            .catch(err => {
-              console.log(err);
+            .catch(() => {
+              ElMessage({
+                message: '结算失败',
+                type: 'error',
+                duration: 2 * 1000
+              });
             })
       }).catch(() => {
         // 用户点击了“取消”，不执行任何操作
@@ -186,8 +191,12 @@ export default {
                 });
               }
             })
-            .catch(err => {
-              console.log(err);
+            .catch(() => {
+              ElMessage({
+                message: '删除失败',
+                type: 'error',
+                duration: 2 * 1000
+              });
             })
       }).catch(() => {
       })
@@ -197,7 +206,6 @@ export default {
     this.show = false;
     await axios.get('/cart/show?id=' + this.userId)
         .then(res => {
-          // console.log(res.data);
           if (res.status === 200 && res.data.flag) {
             this.tableData = res.data.data;
           } else {
@@ -209,8 +217,13 @@ export default {
             useRouter().back();
           }
         })
-        .catch(err => {
-          console.log(err);
+        .catch(() => {
+          ElMessage({
+            message: '获取购物车失败!',
+            type: 'error',
+            duration: 2 * 1000
+          });
+          useRouter().back();
         })
     this.show = true;
   }

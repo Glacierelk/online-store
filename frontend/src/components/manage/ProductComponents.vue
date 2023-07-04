@@ -234,75 +234,6 @@ export default {
       };
       reader.readAsDataURL(this.selectedFile2);
     },
-    // uploadSingle() {
-    //   // console.log(this.productId);
-    //
-    //   let name = String(Date.now()) + ".jpg";
-    //
-    //   let formData = new FormData();
-    //   formData.append("file", this.selectedFile1);
-    //   formData.append("filename", "origin_" + name);
-    //   formData.append("type", "type_single");
-    //   formData.append("pid", this.productId);
-    //   // console.log(formData.get("filename"));
-    //   // console.log(formData.get("pid"));
-    //
-    //   let formData2 = new FormData();
-    //   formData2.append("file", this.selectedFile1Middle);
-    //   formData2.append("filename", "middle_" + name);
-    //   formData2.append("type", "type_single_middle");
-    //   formData2.append("pid", this.productId);
-    //   // console.log(formData2.get("filename"));
-    //
-    //   let formData3 = new FormData();
-    //   formData3.append("file", this.selectedFile1Small);
-    //   formData3.append("filename", "small_" + name);
-    //   formData3.append("type", "type_single_small");
-    //   formData3.append("pid", this.productId);
-    //   // console.log(formData3.get("filename"));
-    //
-    //   let config = {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data"
-    //     }
-    //   };
-    //   axios.all([
-    //     axios.post("/upload/product", formData, config),
-    //     axios.post("/upload/product", formData2, config),
-    //     axios.post("/upload/product", formData3, config),
-    //   ])
-    //       .then(axios.spread((res1, res2, res3) => {
-    //         this.singleDialogVisible = false;
-    //         // console.log("File uploaded", res1, res2, res3);
-    //         if (res1.data.flag === true && res2.data.flag === true && res3.data.flag === true) {
-    //           ElMessage({
-    //             message: '上传成功',
-    //             type: 'success',
-    //             duration: 2 * 1000
-    //           });
-    //         } else {
-    //           ElMessage({
-    //             message: '上传失败',
-    //             type: 'error',
-    //             duration: 2 * 1000
-    //           });
-    //         }
-    //       }))
-    //       .catch(() => {
-    //         // console.error("File upload failed", err);
-    //         ElMessage({
-    //           message: '上传失败',
-    //           type: 'error',
-    //           duration: 2 * 1000
-    //         });
-    //       });
-    //
-    //
-    //   this.$refs.selectedFile1.value = '';
-    //   this.selectedFile1 = null;
-    //   this.selectedFile1Middle = null;
-    //   this.selectedFile1Small = null;
-    // },
 
     uploadSingle() {
       // let name = String(Date.now()) + this.selectedFile1.name;
@@ -365,9 +296,6 @@ export default {
       formData.append("filename", String(Date.now()) + this.selectedFile2.name);
       formData.append("type", "type_detail");
       formData.append("pid", this.productId);
-      // console.log(formData.get("pid"));
-      // console.log(formData.get("filename"));
-      // console.log(formData.get("type"));
 
       axios.post("/upload/product", formData, {
         headers: {
@@ -377,7 +305,6 @@ export default {
           .then(res => {
             this.detailDialogVisible = false;
             this.$refs.selectedFile2.value = '';
-            // console.log("File uploaded", res);
             if (res.data.flag === true) {
               ElMessage({
                 message: '上传成功',
@@ -393,7 +320,6 @@ export default {
             }
           })
           .catch(() => {
-            // console.error("File upload failed", err);
             ElMessage({
               message: '上传失败',
               type: 'error',
@@ -420,11 +346,9 @@ export default {
         "cid": this.cid,
       })).then(response => {
         this.tableData = response.data.data;
-        // console.log(this.tableData);
       })
           .catch(() => {
             // 请求失败，处理错误
-            // console.error('请求数据失败:', error);
             ElMessage({
               message: '请求数据失败',
               type: 'error',
@@ -437,11 +361,9 @@ export default {
     handleAddProduct() {
       // 处理按钮点击事件的逻辑
       this.dialogVisible = true; // 打开对话框
-      // console.log("按钮被点击");
     },
 
     handleDelete(row) {
-      // console.log(row.id);
       ElMessageBox.confirm('确定要删除吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -459,7 +381,6 @@ export default {
                 })
                 .catch(() => {
                   // 处理删除失败的情况
-                  // console.error(error);
                   ElMessage({
                     type: 'error',
                     message: '删除失败，请重试！',
@@ -474,7 +395,6 @@ export default {
     handleEdit(row) {
       this.productId = row.id;
 
-      // console.log(row.id);
       this.formData.productName = row.name;
       this.formData.productSubtitle = row.subTitle;
       this.formData.originalPrice = row.originalPrice;
@@ -484,7 +404,6 @@ export default {
       this.dialogVisible2 = true; // 打开对话框
     },
     setProperty(row) {
-      // console.log(row.id);
       this.router.push({
         path: '/property',
         query: {
@@ -493,7 +412,6 @@ export default {
           cid: this.cid,
         }
       });
-      // console.log("点击了所有分类");
     },
 
     handleClick() {
@@ -501,13 +419,11 @@ export default {
       this.router.push({
         path: '/manage',
       });
-      // console.log("点击了所有分类");
       // 执行相应的逻辑...
     },
 
     async submitAddForm() {
       // 在此处提交表单数据的逻辑
-      // console.log(this.formData);
       event.preventDefault(); // 阻止表单默认提交行为
       // 在这里执行表单提交逻辑
       let requests = []; // 存储所有请求
@@ -551,7 +467,6 @@ export default {
           });
         }
       } catch (error) {
-        // console.error(error);
         ElMessage({
           type: 'error',
           message: "请求发生错误，请重试！",
@@ -571,7 +486,6 @@ export default {
 
     async submitEditForm() {
       // 在此处提交表单数据的逻辑
-      // console.log(this.formData);
       event.preventDefault(); // 阻止表单默认提交行为
       // 在这里执行表单提交逻辑
       let requests = []; // 存储所有请求
@@ -617,7 +531,6 @@ export default {
           });
         }
       } catch (error) {
-        // console.error(error);
         ElMessage({
           type: 'error',
           message: "请求发生错误，请重试！",
@@ -632,11 +545,9 @@ export default {
     this.cid = this.$route.query.cid;
     this.currentCategory = this.$route.query.name;
     // 使用获取到的 cid 值进行后续操作
-    // console.log(this.cid);
   },
   mounted() {
     this.getData(); // 页面加载时初始化数据
-    //console.log("111"); // 或者将表单数据发送至后端
   },
 };
 </script>

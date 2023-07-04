@@ -118,7 +118,6 @@ export default {
     },
     handleClick(event) {
       // 按照选中的标签筛选订单
-      console.log(event.index);
       if (event.index === '0') {
         this.currentOrders = this.allOrders
       } else if (this.allOrders) {
@@ -129,7 +128,6 @@ export default {
       const response = await axios.post('/order/getOrdersByUserId', qs.stringify({
         "uid": this.userId,
       }))
-      // console.log(response.data)
       this.allOrders = response.data.data
       this.currentOrders = this.allOrders
     },
