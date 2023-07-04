@@ -37,7 +37,7 @@ public class ProductDAOImpl implements ProductDAO {
     @Override
     public ProductImage getOneImageByProductId(int productId) {
         try {
-            String sql = "select id,pid, type,url_path from product_image where pid = ? and type = 'type_single' limit 1;";
+            String sql = "select * from product_image where pid = ? and type = 'type_single' limit 1;";
             return template.queryForObject(sql, new BeanPropertyRowMapper<>(ProductImage.class), productId);
         } catch (Exception e) {
             return null;
