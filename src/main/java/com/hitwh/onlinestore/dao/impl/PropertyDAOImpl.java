@@ -25,13 +25,14 @@ public class PropertyDAOImpl implements PropertyDAO {
 
     @Override
     public List<ProductProperties> getPropertiesByProductId(int id) {
-        String sql = "SELECT " +
-                "  COALESCE(id, '') AS id," +
-                "  COALESCE(pid, '') AS pid," +
-                "  COALESCE(name, '') AS name," +
-                "  COALESCE(value, '') AS value " +
-                "FROM product_properties_view " +
-                "WHERE pid = ?;";
+        String sql = "SELECT" +
+                " COALESCE(id, '') AS id," +
+                " COALESCE(pid, '') AS pid," +
+                " COALESCE(ptid, '') AS ptid," +
+                " COALESCE(name, '') AS name," +
+                " COALESCE(value, '') AS value" +
+                " FROM product_properties_view" +
+                " WHERE pid = ?;";
         try {
             return template.query(sql, new BeanPropertyRowMapper<>(ProductProperties.class), id);
         } catch (Exception e) {

@@ -5,15 +5,19 @@ public class ProductImage {
     private int pid;
     private String type;
     private String urlPath;
+    private String singleMiddle;
+    private String singleSmall;
 
     public ProductImage() {
     }
 
-    public ProductImage(int id, int pid, String type, String urlPath) {
+    public ProductImage(int id, int pid, String type, String urlPath, String singleMiddle, String singleSmall) {
         this.id = id;
         this.pid = pid;
         this.type = type;
         this.urlPath = urlPath;
+        this.singleMiddle = singleMiddle;
+        this.singleSmall = singleSmall;
     }
 
     public int getId() {
@@ -48,6 +52,22 @@ public class ProductImage {
         this.urlPath = urlPath;
     }
 
+    public String getSingleMiddle() {
+        return singleMiddle;
+    }
+
+    public void setSingleMiddle(String singleMiddle) {
+        this.singleMiddle = singleMiddle;
+    }
+
+    public String getSingleSmall() {
+        return singleSmall;
+    }
+
+    public void setSingleSmall(String singleSmall) {
+        this.singleSmall = singleSmall;
+    }
+
     @Override
     public String toString() {
         return "ProductImage{" +
@@ -55,6 +75,8 @@ public class ProductImage {
                 ", pid=" + pid +
                 ", type='" + type + '\'' +
                 ", urlPath='" + urlPath + '\'' +
+                ", singleMiddle='" + singleMiddle + '\'' +
+                ", singleSmall='" + singleSmall + '\'' +
                 '}';
     }
 }

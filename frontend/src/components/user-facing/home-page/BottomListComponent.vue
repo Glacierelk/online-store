@@ -63,15 +63,13 @@ for (let i = 0; i < categories.length; i++) {
   titles.push([]);
   for (let j = 0; j < categories[i].products.length; j++) {
     //require中文件的路径必须使用拼接的方式，不要写死
-    let src = 'https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleMiddle/';
-    // console.log(categories[i].products[j].images[0].urlPath)
-    console.log(categories[i].products[j].images[0])
-    if (categories[i].products[j].images[0].urlPath !== null) {
-      src += categories[i].products[j].images[0].urlPath;
+    let src = '';
+    if (categories[i].products[j].images[0].singleMiddle !== null) {
+      src = categories[i].products[j].images[0].singleMiddle;
     } else {
-      src += categories[i].products[j].images[0].id;
+      src = 'https://online-store-wenruyv.oss-cn-beijing.aliyuncs.com/productSingleMiddle/' +
+          categories[i].products[j].images[0].id + '.jpg';
     }
-    src += '.jpg';
     images[i].push(src);//直接取第一张图片
     if (categories[i].products[j].promotePrice == null) //如果没有打折价那么就获取原价
     {
