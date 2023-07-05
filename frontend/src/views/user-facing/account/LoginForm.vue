@@ -47,7 +47,7 @@ import {ElMessage} from "element-plus";
 
 function submitForm() {
 
-  if (username.value === "admin" || password.value === "admin") {
+  if (username.value === "admin" && password.value === "admin") {
     router.push('/manage')
     return false;
   }

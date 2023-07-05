@@ -170,7 +170,7 @@ export default {
         let image = new Image();
         image.onload = () => {
           // alert(image.width)
-          if (image.width > 1200 || image.height > 1200) {
+          if (image.width > 1400 || image.height > 1400) {
             ElMessage.error("图片尺寸应小于 1200px * 1200px，请重新选择");
             this.$refs.selectedFile1.value = '';
             this.selectedFile1 = null;
@@ -186,7 +186,7 @@ export default {
       reader.onload = (e) => {
         let image = new Image();
         image.onload = () => {
-          if (image.width > 800) {
+          if (image.width > 900) {
             ElMessage.error("图片宽度应小于 800px，请重新选择");
             this.$refs.selectedFile2.value = '';
             this.selectedFile2 = null;
