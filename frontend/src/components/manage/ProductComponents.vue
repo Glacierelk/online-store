@@ -198,7 +198,6 @@ export default {
     },
 
     uploadSingle() {
-      // let name = String(Date.now()) + this.selectedFile1.name;
       let formData = new FormData();
 
       formData.append("file", this.selectedFile1);
@@ -206,16 +205,6 @@ export default {
       formData.append("filename", this.selectedFile1.name)
       formData.append("type", "type_single");
       formData.append("pid", this.productId);
-      //
-      // formData.append("file", this.selectedFile1Middle);
-      // formData.append("filename", "middle_" + name);
-      // formData.append("type", "type_single_middle");
-      // formData.append("pid", this.productId);
-      //
-      // formData.append("file", this.selectedFile1Small);
-      // formData.append("filename", "small_" + name);
-      // formData.append("type", "type_single_small");
-      // formData.append("pid", this.productId);
 
       axios.post("/upload/product", formData, {
         headers: {

@@ -131,7 +131,7 @@ export default {
         let image = new Image();
         image.onload = () => {
           // alert(image.width)
-          if (image.width > 1000 || image.height > 200) {
+          if (image.width > 1300 || image.height > 300) {
             ElMessage.error("图片尺寸应小于 1000px * 200px，请重新选择");
             this.$refs.selectedFile.value = '';
             this.selectedFile = null;
