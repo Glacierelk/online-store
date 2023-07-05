@@ -170,7 +170,7 @@ export default {
         let image = new Image();
         image.onload = () => {
           // alert(image.width)
-          if (image.width > 1200 || image.height > 1200) {
+          if (image.width > 1400 || image.height > 1400) {
             ElMessage.error("图片尺寸应小于 1200px * 1200px，请重新选择");
             this.$refs.selectedFile1.value = '';
             this.selectedFile1 = null;
@@ -186,7 +186,7 @@ export default {
       reader.onload = (e) => {
         let image = new Image();
         image.onload = () => {
-          if (image.width > 800) {
+          if (image.width > 900) {
             ElMessage.error("图片宽度应小于 800px，请重新选择");
             this.$refs.selectedFile2.value = '';
             this.selectedFile2 = null;
@@ -198,7 +198,6 @@ export default {
     },
 
     uploadSingle() {
-      // let name = String(Date.now()) + this.selectedFile1.name;
       let formData = new FormData();
 
       formData.append("file", this.selectedFile1);
@@ -206,16 +205,6 @@ export default {
       formData.append("filename", this.selectedFile1.name)
       formData.append("type", "type_single");
       formData.append("pid", this.productId);
-      //
-      // formData.append("file", this.selectedFile1Middle);
-      // formData.append("filename", "middle_" + name);
-      // formData.append("type", "type_single_middle");
-      // formData.append("pid", this.productId);
-      //
-      // formData.append("file", this.selectedFile1Small);
-      // formData.append("filename", "small_" + name);
-      // formData.append("type", "type_single_small");
-      // formData.append("pid", this.productId);
 
       axios.post("/upload/product", formData, {
         headers: {
