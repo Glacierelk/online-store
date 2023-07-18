@@ -32,7 +32,8 @@
 <script setup>
 import axios from "axios";
 
-axios.defaults.withCredentials = false;
+//本地部署true，服务器部署false
+axios.defaults.withCredentials = true;
 import Header from "@/components/user-facing/header-footer/LoginAndRegisterHeader.vue";
 import Footer from "@/components/user-facing/header-footer/FooterComponent.vue";
 import {ref} from "vue";

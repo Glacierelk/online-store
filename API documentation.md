@@ -1,6 +1,6 @@
 # 天猫商城 API 文档
 
-`BaseURL: http://localhost:8080/store` 
+`BaseURL: http://localhost:8729/store` 
 
 ## 用户
 

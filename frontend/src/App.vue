@@ -4,8 +4,9 @@
 
 <script setup>
 import axios from "axios";
-
+//本地部署
 axios.defaults.baseURL = "http://localhost:8729/store";
+//服务器部署
 // axios.defaults.baseURL = '/store';
 </script>
 
